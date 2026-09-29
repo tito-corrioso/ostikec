@@ -392,9 +392,9 @@
           '<div class="info-creador">' +
             '<p class="info-titulo">OSTIKEC</p>' +
             '<p class="info-autor">Desarrollada por Osmani Tito Corrioso</p>' +
-            '<p class="info-grupo">Grupo OSTICOR</p>' +
+            '<p class="info-grupo">&copy; OSTICOR 2026</p>' +
             '<p class="info-derechos">Todos los derechos reservados</p>' +
-            '<p class="info-aviso">No puede utilizar ni compartir la apk sin la debida autorización del creador</p>' +
+            '<p class="info-aviso">No puede utilizar ni compartir la apk sin la licencia y la autorización del creador</p>' +
             '<p class="info-contacto">Contacto: osmanitito94@zoho.com</p>' +
           '</div>' +
         '</div>' +
