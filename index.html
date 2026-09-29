@@ -301,14 +301,14 @@ html, body {
     </svg>
 
     <h1 class="titulo-app">OSTIKEC</h1>
-    <p class="subtitulo">Sistema de tickets con código QR</p>
+    <p class="subtitulo">Sistema de tickets electrónicos. v.26.09.01</p>
 
     <div class="tarjeta">
       <div class="campo-bloque">
         <label for="loginTelefono">Número de teléfono</label>
         <div class="campo">
           <input id="loginTelefono" type="tel" inputmode="numeric"
-                 placeholder="Ej. 54089688" autocomplete="off">
+                 placeholder="Ej. 56224466" autocomplete="off">
         </div>
       </div>
 
@@ -316,7 +316,7 @@ html, body {
         <label for="loginLicencia">Número de licencia</label>
         <div class="campo">
           <input id="loginLicencia" type="text"
-                 placeholder="Ej. OT-0001" autocomplete="off">
+                 placeholder="Ej. XX-X000-XX-X" autocomplete="off">
         </div>
       </div>
 
@@ -404,7 +404,7 @@ html, body {
 
       <!-- Campo: ASIENTO -->
       <div class="campo-bloque">
-        <label for="inAsiento">Asiento</label>
+        <label for="inAsiento">Ticket/Asiento</label>
         <div class="campo">
           <input id="inAsiento" type="text" inputmode="numeric"
                  placeholder="Número de asiento" autocomplete="off">
@@ -424,7 +424,7 @@ html, body {
 
       <div class="acciones">
         <button id="btnLimpiar" class="btn btn-secundario">Limpiar</button>
-        <button id="btnCrear" class="btn btn-primario">Crear</button>
+        <button id="btnCrear" class="btn btn-primario">Crear Ostikec</button>
       </div>
     </div>
 
@@ -560,14 +560,14 @@ html, body {
    Cada licencia tiene un "tipo":
      - 'creador'   → entra a la pantalla 2 (genera tickets)
      - 'validador' → entra a la pantalla 3 (solo verifica tickets)
-
+Nota: Las licencias tienen el formato OT-X00n-YY-Z, donde "X" es C o V, "n" es un número consecutivo, "YY" son las dos últimas cifras del número de teléfono y "Z" es la inicial del nombre de la persona autorizada.
    Para añadir un usuario nuevo, agrega otra línea con el mismo formato.
    ============================================================================ */
 const USUARIOS_AUTORIZADOS = [
-  { telefono: '54089688', licencia: 'OT-0001', tipo: 'creador'   },
-  { telefono: '58213831', licencia: 'OT-0002', tipo: 'creador'   },
-  { telefono: '54089688', licencia: 'OT-V001', tipo: 'validador' },
-  { telefono: '58213831', licencia: 'OT-V002', tipo: 'validador' }
+  { telefono: '54089688', licencia: 'OT-C001-88-O', tipo: 'creador'   },
+  { telefono: '58213831', licencia: 'OT-C002-31-D', tipo: 'creador'   },
+  { telefono: '54089688', licencia: 'OT-V001-88-O', tipo: 'validador' },
+  { telefono: '58213831', licencia: 'OT-V002-31-D', tipo: 'validador' }
 ];
 
 const CLAVE_SECRETA   = 'Ostikec-Clave-Secreta-2026'; // clave para calcular la firma
