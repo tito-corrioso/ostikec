@@ -1,0 +1,135 @@
+/* ============================================================================
+   EXTRAS.CSS — Estilos añadidos sin tocar el CSS original
+   ============================================================================
+   Si se elimina este archivo, la app sigue funcionando con sus estilos
+   originales. Solo se perderán los estilos del panel de Negocios.
+   ============================================================================ */
+
+/* ==========================================================================
+   MODAL DE NEGOCIOS Y SERVICIOS
+   ========================================================================== */
+#modalNegocios .modal-caja {
+  max-width: 460px;
+}
+
+.neg-form {
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.neg-form label {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  color: #475569;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 6px;
+}
+
+.neg-form input {
+  width: 100%;
+  padding: 12px 14px;
+  border: 2px solid #cbd5e1;
+  border-radius: 10px;
+  font-size: 15px;
+  font-family: inherit;
+  background: #ffffff;
+  color: #1f2937;
+  outline: none;
+  margin-bottom: 12px;
+  box-sizing: border-box;
+  transition: border-color .15s ease;
+}
+
+.neg-form input:focus {
+  border-color: #16324f;
+}
+
+.neg-form input::placeholder {
+  color: #a3b0c2;
+}
+
+.neg-lista-titulo {
+  font-size: 13px;
+  font-weight: 800;
+  color: #16324f;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin: 0 0 10px 0;
+}
+
+.neg-lista {
+  max-height: 240px;
+  overflow-y: auto;
+  margin-bottom: 8px;
+}
+
+.neg-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+  border: 2px solid #e2e8f0;
+  border-radius: 10px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  background: #ffffff;
+  transition: border-color .15s, background .15s;
+}
+
+.neg-item:active {
+  background: #f1f5f9;
+}
+
+.neg-item.activo {
+  border-color: #f2a900;
+  background: #fff9e6;
+}
+
+.neg-item-texto {
+  flex: 1;
+  min-width: 0;
+}
+
+.neg-item-nombre {
+  font-size: 14px;
+  font-weight: 700;
+  color: #1f2937;
+  word-break: break-word;
+}
+
+.neg-item-servicio {
+  font-size: 12px;
+  color: #64748b;
+  word-break: break-word;
+  margin-top: 2px;
+}
+
+.neg-item-borrar {
+  width: 28px;
+  height: 28px;
+  border: none;
+  border-radius: 50%;
+  background: #fee2e2;
+  color: #991b1b;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  flex-shrink: 0;
+  padding: 0;
+  line-height: 1;
+}
+
+.neg-item-borrar:active {
+  background: #fecaca;
+}
+
+.neg-vacio {
+  font-size: 13px;
+  color: #94a3b8;
+  text-align: center;
+  padding: 16px 0;
+  font-style: italic;
+}
