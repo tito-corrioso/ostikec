@@ -563,7 +563,7 @@ html, body {
    Cada licencia tiene un "tipo":
      - 'creador'   → entra a la pantalla 2 (genera tickets)
      - 'validador' → entra a la pantalla 3 (solo verifica tickets)
-Nota: Las licencias tienen el formato OT-X00n-YY-Z, donde "X" es C o V, "n" es un número consecutivo, "YY" son las dos últimas cifras del número de teléfono y "Z" es la inicial del nombre de la persona autorizada.
+   Nota: Las licencias tienen el formato OT-X00n-YY-Z, donde "X" es C o V, "n" es un número consecutivo, "YY" son las dos últimas cifras del número de teléfono y "Z" es la inicial del nombre de la persona autorizada.
    Para añadir un usuario nuevo, agrega otra línea con el mismo formato.
    ============================================================================ */
 const USUARIOS_AUTORIZADOS = [
@@ -1084,7 +1084,7 @@ function generarTicket() {
   for (const clave in nombres) {
     if (!datos[clave]) { alert('Falta completar el campo: ' + nombres[clave]); return; }
   }
-  if (!/^\d+$/.test(datos.a)) { alert('El campo "Asiento" debe contener solo números.'); return; }
+  if (!/^\d+$/.test(datos.a)) { alert('El campo "Ticket/Asiento" debe contener solo números.'); return; }
   if (!/^\d+$/.test(datos.i)) { alert('El campo "ID Servicio" debe contener solo números.'); return; }
 
   const textoQR = construirContenidoQR(datos);
@@ -1167,7 +1167,12 @@ async function iniciarCamara() {
     await escanerActivo.start(
       { facingMode: 'environment' },
       { fps: 10, qrbox: { width: 240, height: 240 } },
-      function (textoLeido) { detenerCamara(); cerrarLector(); procesarLectura(textoLeido); },
+      /*function (textoLeido) { detenerCamara(); cerrarLector(); procesarLectura(textoLeido); },*/
+      async function (textoLeido) {
+        await detenerCamara();
+        await cerrarLector();
+        procesarLectura(textoLeido);
+      },
       function () { /* errores de escaneo normales: los ignoramos */ }
     );
     estado.textContent = 'Apunte la cámara al código QR del ticket.';
