@@ -1080,7 +1080,7 @@ function generarTicket() {
     i: document.getElementById('inIdServicio').value.trim()
   };
 
-  const nombres = { f: 'Fecha', n: 'Nombre', t: 'Teléfono', a: 'Asiento', i: 'ID Servicio' };
+  const nombres = { f: 'Fecha', n: 'Nombre', t: 'Teléfono', a: 'Ticket/Asiento', i: 'ID Servicio' };
   for (const clave in nombres) {
     if (!datos[clave]) { alert('Falta completar el campo: ' + nombres[clave]); return; }
   }
