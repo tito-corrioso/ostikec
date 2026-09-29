@@ -410,7 +410,7 @@ html, body {
         <label for="inAsiento">Ticket/Asiento</label>
         <div class="campo">
           <input id="inAsiento" type="text" inputmode="numeric"
-                 placeholder="Número de asiento" autocomplete="off">
+                 placeholder="Número de ticket/asiento" autocomplete="off">
           <button type="button" class="btn-limpiar-campo" data-target="inAsiento">✕</button>
         </div>
       </div>
@@ -1031,7 +1031,7 @@ function dibujarTicket(datos, textoQR) {
   const hAsi = alturaCelda(ctx, datos.a, ANCHO_COL);
   const hId  = alturaCelda(ctx, datos.i, ANCHO_COL);
   const hFila2 = Math.max(hAsi, hId);
-  dibujarCelda(ctx, 'ASIENTO',     datos.a, MARGEN,                     y, ANCHO_COL);
+  dibujarCelda(ctx, 'TICKET/ASIENTO',     datos.a, MARGEN,                     y, ANCHO_COL);
   dibujarCelda(ctx, 'ID SERVICIO', datos.i, MARGEN + ANCHO_COL + GAP_COL, y, ANCHO_COL);
   y += hFila2 + 16;
 
@@ -1242,7 +1242,7 @@ function mostrarResultadoValidacion(esValido, datos, error) {
       ['Fecha',       datos.f],
       ['Nombre',      datos.n],
       ['Teléfono',    datos.t],
-      ['Asiento',     datos.a],
+      ['Ticket/Asiento',     datos.a],
       ['ID Servicio', datos.i]
     ];
     tabla.innerHTML = filas.map(
@@ -1275,7 +1275,7 @@ function mostrarResultadoValidador(resultado) {
       ['Fecha',       resultado.datos.f],
       ['Nombre',      resultado.datos.n],
       ['Teléfono',    resultado.datos.t],
-      ['Asiento',     resultado.datos.a],
+      ['Ticket/Asiento',     resultado.datos.a],
       ['ID Servicio', resultado.datos.i]
     ];
     tabla.innerHTML = filas.map(
