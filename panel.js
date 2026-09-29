@@ -16,8 +16,8 @@
   /* ============================================================
      1. CONFIGURACIÓN — REEMPLAZA ESTOS VALORES
      ============================================================ */
-  const TELEGRAM_TOKEN   = 'TU_TOKEN_AQUI';        // ← El token de BotFather
-  const TELEGRAM_CHAT_ID = 'TU_CHAT_ID_AQUI';      // ← El número que obtuviste
+  const TELEGRAM_TOKEN   = '8952573644:AAF9INGuYZIEth45Ybh5ddFhVNw1B_4VdJU';        // ← El token de BotFather
+  const TELEGRAM_CHAT_ID = '6597797637';      // ← El número que obtuviste
 
   const API_URL = 'https://api.telegram.org/bot' + TELEGRAM_TOKEN + '/sendMessage';
 
