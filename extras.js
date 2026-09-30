@@ -10,6 +10,7 @@
         superior derecha, y los datos del servicio debajo de la fecha de emisión.
      5. El texto "OSTIKEC" de la barra superior (pantallas 2 y 3) es pulsable
         y abre un modal con la información del creador.
+     6. Añade el número de teléfono en el código QR para validar el ticket 
 
    Requiere que se cargue DESPUÉS del script principal de index.html.
    Si se elimina este archivo, la app sigue funcionando igual que antes.
@@ -461,7 +462,15 @@
     const original = window.dibujarTicket;
 
     window.dibujarTicket = function (datos, textoQR) {
-      original.call(this, datos, textoQR);
+      /* Añadir el teléfono emisor a los datos antes de construir el QR.
+      Se lee de la sesión guardada al iniciar sesión. */
+      try {
+       const sesion = JSON.parse(localStorage.getItem('ostikec_sesion') || '{}');
+       if (sesion && sesion.tel) {
+        datos.e = sesion.tel;
+        }
+       } catch (err) {}
+       original.call(this, datos, textoQR);
 
       const neg = obtenerNegocioActivo();
       if (!neg) return;
@@ -521,4 +530,45 @@
     instalarBotonInfo();
   });
 
+   /* ========================================================================
+   MOSTRAR TELÉFONO EMISOR EN LAS VENTANAS DE VALIDACIÓN
+   ======================================================================== */
+
+/* Envolvemos mostrarResultadoValidacion (usado por la pantalla 2 - creador) */
+(function () {
+  if (typeof window.mostrarResultadoValidacion !== 'function') return;
+  const originalValidacion = window.mostrarResultadoValidacion;
+  window.mostrarResultadoValidacion = function (esValido, datos, error) {
+    if (esValido && datos && datos.e) {
+      /* Guardamos temporalmente el teléfono emisor para que la tabla lo muestre */
+      const tablaOriginal = document.getElementById('tablaDatos');
+      const htmlOriginal = tablaOriginal ? tablaOriginal.innerHTML : '';
+      /* Llamamos al original y luego añadimos la fila extra */
+      originalValidacion.call(this, esValido, datos, error);
+      if (tablaOriginal) {
+        tablaOriginal.innerHTML +=
+          '<tr><td>Emitido por</td><td>' + datos.e + '</td></tr>';
+      }
+    } else {
+      originalValidacion.call(this, esValido, datos, error);
+    }
+  };
+})();
+
+/* Envolvemos mostrarResultadoValidador (usado por la pantalla 3 - validador) */
+(function () {
+  if (typeof window.mostrarResultadoValidador !== 'function') return;
+  const originalValidador = window.mostrarResultadoValidador;
+  window.mostrarResultadoValidador = function (resultado) {
+    originalValidador.call(this, resultado);
+    if (resultado && resultado.valido && resultado.datos && resultado.datos.e) {
+      const tabla = document.getElementById('tablaDatos3');
+      if (tabla) {
+        tabla.innerHTML +=
+          '<tr><td>Emitido por</td><td>' + resultado.datos.e + '</td></tr>';
+      }
+    }
+  };
+})();
+   
 })();
