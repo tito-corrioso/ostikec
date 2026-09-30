@@ -19,7 +19,7 @@
      ============================================================ */
   /* URL del archivo blocked.json en tu GitHub Pages.
      Ejemplo: https://tunombre.github.io/turepo/blocked.json */
-  const URL_LISTA_NEGRA = 'AQUI_VA_LA_URL_DE_TU_BLOCKED_JSON';
+  const URL_LISTA_NEGRA = 'https://tito-corrioso.github.io/ostikec/blocked.json';
 
   /* Clave donde se guarda la lista descargada */
   const CLAVE_CACHE = 'ostikec_lista_negra';
