@@ -462,14 +462,6 @@
     const original = window.dibujarTicket;
 
     window.dibujarTicket = function (datos, textoQR) {
-      /* Añadir el teléfono emisor a los datos antes de construir el QR.
-      Se lee de la sesión guardada al iniciar sesión. */
-      try {
-       const sesion = JSON.parse(localStorage.getItem('ostikec_sesion') || '{}');
-       if (sesion && sesion.tel) {
-        datos.e = sesion.tel;
-        }
-       } catch (err) {}
        original.call(this, datos, textoQR);
 
       const neg = obtenerNegocioActivo();
@@ -570,5 +562,24 @@
     }
   };
 })();
+
+     /* ========================================================================
+     AÑADIR TELÉFONO EMISOR AL CONTENIDO DEL QR
+     Se intercepta construirContenidoQR (que se ejecuta ANTES que dibujarTicket),
+     para que el teléfono quede dentro del QR cifrado y firmado.
+     ======================================================================== */
+  (function () {
+    if (typeof window.construirContenidoQR !== 'function') return;
+    const originalContenido = window.construirContenidoQR;
+    window.construirContenidoQR = function (datos) {
+      try {
+        const sesion = JSON.parse(localStorage.getItem('ostikec_sesion') || '{}');
+        if (sesion && sesion.tel) {
+          datos.e = sesion.tel;
+        }
+      } catch (err) {}
+      return originalContenido.call(this, datos);
+    };
+  })();
    
 })();
