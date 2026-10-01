@@ -417,8 +417,8 @@ html, body {
       <div class="campo-bloque">
         <label for="inAsiento">Ticket/Asiento</label>
         <div class="campo">
-          <input id="inAsiento" type="text" inputmode="numeric"
-                 placeholder="Número de ticket/asiento" autocomplete="off">
+          <input id="inAsiento" type="text"
+                 placeholder="Número o texto" autocomplete="off">
           <button type="button" class="btn-limpiar-campo" data-target="inAsiento">✕</button>
         </div>
       </div>
@@ -428,7 +428,7 @@ html, body {
         <label for="inIdServicio">ID Servicio</label>
         <div class="campo">
           <input id="inIdServicio" type="text" inputmode="text"
-                 placeholder="Identificador del servicio" autocomplete="off">
+                 placeholder="Número o texto" autocomplete="off">
           <button type="button" class="btn-limpiar-campo" data-target="inIdServicio">✕</button>
         </div>
       </div>
@@ -1113,8 +1113,7 @@ function generarTicket() {
   for (const clave in nombres) {
     if (!datos[clave]) { alert('Falta completar el campo: ' + nombres[clave]); return; }
   }
-  if (!/^\d+$/.test(datos.a)) { alert('El campo "Ticket/Asiento" debe contener solo números.'); return; }
-
+  
   const textoQR = construirContenidoQR(datos);
   dibujarTicket(datos, textoQR);
 
@@ -1361,13 +1360,6 @@ document.addEventListener('DOMContentLoaded', function () {
     if (v.length > 2) v = v.substring(0, 2) + '/' + v.substring(2);
     if (v.length > 5) v = v.substring(0, 5) + '/' + v.substring(5);
     this.value = v;
-  });
-
-  /* ---------- Solo números en Asiento y ID Servicio ---------- */
-  ['inAsiento'].forEach(function (id) {
-    document.getElementById(id).addEventListener('input', function () {
-      this.value = this.value.replace(/\D/g, '');
-    });
   });
 
   /* ---------- Lector de QR (compartido por ambas pantallas) ---------- */
