@@ -1,0 +1,1690 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manual OSTIKEC — v26.10.01</title>
+<style>
+/* ============================================================================
+   MANUAL OSTIKEC — Estilos del manual (autocontenidos)
+   ============================================================================ */
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  background: #f4f6f9;
+  color: #1f2937;
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+/* Contenedor principal tipo A4 */
+.hoja {
+  max-width: 900px;
+  margin: 0 auto 40px auto;
+  background: #ffffff;
+  padding: 46px 56px;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.07);
+}
+
+/* Portada */
+.portada {
+  text-align: center;
+  padding: 80px 40px 60px 40px;
+  background: linear-gradient(160deg, #16324f 0%, #0d2033 100%);
+  color: #ffffff;
+  border-radius: 10px;
+  margin-bottom: 40px;
+}
+.portada .logo-ot {
+  width: 130px;
+  height: 130px;
+  margin: 0 auto 24px auto;
+  border-radius: 50%;
+  background: #f2a900;
+  color: #16324f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 60px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  border: 6px solid #16324f;
+  box-shadow: 0 0 0 4px #f2a900 inset;
+}
+.portada h1 {
+  font-size: 42px;
+  margin: 0 0 10px 0;
+  letter-spacing: 3px;
+  font-weight: 800;
+}
+.portada .subtitulo {
+  font-size: 15px;
+  color: #9db4cc;
+  margin: 0 0 40px 0;
+  letter-spacing: 1px;
+}
+.portada .meta {
+  border-top: 1px solid #2a4761;
+  padding-top: 24px;
+  margin-top: 40px;
+  font-size: 13px;
+  color: #9db4cc;
+  line-height: 1.9;
+}
+.portada .meta b { color: #f2a900; }
+
+/* Tipografía de secciones */
+h2 {
+  color: #16324f;
+  font-size: 26px;
+  border-bottom: 3px solid #f2a900;
+  padding-bottom: 8px;
+  margin: 44px 0 22px 0;
+  letter-spacing: 0.5px;
+}
+h2:first-of-type { margin-top: 0; }
+
+h3 {
+  color: #16324f;
+  font-size: 19px;
+  margin: 32px 0 12px 0;
+  letter-spacing: 0.3px;
+}
+h4 {
+  color: #334155;
+  font-size: 16px;
+  margin: 22px 0 10px 0;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  font-weight: 700;
+}
+p { margin: 0 0 12px 0; }
+
+/* Índice */
+.indice {
+  background: #eef2f7;
+  border-left: 4px solid #f2a900;
+  padding: 22px 26px;
+  border-radius: 8px;
+  margin-bottom: 30px;
+}
+.indice h3 { margin-top: 0; }
+.indice ol { margin: 0; padding-left: 22px; }
+.indice ol li { margin-bottom: 5px; }
+.indice a {
+  color: #16324f;
+  text-decoration: none;
+  font-weight: 600;
+}
+.indice a:hover { text-decoration: underline; }
+
+/* Botón de imprimir */
+.btn-imprimir {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 999;
+  background: #f2a900;
+  color: #16324f;
+  border: none;
+  padding: 12px 20px;
+  font-size: 14px;
+  font-weight: 700;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+  font-family: inherit;
+}
+.btn-imprimir:hover { background: #d99a00; }
+
+/* Cajas de avisos */
+.aviso {
+  padding: 14px 18px;
+  border-radius: 8px;
+  margin: 16px 0;
+  font-size: 14px;
+  line-height: 1.55;
+}
+.aviso-info {
+  background: #eef2f7;
+  border-left: 4px solid #16324f;
+  color: #16324f;
+}
+.aviso-ok {
+  background: #dcfce7;
+  border-left: 4px solid #166534;
+  color: #166534;
+}
+.aviso-warn {
+  background: #fee2e2;
+  border-left: 4px solid #991b1b;
+  color: #991b1b;
+}
+.aviso-dorado {
+  background: #fff9e6;
+  border-left: 4px solid #f2a900;
+  color: #7a5500;
+}
+
+/* Bloques de código */
+pre {
+  background: #0d2033;
+  color: #e2e8f0;
+  padding: 16px 18px;
+  border-radius: 8px;
+  overflow-x: auto;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 13px;
+  line-height: 1.5;
+  margin: 12px 0 18px 0;
+}
+code {
+  font-family: 'Courier New', Courier, monospace;
+  background: #eef2f7;
+  color: #16324f;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 13px;
+}
+pre code {
+  background: transparent;
+  color: inherit;
+  padding: 0;
+  border-radius: 0;
+  font-size: 13px;
+}
+
+/* Tablas */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0 22px 0;
+  font-size: 14px;
+}
+th {
+  background: #16324f;
+  color: #ffffff;
+  padding: 10px 12px;
+  text-align: left;
+  font-weight: 700;
+}
+td {
+  padding: 9px 12px;
+  border-bottom: 1px solid #e2e8f0;
+  vertical-align: top;
+}
+tr:nth-child(even) td { background: #f8fafc; }
+
+/* Listas */
+ul, ol { margin: 0 0 14px 0; padding-left: 24px; }
+li { margin-bottom: 5px; }
+
+/* Maquetas (mockups) */
+.mock {
+  max-width: 340px;
+  margin: 20px auto 26px auto;
+  border: 8px solid #1f2937;
+  border-radius: 24px;
+  overflow: hidden;
+  background: #eef2f7;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+}
+.mock-caption {
+  text-align: center;
+  font-size: 12px;
+  color: #64748b;
+  font-style: italic;
+  margin: -18px 0 24px 0;
+}
+
+/* Pantalla login dentro del mockup */
+.mk-login {
+  min-height: 560px;
+  background: linear-gradient(160deg, #16324f 0%, #0d2033 100%);
+  padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  color: #ffffff;
+}
+.mk-promo {
+  color: #9db4cc;
+  font-size: 10px;
+  text-align: center;
+  font-style: italic;
+  margin-bottom: 12px;
+  line-height: 1.4;
+  padding: 0 10px;
+}
+.mk-logo {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: #f2a900;
+  color: #16324f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  font-weight: 800;
+  margin-bottom: 8px;
+  border: 4px solid #16324f;
+}
+.mk-titulo {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  margin: 0 0 2px 0;
+}
+.mk-subtitulo {
+  font-size: 10px;
+  color: #9db4cc;
+  margin: 0 0 14px 0;
+}
+.mk-tarjeta {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 14px 12px;
+  width: 100%;
+  max-width: 280px;
+}
+.mk-campo { margin-bottom: 10px; }
+.mk-campo label {
+  display: block;
+  font-size: 9px;
+  font-weight: 700;
+  color: #475569;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 3px;
+}
+.mk-input {
+  width: 100%;
+  padding: 8px 10px;
+  border: 2px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 12px;
+  background: #ffffff;
+  color: #1f2937;
+  font-family: inherit;
+}
+/* Los inputs deshabilitados del mock deben verse como los normales */
+.mk-input:disabled {
+  opacity: 1;
+  cursor: default;
+  color: #1f2937;
+  background: #ffffff;
+}
+.mk-input::placeholder {
+  color: #a3b0c2;
+  opacity: 1;
+}
+.mk-input-con-ojo { position: relative; }
+.mk-input-con-ojo .mk-input { padding-right: 32px; }
+.mk-ojo {
+  position: absolute;
+  right: 4px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #e2e8f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  color: #475569;
+}
+.mk-btn-acento {
+  width: 100%;
+  padding: 10px;
+  background: #f2a900;
+  color: #16324f;
+  border: none;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  text-align: center;
+  margin-top: 4px;
+}
+.mk-pie {
+  margin-top: 14px;
+  text-align: center;
+  color: #9db4cc;
+  font-size: 9px;
+  line-height: 1.7;
+}
+.mk-pie .mk-link { color: #f2a900; font-weight: 700; }
+.mk-pie .mk-terminos { color: #ffffff; font-size: 8px; margin-top: 6px; }
+.mk-pie .mk-terminos a { color: #f2a900; }
+
+/* Pantalla creador dentro del mockup */
+.mk-barra {
+  background: #16324f;
+  color: #ffffff;
+  padding: 8px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.mk-barra .mk-izq {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.mk-logo-mini {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #f2a900;
+  color: #16324f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 10px;
+}
+.mk-barra .mk-titulo-mini {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+.mk-barra .mk-der { display: flex; gap: 4px; }
+.mk-btn-icono {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.14);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  color: #ffffff;
+}
+.mk-cuerpo {
+  background: #eef2f7;
+  padding: 12px 10px;
+  min-height: 480px;
+}
+.mk-formulario {
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 12px 10px;
+}
+.mk-seccion-titulo {
+  font-size: 10px;
+  font-weight: 800;
+  color: #16324f;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-bottom: 2px solid #f2a900;
+  padding-bottom: 4px;
+  margin-bottom: 10px;
+}
+.mk-input-con-limpiar { position: relative; }
+.mk-input-con-limpiar .mk-input { padding-right: 30px; }
+.mk-btn-limpiar {
+  position: absolute;
+  right: 3px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #e2e8f0;
+  color: #475569;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 700;
+}
+.mk-select {
+  width: 100%;
+  padding: 6px 8px;
+  border: 2px solid #cbd5e1;
+  border-radius: 7px;
+  background: #f8fafc;
+  font-size: 10px;
+  font-weight: 700;
+  color: #475569;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  margin-bottom: 3px;
+  font-family: inherit;
+}
+.mk-select:disabled {
+  opacity: 1;
+  cursor: default;
+}
+.mk-acciones {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+.mk-acciones .mk-btn-sec,
+.mk-acciones .mk-btn-pri {
+  flex: 1;
+  padding: 8px;
+  text-align: center;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 700;
+}
+.mk-btn-sec { background: #e2e8f0; color: #334155; }
+.mk-btn-pri { background: #16324f; color: #ffffff; }
+
+/* Modal dentro del mockup */
+.mk-modal {
+  background: rgba(9, 20, 32, 0.75);
+  padding: 20px 12px;
+  min-height: 480px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.mk-modal-caja {
+  background: #ffffff;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 280px;
+  overflow: hidden;
+}
+.mk-modal-cab {
+  padding: 10px 12px;
+  border-bottom: 1px solid #e2e8f0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.mk-modal-cab h4 {
+  margin: 0;
+  font-size: 12px;
+  color: #16324f;
+  text-transform: none;
+  letter-spacing: 0;
+}
+.mk-modal-cerrar {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #f1f5f9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: #475569;
+}
+.mk-modal-cuerpo { padding: 12px; }
+.mk-modal-cuerpo p {
+  font-size: 10px;
+  line-height: 1.45;
+  margin: 0 0 8px 0;
+  color: #334155;
+}
+.mk-modal-cuerpo label {
+  display: block;
+  font-size: 9px;
+  font-weight: 700;
+  color: #475569;
+  text-transform: uppercase;
+  margin-bottom: 3px;
+}
+.mk-modal-cuerpo .mk-input { margin-bottom: 8px; }
+.mk-item-neg {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  margin-bottom: 6px;
+  font-size: 10px;
+}
+.mk-item-neg.activo { border-color: #f2a900; background: #fff9e6; }
+.mk-item-neg .mk-item-texto { flex: 1; }
+.mk-item-neg .mk-item-nom { font-weight: 700; color: #1f2937; }
+.mk-item-neg .mk-item-serv { color: #64748b; font-size: 9px; }
+.mk-item-neg .mk-item-borr {
+  width: 20px; height: 20px; border-radius: 50%;
+  background: #fee2e2; color: #991b1b;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 9px; font-weight: 700;
+}
+
+/* Ticket dentro del mockup */
+.mk-ticket {
+  background: #ffffff;
+  border: 4px solid #16324f;
+  border-radius: 6px;
+  max-width: 300px;
+  margin: 20px auto;
+  overflow: hidden;
+  font-family: Arial, sans-serif;
+}
+.mk-ticket-enc {
+  background: #16324f;
+  color: #ffffff;
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+}
+.mk-ticket-logo {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #f2a900;
+  color: #16324f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+.mk-ticket-nombre-inst {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  font-size: 9px;
+  color: #ffffff;
+  font-weight: 700;
+  text-align: right;
+  max-width: 120px;
+  line-height: 1.2;
+}
+.mk-ticket-titulo-enc { flex: 1; }
+.mk-ticket-titulo-enc .mk-t-nom {
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+.mk-ticket-titulo-enc .mk-t-sub {
+  font-size: 9px;
+  color: #f2a900;
+  font-weight: 700;
+  margin-top: 2px;
+}
+.mk-ticket-cuerpo {
+  padding: 12px;
+  background: #ffffff;
+}
+.mk-ticket-celda { margin-bottom: 8px; }
+.mk-ticket-celda .mk-lbl {
+  font-size: 9px;
+  color: #64748b;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 2px;
+}
+.mk-ticket-celda .mk-val {
+  font-size: 13px;
+  color: #0f172a;
+  font-weight: 700;
+}
+.mk-ticket-fila {
+  display: flex;
+  gap: 12px;
+}
+.mk-ticket-fila > div { flex: 1; }
+.mk-ticket-qr {
+  background: #ffffff;
+  border: 1px dashed #cbd5e1;
+  padding: 20px;
+  margin: 14px 0 8px 0;
+  text-align: center;
+  font-size: 10px;
+  color: #94a3b8;
+}
+.mk-ticket-qr .mk-qr-cuadro {
+  width: 100px;
+  height: 100px;
+  margin: 0 auto 8px auto;
+  background:
+    repeating-conic-gradient(#1f2937 0% 25%, #ffffff 0% 50%) 50% / 14px 14px;
+  border: 4px solid #ffffff;
+  box-shadow: 0 0 0 1px #cbd5e1;
+}
+.mk-ticket-pie {
+  text-align: center;
+  font-size: 9px;
+  color: #64748b;
+  padding: 8px 0 0 0;
+  border-top: 1px solid #cbd5e1;
+}
+.mk-ticket-pie .mk-t-emit {
+  font-weight: 700;
+  color: #64748b;
+  font-size: 8px;
+  margin-bottom: 2px;
+}
+.mk-ticket-pie .mk-t-fecha {
+  font-weight: 700;
+  color: #16324f;
+  font-size: 12px;
+}
+.mk-ticket-servicio {
+  text-align: center;
+  font-size: 9px;
+  color: #16324f;
+  font-weight: 700;
+  margin-top: 8px;
+  padding-top: 6px;
+  border-top: 1px solid #cbd5e1;
+}
+
+/* Bloque de paleta de colores */
+.paleta {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 12px;
+  margin: 16px 0 24px 0;
+}
+.paleta .color {
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+}
+.paleta .muestra { height: 60px; }
+.paleta .datos {
+  padding: 8px 10px;
+  font-size: 10px;
+  line-height: 1.5;
+  font-family: 'Courier New', monospace;
+}
+.paleta .datos b {
+  display: block;
+  font-size: 11px;
+  color: #16324f;
+  font-family: -apple-system, Arial, sans-serif;
+  margin-bottom: 3px;
+}
+
+/* Separador de secciones grandes */
+.parte {
+  background: #16324f;
+  color: #ffffff;
+  padding: 22px 26px;
+  border-radius: 10px;
+  margin: 50px 0 26px 0;
+  text-align: center;
+}
+.parte h2 {
+  color: #ffffff;
+  border: none;
+  margin: 0;
+  font-size: 24px;
+  letter-spacing: 2px;
+}
+.parte p {
+  margin: 6px 0 0 0;
+  color: #9db4cc;
+  font-size: 13px;
+}
+
+/* ============================================================================
+   ESTILOS DE IMPRESIÓN
+   ============================================================================ */
+@media print {
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+  body {
+    background: #ffffff;
+    font-size: 11pt;
+    line-height: 1.5;
+    orphans: 3;
+    widows: 3;
+  }
+  .hoja {
+    box-shadow: none;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+    border-radius: 0;
+  }
+  .btn-imprimir { display: none !important; }
+  .portada {
+    border-radius: 0;
+    page-break-after: always;
+  }
+  h2 {
+    page-break-after: avoid;
+    page-break-before: auto;
+  }
+  h3, h4 { page-break-after: avoid; }
+  pre, table, .mock, .paleta, .aviso, .indice {
+    page-break-inside: avoid;
+  }
+  .parte {
+    page-break-before: always;
+    page-break-after: avoid;
+    border-radius: 0;
+  }
+  a { color: #16324f; text-decoration: none; }
+  .mock {
+    border-width: 4px;
+    box-shadow: none;
+  }
+}
+
+/* Reglas @page para márgenes A4 */
+@page {
+  size: A4 portrait;
+  margin: 1.5cm;
+}
+</style>
+</head>
+<body>
+
+<button class="btn-imprimir" onclick="window.print()">🖨️ Imprimir / Guardar PDF</button>
+
+<div class="hoja">
+
+<!-- =========================================================================
+     PORTADA
+     ========================================================================= -->
+<div class="portada">
+  <div class="logo-ot">OT</div>
+  <h1>OSTIKEC</h1>
+  <p class="subtitulo">Sistema de tickets electrónicos con código QR</p>
+  <p style="font-size:13px; color:#9db4cc; max-width:520px; margin:0 auto 30px auto; line-height:1.7;">
+    Manual completo de uso y funcionamiento técnico
+  </p>
+  <div class="meta">
+    <div><b>Versión:</b> 26.10.01</div>
+    <div><b>Fecha:</b> 1 de octubre de 2026</div>
+    <div><b>Autor:</b> Dr. C. Osmani Tito Corrioso</div>
+    <div><b>Grupo:</b> OSTICOR 2026</div>
+    <div><b>Contacto:</b> osmanitito94@zoho.com</div>
+  </div>
+</div>
+
+<!-- =========================================================================
+     ÍNDICE
+     ========================================================================= -->
+<div class="indice">
+  <h3>Índice</h3>
+  <ol>
+    <li><a href="#parte1">Manual de usuario</a></li>
+    <li><a href="#que-es">¿Qué es OSTIKEC?</a></li>
+    <li><a href="#beneficios">Beneficios para tu negocio</a></li>
+    <li><a href="#pantalla1">Pantalla 1 — Inicio de sesión</a></li>
+    <li><a href="#pantalla2">Pantalla 2 — Creador de tickets</a></li>
+    <li><a href="#pantalla3">Pantalla 3 — Validador</a></li>
+    <li><a href="#negocios">Sistema de negocios y etiquetas</a></li>
+    <li><a href="#parte2">Manual técnico</a></li>
+    <li><a href="#arquitectura">Arquitectura de archivos</a></li>
+    <li><a href="#flujo">Flujo de la aplicación</a></li>
+    <li><a href="#licencias">Sistema de licencias</a></li>
+    <li><a href="#sesion">Sesión y huella del dispositivo</a></li>
+    <li><a href="#cifrado">Cifrado y firma digital</a></li>
+    <li><a href="#qr">Construcción y lectura del QR</a></li>
+    <li><a href="#telegram">Reporte a Telegram</a></li>
+    <li><a href="#killswitch">Kill switch remoto</a></li>
+    <li><a href="#paleta">Paleta de colores</a></li>
+    <li><a href="#operaciones">Operaciones comunes</a></li>
+    <li><a href="#seguridad">Consideraciones de seguridad</a></li>
+  </ol>
+</div>
+
+<!-- =========================================================================
+     PARTE 1 — MANUAL DE USUARIO
+     ========================================================================= -->
+<div class="parte" id="parte1">
+  <h2>PARTE 1 — MANUAL DE USUARIO</h2>
+  <p>Guía de uso de OSTIKEC para negocios y usuarios finales</p>
+</div>
+
+<h2 id="que-es">¿Qué es OSTIKEC?</h2>
+
+<p><b>OSTIKEC</b> es un sistema de tickets electrónicos con código QR diseñado para negocios y empresas que necesitan entregar comprobantes verificables de forma rápida, segura y sin depender de internet.</p>
+
+<p>Cada vez que un cliente compra un producto, reserva un asiento, contrata un servicio o recibe cualquier tipo de comprobante, tu equipo puede generar un ticket con su código QR único. Ese ticket se imprime, se comparte por WhatsApp, se guarda como imagen o se muestra en pantalla. Días después, cuando el cliente presente el ticket, cualquier dispositivo autorizado puede escanear el código y verificar en segundos que es auténtico.</p>
+
+<h2 id="beneficios">Beneficios para tu negocio</h2>
+
+<div class="aviso aviso-dorado">
+  <b>Profesionaliza tu operación.</b> Con OSTIKEC, cada venta queda respaldada por un comprobante verificable. Tus clientes reciben un ticket con la imagen de tu marca, el nombre de tu negocio y los datos completos del servicio.
+</div>
+
+<h3>¿Por qué elegir OSTIKEC?</h3>
+
+<ul>
+  <li><b>Funciona sin internet.</b> No necesitas conexión para generar o validar tickets. Todo sucede dentro del dispositivo.</li>
+  <li><b>Seguridad real contra falsificaciones.</b> Cada código QR va cifrado y firmado digitalmente. Si alguien intenta alterar un dato o inventar un ticket, la validación fallará.</li>
+  <li><b>Verificación de emisor.</b> Cada ticket guarda internamente el teléfono del dispositivo que lo emitió. Al validarlo, se muestra junto a los datos. Así sabrás con certeza qué cuenta generó cada comprobante.</li>
+  <li><b>Multi-negocio.</b> Puedes manejar varios negocios o servicios desde una misma instalación. Cada uno con su propio nombre, datos de servicio y etiquetas personalizadas.</li>
+  <li><b>Sin contacto físico ni hardware extra.</b> Solo necesitas un teléfono Android. Nada de lectores costosos ni impresoras especiales.</li>
+  <li><b>Reportería automática.</b> El desarrollador recibe informes periódicos sobre accesos y tickets generados, lo que permite detectar cualquier uso indebido de licencias.</li>
+  <li><b>Revocación remota.</b> Si tu licencia es comprometida, puede ser bloqueada de forma automática para proteger tu operación.</li>
+</ul>
+
+<div class="aviso aviso-ok">
+  <b>Ideal para:</b> teatros, cines, eventos, conciertos, festivales, agencias de viaje, ómnibus y transporte, escuelas, academias, rifas, clubes, gimnasios, restaurantes, alquileres, servicios profesionales, facturación simple y cualquier negocio que necesite un comprobante verificable.
+</div>
+
+<h2 id="pantalla1">Pantalla 1 — Inicio de sesión</h2>
+
+<p>Es la primera pantalla que verás al abrir la aplicación. Aquí se ingresa con el <b>número de teléfono</b> y el <b>número de licencia</b> asignados por el desarrollador.</p>
+
+<div class="mock">
+  <div class="mk-login">
+    <p class="mk-promo"><em>¡Haz que tu empresa crezca con seguridad! ¡Dale confianza a tus clientes con OSTIKEC!</em></p>
+    <div class="mk-logo">OT</div>
+    <div class="mk-titulo">OSTIKEC</div>
+    <div class="mk-subtitulo">Sistema de tickets electrónicos</div>
+    <div class="mk-tarjeta">
+      <div class="mk-campo">
+        <label>Número de teléfono</label>
+        <input class="mk-input" type="text" placeholder="Ej. 56224466" disabled>
+      </div>
+      <div class="mk-campo">
+        <label>Número de licencia</label>
+        <div class="mk-input-con-ojo">
+          <input class="mk-input" type="password" value="OT-C001" disabled>
+          <span class="mk-ojo">👁</span>
+        </div>
+      </div>
+      <div class="mk-btn-acento">Entrar</div>
+    </div>
+    <div class="mk-pie">
+      v.26.10.01<br>
+      <span class="mk-link">Únete a OSTIKEC en Telegram</span><br>
+      © OSTICOR 2026
+      <div class="mk-terminos">Al utilizar OSTIKEC aceptas los <a>Términos y Condiciones</a></div>
+    </div>
+  </div>
+</div>
+<p class="mock-caption">Pantalla 1 — Inicio de sesión</p>
+
+<h4>Elementos de la pantalla</h4>
+
+<table>
+  <tr><th>Elemento</th><th>Descripción</th></tr>
+  <tr><td>Mensaje promocional</td><td>Texto en cursiva arriba del logo. Es un enganche para el usuario.</td></tr>
+  <tr><td>Logo OT</td><td>Identificador visual de OSTIKEC.</td></tr>
+  <tr><td>Campo de teléfono</td><td>Acepta solo dígitos. Se normaliza automáticamente (si escribes <code>+53</code> al inicio, se elimina).</td></tr>
+  <tr><td>Campo de licencia</td><td>Se muestra enmascarado con asteriscos. El ojo a la derecha permite mostrarla temporalmente para verificar que se escribió bien.</td></tr>
+  <tr><td>Botón Entrar</td><td>Verifica las credenciales contra la lista autorizada. Si son válidas, entra al tipo de pantalla correspondiente (creador o validador).</td></tr>
+  <tr><td>Enlace a Telegram</td><td>Invita al grupo oficial de OSTIKEC en Telegram.</td></tr>
+  <tr><td>Aviso de términos</td><td>Enlace que abre el modal de Términos y Condiciones. Es obligatorio aceptarlo al usar la aplicación.</td></tr>
+</table>
+
+<h4>Cómo entrar</h4>
+
+<ol>
+  <li>Escribe el número de teléfono autorizado.</li>
+  <li>Escribe el número de licencia. Puedes pulsar el ojo si quieres verificar lo que escribiste.</li>
+  <li>Pulsa <b>Entrar</b>.</li>
+  <li>Si los datos son válidos, la aplicación abrirá la pantalla que corresponda a tu tipo de licencia.</li>
+</ol>
+
+<div class="aviso aviso-warn">
+  <b>Importante:</b> tu número de teléfono y tu licencia son personales e intransferibles. No los compartas con nadie. Si compartes tu licencia, tanto tú como la persona que la use podríais perder el acceso.
+</div>
+
+<h2 id="pantalla2">Pantalla 2 — Creador de tickets</h2>
+
+<p>Es la pantalla donde tu equipo genera los tickets. Cada ticket lleva un código QR único que puede ser verificado después.</p>
+
+<div class="mock">
+  <div class="mk-barra">
+    <div class="mk-izq">
+      <div class="mk-logo-mini">OT</div>
+      <span class="mk-titulo-mini">OSTIKEC</span>
+    </div>
+    <div class="mk-der">
+      <span class="mk-btn-icono">📖</span>
+      <span class="mk-btn-icono">💼</span>
+      <span class="mk-btn-icono">▦</span>
+      <span class="mk-btn-icono">⏏</span>
+    </div>
+  </div>
+  <div class="mk-cuerpo">
+    <div class="mk-formulario">
+      <div class="mk-seccion-titulo">Datos del ticket</div>
+      <div class="mk-campo">
+        <label>Fecha</label>
+        <div class="mk-input-con-limpiar">
+          <input class="mk-input" type="text" placeholder="DD/MM/AA" disabled>
+          <span class="mk-btn-limpiar">✕</span>
+        </div>
+      </div>
+      <div class="mk-campo">
+        <label>Nombre</label>
+        <div class="mk-input-con-limpiar">
+          <input class="mk-input" type="text" placeholder="Nombre y apellidos" disabled>
+          <span class="mk-btn-limpiar">✕</span>
+        </div>
+      </div>
+      <div class="mk-campo">
+        <label>Teléfono</label>
+        <div class="mk-input-con-limpiar">
+          <input class="mk-input" type="text" placeholder="Número de teléfono" disabled>
+          <span class="mk-btn-limpiar">✕</span>
+        </div>
+      </div>
+      <div class="mk-campo">
+        <select class="mk-select" disabled>
+          <option>No. Asiento</option>
+        </select>
+        <div class="mk-input-con-limpiar">
+          <input class="mk-input" type="text" placeholder="Número de ticket/asiento" disabled>
+          <span class="mk-btn-limpiar">✕</span>
+        </div>
+      </div>
+      <div class="mk-campo">
+        <select class="mk-select" disabled>
+          <option>ID Servicio</option>
+        </select>
+        <div class="mk-input-con-limpiar">
+          <input class="mk-input" type="text" placeholder="Identificador del servicio" disabled>
+          <span class="mk-btn-limpiar">✕</span>
+        </div>
+      </div>
+      <div class="mk-acciones">
+        <div class="mk-btn-sec">Limpiar</div>
+        <div class="mk-btn-pri">Crear Ostikec</div>
+      </div>
+    </div>
+  </div>
+</div>
+<p class="mock-caption">Pantalla 2 — Formulario del creador</p>
+
+<h4>Elementos de la pantalla</h4>
+
+<table>
+  <tr><th>Elemento</th><th>Descripción</th></tr>
+  <tr><td>Botón Manual (📖)</td><td>Abre el manual de uso de la aplicación con explicaciones del sistema y de la seguridad.</td></tr>
+  <tr><td>Botón Negocios (💼)</td><td>Abre el modal de negocios y servicios. Permite guardar varios negocios y cambiar entre ellos.</td></tr>
+  <tr><td>Botón Lector QR (▦)</td><td>Abre el lector de códigos QR para leer un ticket existente y rellenar el formulario con sus datos.</td></tr>
+  <tr><td>Botón Salir (⏏)</td><td>Cierra la sesión. Antes de cerrar, pide confirmación para evitar salidas accidentales.</td></tr>
+  <tr><td>Campo Fecha</td><td>Se autocompleta con el formato DD/MM/AA mientras escribes.</td></tr>
+  <tr><td>Campo Nombre</td><td>Acepta texto libre. Se recomienda escribir nombre y apellidos completos.</td></tr>
+  <tr><td>Campo Teléfono</td><td>Acepta texto libre. Puedes escribir números, espacios, guiones.</td></tr>
+  <tr><td>Selector Ticket/Asiento</td><td>Lista desplegable configurable por negocio. Las opciones son: No. Ticket, No. Asiento, No. Factura, No. Servicio, No. Orden, Referencia, Código, Precio, ID Servicio y Otro. Si eliges Otro, aparece un campo para escribir una etiqueta personalizada (máx. 20 caracteres).</td></tr>
+  <tr><td>Selector ID Servicio</td><td>Otra lista desplegable con las mismas opciones. Por defecto vale ID Servicio.</td></tr>
+  <tr><td>Botones Limpiar / Crear</td><td>Limpiar borra todos los campos. Crear genera el ticket con su QR.</td></tr>
+</table>
+
+<h4>Cómo generar un ticket</h4>
+
+<ol>
+  <li>Rellena todos los campos con los datos del cliente.</li>
+  <li>Si ya guardaste el negocio correspondiente, selecciónalo con el botón de la maleta antes de crear el ticket.</li>
+  <li>Pulsa <b>Crear Ostikec</b>. Aparecerá el ticket generado como imagen.</li>
+  <li>Puedes <b>Descargar</b> el ticket como imagen PNG o pulsar <b>Compartir</b> para enviarlo por WhatsApp, Telegram, correo o cualquier aplicación del teléfono.</li>
+</ol>
+
+<h2 id="pantalla3">Pantalla 3 — Validador</h2>
+
+<p>Es la pantalla que usan los encargados de puerta o recepción para verificar la autenticidad de un ticket. Solo puede leer códigos QR, no puede crear tickets.</p>
+
+<div class="mock">
+  <div class="mk-barra">
+    <div class="mk-izq">
+      <div class="mk-logo-mini">OT</div>
+      <span class="mk-titulo-mini">OSTIKEC</span>
+    </div>
+    <div class="mk-der">
+      <span class="mk-btn-icono">⏏</span>
+    </div>
+  </div>
+  <div class="mk-cuerpo">
+    <div class="mk-formulario">
+      <div class="mk-seccion-titulo">Validar ticket</div>
+      <p style="font-size:10px; color:#64748b; margin:0 0 12px 0;">
+        Escanee el código QR del ticket para verificar si es válido y ver su información.
+      </p>
+      <div class="mk-btn-acento">Escanear código QR</div>
+    </div>
+  </div>
+</div>
+<p class="mock-caption">Pantalla 3 — Validador</p>
+
+<h4>Cómo validar un ticket</h4>
+
+<ol>
+  <li>Pulsa <b>Escanear código QR</b>.</li>
+  <li>Apunta la cámara al código del ticket. También puedes subir una imagen del código desde la galería.</li>
+  <li>La aplicación verifica la firma digital y muestra el resultado:
+    <ul>
+      <li>Si es válido: <b>✔ TICKET VÁLIDO</b> con todos los datos del ticket y el teléfono emisor.</li>
+      <li>Si no es válido: <b>✘ TICKET NO VÁLIDO</b> con el motivo (firma no coincide, código ajeno, etc.).</li>
+    </ul>
+  </li>
+</ol>
+
+<div class="aviso aviso-info">
+  <b>Nota:</b> las etiquetas de los campos 4 y 5 en la pantalla de validación aparecen siempre como <b>"Campo 4"</b> y <b>"Campo 5"</b>, independientemente de las etiquetas que haya elegido el emisor. Esto es así por diseño: el validador no necesita saber si el emisor usó "Factura" o "Asiento", solo necesita ver el dato.
+</div>
+
+<h2 id="negocios">Sistema de negocios y etiquetas</h2>
+
+<p>Uno de los pilares de OSTIKEC es poder manejar varios negocios desde una misma instalación. Cada negocio tiene su propio nombre, sus datos de servicio y sus etiquetas personalizadas para los campos 4 y 5.</p>
+
+<div class="mock">
+  <div class="mk-modal">
+    <div class="mk-modal-caja">
+      <div class="mk-modal-cab">
+        <h4>Negocios y servicios</h4>
+        <span class="mk-modal-cerrar">✕</span>
+      </div>
+      <div class="mk-modal-cuerpo">
+        <label>Nombre de la Institución</label>
+        <input class="mk-input" type="text" placeholder="Ej. Teatro Nacional" disabled>
+        <label>Datos del Servicio</label>
+        <input class="mk-input" type="text" placeholder="Ej. Función de las 8:00 PM" disabled>
+        <div class="mk-btn-acento" style="margin-bottom:10px;">Guardar combinación</div>
+
+        <div style="font-size:9px; font-weight:800; color:#16324f; text-transform:uppercase; margin-bottom:6px;">Combinaciones guardadas</div>
+        <div class="mk-item-neg activo">
+          <div class="mk-item-texto">
+            <div class="mk-item-nom">Teatro Nacional</div>
+            <div class="mk-item-serv">Función de las 8:00 PM - Sala A</div>
+          </div>
+          <div class="mk-item-borr">✕</div>
+        </div>
+        <div class="mk-item-neg">
+          <div class="mk-item-texto">
+            <div class="mk-item-nom">Ómnibus La Habana</div>
+            <div class="mk-item-serv">Salida 15/10/2026 - 07:30 AM</div>
+          </div>
+          <div class="mk-item-borr">✕</div>
+        </div>
+
+        <div class="mk-acciones" style="margin-top:10px;">
+          <div class="mk-btn-sec">Exportar</div>
+          <div class="mk-btn-acento" style="flex:1; padding:8px; font-size:11px; border-radius:8px;">Importar</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<p class="mock-caption">Modal de negocios y servicios</p>
+
+<h3>Cómo guardar un negocio</h3>
+<ol>
+  <li>Pulsa el botón de la maleta (💼).</li>
+  <li>Escribe el Nombre de la Institución y los Datos del Servicio.</li>
+  <li>Pulsa <b>Guardar combinación</b>. La combinación queda disponible y activa automáticamente.</li>
+  <li>Para cambiar entre negocios, basta tocar una combinación de la lista.</li>
+</ol>
+
+<h3>Cómo exportar e importar</h3>
+<ul>
+  <li><b>Exportar:</b> guarda todas las combinaciones y etiquetas en un archivo <code>.json</code> que puedes enviar por WhatsApp, correo, etc. Ideal para pasarlas a otro dispositivo.</li>
+  <li><b>Importar:</b> carga un archivo <code>.json</code> generado antes. Los duplicados se omiten automáticamente.</li>
+</ul>
+
+<h3>Etiquetas personalizadas</h3>
+<p>Cada negocio puede tener sus propias etiquetas para los campos 4 y 5. Por ejemplo:</p>
+<ul>
+  <li>Un teatro podría usar <b>No. Asiento</b> y <b>No. Función</b>.</li>
+  <li>Una agencia de viajes podría usar <b>No. Factura</b> y <b>Precio</b>.</li>
+  <li>Una escuela podría usar <b>No. Matrícula</b> y <b>Curso</b>.</li>
+</ul>
+<p>Las etiquetas se guardan por negocio, así que al cambiar de negocio se recargan automáticamente.</p>
+
+<h4>El ticket generado</h4>
+
+<div class="mk-ticket">
+  <div class="mk-ticket-enc">
+    <div class="mk-ticket-logo">OT</div>
+    <div class="mk-ticket-titulo-enc">
+      <div class="mk-t-nom">OSTIKEC</div>
+      <div class="mk-t-sub">TICKET/SERVICIO/FACTURA</div>
+    </div>
+    <div class="mk-ticket-nombre-inst">TEATRO NACIONAL</div>
+  </div>
+  <div class="mk-ticket-cuerpo">
+    <div class="mk-ticket-celda">
+      <div class="mk-lbl">Nombre</div>
+      <div class="mk-val">Juan Pérez García</div>
+    </div>
+    <div class="mk-ticket-fila">
+      <div class="mk-ticket-celda">
+        <div class="mk-lbl">Fecha</div>
+        <div class="mk-val">15/10/26</div>
+      </div>
+      <div class="mk-ticket-celda">
+        <div class="mk-lbl">Teléfono</div>
+        <div class="mk-val">56224466</div>
+      </div>
+    </div>
+    <div class="mk-ticket-fila">
+      <div class="mk-ticket-celda">
+        <div class="mk-lbl">No. Asiento</div>
+        <div class="mk-val">12</div>
+      </div>
+      <div class="mk-ticket-celda">
+        <div class="mk-lbl">ID Servicio</div>
+        <div class="mk-val">SVC-2026-001</div>
+      </div>
+    </div>
+    <div class="mk-ticket-qr">
+      <div class="mk-qr-cuadro"></div>
+      Código QR con los datos cifrados
+    </div>
+    <div class="mk-ticket-pie">
+      <div class="mk-t-emit">EMITIDO</div>
+      <div class="mk-t-fecha">01/10/2026 14:30</div>
+    </div>
+    <div class="mk-ticket-servicio">
+      FUNCIÓN DE LAS 8:00 PM - SALA A
+    </div>
+  </div>
+</div>
+<p class="mock-caption">Ticket generado por la aplicación</p>
+
+<div class="aviso aviso-info">
+  Las etiquetas "No. Asiento" e "ID Servicio" son solo un ejemplo. Cada negocio las configura según lo que necesite.
+</div>
+
+<!-- =========================================================================
+     PARTE 2 — MANUAL TÉCNICO
+     ========================================================================= -->
+<div class="parte" id="parte2">
+  <h2>PARTE 2 — MANUAL TÉCNICO</h2>
+  <p>Arquitectura, lógica interna y seguridad del sistema</p>
+</div>
+
+<div class="aviso aviso-warn">
+  <b>Este manual está dirigido al desarrollador o mantenedor de la aplicación.</b> Contiene detalles del funcionamiento interno, la estructura del código y las consideraciones de seguridad. Se recomienda no compartirlo con usuarios finales. Los datos sensibles (tokens, URLs, claves) aparecen censurados.
+</div>
+
+<h2 id="arquitectura">Arquitectura de archivos</h2>
+
+<p>OSTIKEC está construido como una aplicación web empaquetada como APK. No hay backend propio: toda la lógica corre en el cliente y la única comunicación externa es opcional (Telegram).</p>
+
+<table>
+  <tr><th>Archivo</th><th>Obligatorio</th><th>Función</th></tr>
+  <tr>
+    <td><code>index.html</code></td>
+    <td>✅ Sí</td>
+    <td>Contiene todo el HTML, CSS embebido y el JavaScript principal de la aplicación. Es el archivo base.</td>
+  </tr>
+  <tr>
+    <td><code>qrcode.js</code></td>
+    <td>✅ Sí</td>
+    <td>Librería externa que genera las matrices del código QR. Sin ella, no se pueden crear tickets.</td>
+  </tr>
+  <tr>
+    <td><code>html5-qrcode.min.js</code></td>
+    <td>✅ Sí</td>
+    <td>Librería externa que lee códigos QR desde la cámara o desde un archivo. Sin ella, no se pueden validar tickets.</td>
+  </tr>
+  <tr>
+    <td><code>extras.css</code></td>
+    <td>⚠️ Opcional</td>
+    <td>Estilos añadidos: modales nuevos, ojo de licencia, mensaje promocional, compactación del login. Si se elimina, la aplicación sigue funcionando pero pierde los estilos extra.</td>
+  </tr>
+  <tr>
+    <td><code>extras.js</code></td>
+    <td>⚠️ Opcional</td>
+    <td>Extiende la funcionalidad: negocios, etiquetas, manual, términos, confirmación de salida, ojo de licencia. Si se elimina, la app vuelve a su estado base.</td>
+  </tr>
+  <tr>
+    <td><code>panel.js</code></td>
+    <td>⚠️ Opcional</td>
+    <td>Envía avisos a Telegram sobre accesos y tickets generados. Si se elimina, no se envían reportes.</td>
+  </tr>
+  <tr>
+    <td><code>bloqueo.js</code></td>
+    <td>⚠️ Opcional</td>
+    <td>Kill switch remoto: consulta una lista negra en GitHub y bloquea la app si el usuario está revocado.</td>
+  </tr>
+  <tr>
+    <td><code>blocked.json</code></td>
+    <td>⚠️ Opcional</td>
+    <td>Lista de usuarios bloqueados. Se aloja en el repositorio de GitHub, no en el APK.</td>
+  </tr>
+  <tr>
+    <td><code>manual.html</code></td>
+    <td>❌ No</td>
+    <td>Este manual. No forma parte del APK, solo del repositorio.</td>
+  </tr>
+</table>
+
+<h3>Estructura del ZIP para AppMint</h3>
+
+<pre><code>ostikec.zip
+├── index.html          ← base de la app
+├── extras.css          ← estilos extra
+├── extras.js           ← lógica extra
+├── panel.js            ← reporte a Telegram
+├── bloqueo.js          ← kill switch
+├── qrcode.js           ← librería QR (generar)
+└── html5-qrcode.min.js ← librería QR (leer)</code></pre>
+
+<p>El <code>manual.html</code>, <code>blocked.json</code> y cualquier archivo de documentación <b>no se incluyen</b> en el ZIP. Viven solo en el repositorio de GitHub.</p>
+
+<h2 id="flujo">Flujo de la aplicación</h2>
+
+<h3>Arranque</h3>
+<ol>
+  <li>Se cargan las librerías y el estilo.</li>
+  <li>El DOM se inicializa y cada archivo registra sus propios listeners.</li>
+  <li>La pantalla 1 (login) aparece activa.</li>
+  <li>Si existe una sesión guardada en <code>localStorage</code> y la huella del dispositivo coincide, se salta directo a la pantalla correspondiente.</li>
+  <li>Si <code>bloqueo.js</code> está presente, se descarga la lista negra en segundo plano.</li>
+</ol>
+
+<h3>Inicio de sesión</h3>
+<ol>
+  <li>El usuario escribe teléfono y licencia.</li>
+  <li>El sistema normaliza el teléfono (quita <code>+53</code> y <code>53</code> al inicio si sobran dígitos).</li>
+  <li>Se busca al usuario en <code>USUARIOS_AUTORIZADOS</code> comparando teléfono y licencia en mayúsculas.</li>
+  <li>Si coincide, se guarda la sesión (<code>tel</code>, <code>tipo</code>, <code>huella</code>, <code>fecha</code>) y se muestra la pantalla correspondiente.</li>
+  <li>Si <code>bloqueo.js</code> detecta que el usuario está en la lista negra, se muestra la pantalla de bloqueo y se cierra la sesión.</li>
+</ol>
+
+<h3>Generación de un ticket</h3>
+<ol>
+  <li>El usuario rellena los campos del formulario.</li>
+  <li>Se valida que no haya campos vacíos y que el asiento sea numérico.</li>
+  <li>Se construye un objeto <code>{f, n, t, a, i}</code>.</li>
+  <li><code>extras.js</code> intercepta <code>construirContenidoQR</code> y añade el teléfono emisor como <code>e</code>.</li>
+  <li>El JSON resultante se cifra con Base64 + desplazamiento variable.</li>
+  <li>Se calcula la firma SHA-256 de <code>clave_secreta + json</code> y se toman los primeros 12 caracteres.</li>
+  <li>El QR resultante tiene la forma <code>OTK1|&lt;cifrado&gt;|&lt;firma&gt;</code>.</li>
+  <li>Se dibuja el ticket completo en un canvas con el logo, los datos, el QR y la fecha de emisión.</li>
+  <li>Si hay un negocio activo, se añaden su nombre arriba a la derecha y sus datos de servicio abajo del QR.</li>
+  <li><code>panel.js</code> envía un aviso a Telegram con la huella del dispositivo y el nombre del negocio (o "(Sin negocio asignado)").</li>
+</ol>
+
+<h3>Validación de un ticket</h3>
+<ol>
+  <li>El usuario abre el lector QR desde la pantalla del creador o del validador.</li>
+  <li>Se captura el código con la cámara o desde un archivo.</li>
+  <li>Se lee el contenido del QR y se divide por <code>|</code>.</li>
+  <li>Se comprueba que empiece por <code>OTK1</code>.</li>
+  <li>Se descifra la parte del medio y se recalcula la firma.</li>
+  <li>Si la firma coincide, el ticket es válido. Si no, se marca como falsificado o alterado.</li>
+  <li>Se muestran los datos y, si existe, el teléfono emisor.</li>
+  <li>Las filas 4 y 5 se rotulan siempre como <b>Campo 4</b> y <b>Campo 5</b> (interceptado por <code>extras.js</code>).</li>
+</ol>
+
+<h2 id="licencias">Sistema de licencias</h2>
+
+<p>La aplicación reconoce a los usuarios autorizados mediante una lista estática dentro del código. Cada entrada define el teléfono, la licencia y el tipo de acceso.</p>
+
+<pre><code>const USUARIOS_AUTORIZADOS = [
+  { telefono: '54XXXXXX', licencia: 'OT-C001-XX-X', tipo: 'creador'   },
+  { telefono: '58XXXXXX', licencia: 'OT-C002-XX-X', tipo: 'creador'   },
+  { telefono: '54XXXXXX', licencia: 'OT-V001-XX-X', tipo: 'validador' },
+  { telefono: '58XXXXXX', licencia: 'OT-V002-XX-X', tipo: 'validador' }
+];</code></pre>
+
+<table>
+  <tr><th>Tipo</th><th>Acceso</th></tr>
+  <tr><td><code>creador</code></td><td>Puede generar tickets y validarlos (pantalla 2).</td></tr>
+  <tr><td><code>validador</code></td><td>Solo puede validar tickets, no puede crearlos (pantalla 3).</td></tr>
+</table>
+
+<div class="aviso aviso-info">
+  La lista se compila dentro del APK. Para añadir o quitar usuarios hay que modificar el <code>index.html</code> y volver a generar el APK.
+</div>
+
+<h2 id="sesion">Sesión y huella del dispositivo</h2>
+
+<h3>Huella del dispositivo</h3>
+<p>Es un hash de 16 caracteres calculado a partir de características del teléfono:</p>
+<pre><code>function huellaDispositivo() {
+  const partes = [
+    navigator.userAgent,
+    navigator.language,
+    navigator.platform || '',
+    screen.width, screen.height, screen.colorDepth,
+    window.devicePixelRatio,
+    new Date().getTimezoneOffset()
+  ];
+  return sha256Hex(partes.join('|')).substring(0, 16);
+}</code></pre>
+
+<div class="aviso aviso-warn">
+  <b>Limitación conocida:</b> dos teléfonos idénticos con la misma configuración pueden generar la misma huella. La huella no es un identificador único garantizado, pero sirve como referencia para detectar cambios de dispositivo en la mayoría de casos.
+</div>
+
+<h3>Sesión guardada</h3>
+<p>Al iniciar sesión correctamente, se guarda en <code>localStorage</code> bajo la clave <code>ostikec_sesion</code>:</p>
+<pre><code>{
+  "tel": "54XXXXXX",
+  "tipo": "creador",
+  "huella": "a1b2c3d4e5f6a7b8",
+  "fecha": 1759156200000
+}</code></pre>
+<p>La próxima vez que se abra la app, si la huella coincide con la actual, se salta el login.</p>
+
+<h2 id="cifrado">Cifrado y firma digital</h2>
+
+<h3>Cifrado reversible</h3>
+<p>Los datos del ticket se serializan como JSON y se cifran con un esquema propio: Base64 + desplazamiento variable sobre el alfabeto Base64. El resultado sigue siendo Base64 válido, así que el QR nunca se rompe.</p>
+
+<pre><code>function cifrarCadena(textoPlano) {
+  const base64 = btoa(unescape(encodeURIComponent(textoPlano)));
+  let salida = '';
+  for (let i = 0; i &lt; base64.length; i++) {
+    const ch = base64[i];
+    if (ch === '=') { salida += '='; continue; }
+    const indice = ALFABETO_B64.indexOf(ch);
+    salida += ALFABETO_B64[(indice + CLAVE_CIFRADO + i * 3) % 64];
+  }
+  return salida;
+}</code></pre>
+
+<h3>Firma SHA-256</h3>
+<p>Se calcula <code>sha256Hex(CLAVE_SECRETA + json)</code> y se toman los primeros 12 caracteres en hexadecimal. Esa firma viaja en el QR junto a los datos cifrados.</p>
+
+<pre><code>OTK1|&lt;cifrado&gt;|&lt;firma_de_12_caracteres&gt;</code></pre>
+
+<p>Al validar, se recalcula la firma con los mismos datos y se compara. Si no coincide, el ticket es rechazado.</p>
+
+<div class="aviso aviso-dorado">
+  <b>Clave secreta:</b> <code>TU_CLAVE_SECRETA_AQUI</code>. Si se cambia, todos los tickets generados antes dejan de ser válidos. Anótala en un lugar seguro.
+</div>
+
+<h2 id="qr">Construcción y lectura del QR</h2>
+
+<h3>Construcción</h3>
+<p>El objeto <code>datos</code> que se cifra tiene esta forma (más el campo <code>e</code> añadido por <code>extras.js</code>):</p>
+<pre><code>{
+  "f": "15/10/26",          // fecha
+  "n": "Juan Pérez García", // nombre
+  "t": "56224466",          // teléfono del cliente
+  "a": "12",                // etiqueta 1 (por ejemplo, No. Asiento)
+  "i": "SVC-2026-001",      // etiqueta 2 (por ejemplo, ID Servicio)
+  "e": "54XXXXXX"           // teléfono del dispositivo emisor
+}</code></pre>
+
+<h3>Contenido final del QR</h3>
+<pre><code>OTK1|Y2JjZGRlZmdoaWprbG1ub3BxcnN0|A3F9B21C4D80</code></pre>
+
+<h3>Lectura y validación</h3>
+<pre><code>function leerContenidoQR(texto) {
+  // 1. Dividir por '|'
+  // 2. Comprobar que empieza por OTK1
+  // 3. Descifrar la parte del medio
+  // 4. Recalcular la firma
+  // 5. Comparar
+  // 6. Devolver {valido: true, datos} o {valido: false, error}
+}</code></pre>
+
+<h2 id="telegram">Reporte a Telegram</h2>
+
+<p>Cuando <code>panel.js</code> está presente, la aplicación envía avisos a un chat de Telegram usando un bot. Esto permite al desarrollador estar informado de todos los accesos y tickets generados.</p>
+
+<h3>Cómo se envían los mensajes</h3>
+<p>Se utiliza el truco de crear un <code>Image</code> con la URL de la API de Telegram. Esto evita los problemas de CORS en el WebView.</p>
+
+<pre><code>const img = new Image();
+img.src = 'https://api.telegram.org/bot&lt;TOKEN&gt;/sendMessage?' +
+          'chat_id=&lt;CHAT_ID&gt;&text=' + encodeURIComponent(texto);</code></pre>
+
+<h3>Datos que se envían</h3>
+<p>En cada login:</p>
+<ul>
+  <li>Huella del dispositivo</li>
+  <li>Teléfono y licencia usados</li>
+  <li>Tipo (creador o validador)</li>
+  <li>Fecha y hora</li>
+</ul>
+<p>En cada ticket generado:</p>
+<ul>
+  <li>Huella del dispositivo</li>
+  <li>Nombre del negocio (o "(Sin negocio asignado)")</li>
+  <li>Fecha y hora</li>
+</ul>
+
+<div class="aviso aviso-info">
+  <b>Cola de reintentos:</b> si no hay internet, los mensajes se guardan en <code>localStorage</code> y se reintentan en la próxima apertura.
+</div>
+
+<h2 id="killswitch">Kill switch remoto</h2>
+
+<p>El archivo <code>bloqueo.js</code> permite revocar licencias de forma remota sin recompilar el APK.</p>
+
+<h3>Cómo funciona</h3>
+<ol>
+  <li>Al abrir la aplicación, se descarga un archivo <code>blocked.json</code> alojado en GitHub.</li>
+  <li>Se guarda en caché local (<code>localStorage</code>).</li>
+  <li>Al intentar iniciar sesión, se comprueba si el teléfono y la licencia están en la lista.</li>
+  <li>Si coinciden, se muestra una pantalla de "ACCESO BLOQUEADO" y se cierra la sesión.</li>
+</ol>
+
+<h3>Formato de <code>blocked.json</code></h3>
+<pre><code>{
+  "actualizado": "2026-10-01",
+  "bloqueados": [
+    {
+      "telefono": "54XXXXXX",
+      "licencia": "OT-CXXX-XX-X",
+      "motivo": "Licencia revocada",
+      "fecha": "2026-10-01"
+    }
+  ]
+}</code></pre>
+
+<div class="aviso aviso-dorado">
+  <b>Cómo revocar una licencia:</b> añade una entrada en <code>blocked.json</code> en el repositorio, súbela a GitHub, y en la próxima apertura con conexión el dispositivo bloqueado descargará la lista y se bloqueará.
+</div>
+
+<h2 id="paleta">Paleta de colores</h2>
+
+<p>Colores principales de OSTIKEC, en varios formatos para facilitar su uso:</p>
+
+<div class="paleta">
+  <div class="color">
+    <div class="muestra" style="background:#16324f;"></div>
+    <div class="datos">
+      <b>Azul principal</b>
+      HEX: #16324f<br>
+      RGB: 22, 50, 79<br>
+      HSL: 210, 56%, 20%
+    </div>
+  </div>
+  <div class="color">
+    <div class="muestra" style="background:#0d2033;"></div>
+    <div class="datos">
+      <b>Azul fondo login</b>
+      HEX: #0d2033<br>
+      RGB: 13, 32, 51<br>
+      HSL: 211, 59%, 13%
+    </div>
+  </div>
+  <div class="color">
+    <div class="muestra" style="background:#f2a900;"></div>
+    <div class="datos">
+      <b>Dorado acento</b>
+      HEX: #f2a900<br>
+      RGB: 242, 169, 0<br>
+      HSL: 42, 100%, 47%
+    </div>
+  </div>
+  <div class="color">
+    <div class="muestra" style="background:#9db4cc;"></div>
+    <div class="datos">
+      <b>Azul claro subtítulos</b>
+      HEX: #9db4cc<br>
+      RGB: 157, 180, 204<br>
+      HSL: 211, 27%, 71%
+    </div>
+  </div>
+  <div class="color">
+    <div class="muestra" style="background:#eef2f7;"></div>
+    <div class="datos">
+      <b>Gris fondo claro</b>
+      HEX: #eef2f7<br>
+      RGB: 238, 242, 247<br>
+      HSL: 213, 36%, 95%
+    </div>
+  </div>
+  <div class="color">
+    <div class="muestra" style="background:#64748b;"></div>
+    <div class="datos">
+      <b>Gris texto secundario</b>
+      HEX: #64748b<br>
+      RGB: 100, 116, 139<br>
+      HSL: 215, 16%, 47%
+    </div>
+  </div>
+  <div class="color">
+    <div class="muestra" style="background:#cbd5e1;"></div>
+    <div class="datos">
+      <b>Gris bordes</b>
+      HEX: #cbd5e1<br>
+      RGB: 203, 213, 225<br>
+      HSL: 213, 27%, 84%
+    </div>
+  </div>
+  <div class="color">
+    <div class="muestra" style="background:#dcfce7;"></div>
+    <div class="datos">
+      <b>Verde éxito fondo</b>
+      HEX: #dcfce7<br>
+      RGB: 220, 252, 231<br>
+      HSL: 143, 84%, 93%
+    </div>
+  </div>
+  <div class="color">
+    <div class="muestra" style="background:#166534;"></div>
+    <div class="datos">
+      <b>Verde éxito texto</b>
+      HEX: #166534<br>
+      RGB: 22, 101, 52<br>
+      HSL: 142, 64%, 24%
+    </div>
+  </div>
+  <div class="color">
+    <div class="muestra" style="background:#fee2e2;"></div>
+    <div class="datos">
+      <b>Rojo error fondo</b>
+      HEX: #fee2e2<br>
+      RGB: 254, 226, 226<br>
+      HSL: 0, 93%, 94%
+    </div>
+  </div>
+  <div class="color">
+    <div class="muestra" style="background:#991b1b;"></div>
+    <div class="datos">
+      <b>Rojo error texto</b>
+      HEX: #991b1b<br>
+      RGB: 153, 27, 27<br>
+      HSL: 0, 70%, 35%
+    </div>
+  </div>
+  <div class="color">
+    <div class="muestra" style="background:#ffffff; border-bottom: 1px solid #e2e8f0;"></div>
+    <div class="datos">
+      <b>Blanco puro</b>
+      HEX: #ffffff<br>
+      RGB: 255, 255, 255<br>
+      HSL: 0, 0%, 100%
+    </div>
+  </div>
+</div>
+
+<h2 id="operaciones">Operaciones comunes</h2>
+
+<h3>Cómo añadir una nueva licencia</h3>
+<ol>
+  <li>Abre <code>index.html</code> en GitHub.</li>
+  <li>Busca <code>USUARIOS_AUTORIZADOS</code>.</li>
+  <li>Añade una línea con el teléfono, la licencia y el tipo (<code>creador</code> o <code>validador</code>).</li>
+  <li>Guarda los cambios.</li>
+  <li>Vuelve a comprimir el ZIP y súbelo a AppMint.</li>
+  <li>Genera un nuevo APK y distribúyelo.</li>
+</ol>
+
+<h3>Cómo bloquear una licencia</h3>
+<ol>
+  <li>Abre <code>blocked.json</code> en GitHub.</li>
+  <li>Añade una entrada con teléfono, licencia y motivo.</li>
+  <li>Guarda los cambios.</li>
+  <li>En la próxima apertura con conexión, el dispositivo afectado descargará la lista y se bloqueará.</li>
+</ol>
+
+<h3>Cómo regenerar el token de Telegram</h3>
+<ol>
+  <li>Abre Telegram y busca <code>@BotFather</code>.</li>
+  <li>Escribe <code>/mybots</code> y elige tu bot.</li>
+  <li>Selecciona "API Token" y luego "Revoke current token".</li>
+  <li>BotFather te dará un token nuevo. Cópialo.</li>
+  <li>Reemplaza el valor en <code>panel.js</code>.</li>
+  <li>Sube el ZIP actualizado a AppMint y regenera el APK.</li>
+</ol>
+
+<h3>Cómo cambiar la clave secreta</h3>
+<div class="aviso aviso-warn">
+  Cambiar la clave secreta invalida <b>todos</b> los tickets generados antes del cambio. Solo debe hacerse si la clave fue comprometida, y aceptando que los tickets viejos dejarán de validar.
+</div>
+<ol>
+  <li>Abre <code>index.html</code>.</li>
+  <li>Busca <code>CLAVE_SECRETA</code>.</li>
+  <li>Cámbiala por un valor nuevo, largo y aleatorio.</li>
+  <li>Regenera el APK.</li>
+</ol>
+
+<h3>Cómo compilar el APK</h3>
+<ol>
+  <li>Comprime en un ZIP: <code>index.html</code>, <code>extras.css</code>, <code>extras.js</code>, <code>panel.js</code>, <code>bloqueo.js</code>, <code>qrcode.js</code>, <code>html5-qrcode.min.js</code>.</li>
+  <li>Entra a AppMint (o la plataforma de empaquetado que uses).</li>
+  <li>Selecciona el modo "ZIP to APK" / "Offline ZIP".</li>
+  <li>Sube el ZIP y configura el nombre, el paquete y el ícono.</li>
+  <li>Genera el APK y descárgalo.</li>
+  <li>Instálalo en los dispositivos autorizados.</li>
+</ol>
+
+<h2 id="seguridad">Consideraciones de seguridad</h2>
+
+<h3>Capas existentes</h3>
+<table>
+  <tr><th>Capa</th><th>Qué protege</th><th>Fortaleza</th></tr>
+  <tr><td>Licencia y teléfono</td><td>Acceso a la app</td><td>Alta si no se comparten</td></tr>
+  <tr><td>Huella del dispositivo</td><td>Detección de cambio de equipo</td><td>Media (no única en teléfonos idénticos)</td></tr>
+  <tr><td>Cifrado del QR</td><td>Camuflaje de los datos</td><td>Media (reversible con la clave)</td></tr>
+  <tr><td>Firma SHA-256</td><td>Integridad de los datos</td><td>Alta contra alteración manual</td></tr>
+  <tr><td>Teléfono emisor en el QR</td><td>Atribución de emisión</td><td>Alta (queda registrado quién emitió)</td></tr>
+  <tr><td>Reporte a Telegram</td><td>Detección de uso indebido</td><td>Alta para revisión periódica</td></tr>
+  <tr><td>Kill switch remoto</td><td>Revocación de licencias</td><td>Alta con conexión a internet</td></tr>
+</table>
+
+<h3>Limitaciones conocidas</h3>
+<ul>
+  <li>Un usuario con conocimientos técnicos podría descompilar el APK y ver las claves. La ofuscación del código mitiga parcialmente este riesgo.</li>
+  <li>Si un atacante conoce la clave secreta, puede generar tickets válidos.</li>
+  <li>Si dos dispositivos idénticos comparten huella, el sistema de bloqueo por huella no los distingue.</li>
+  <li>Si un usuario bloqueado nunca se conecta a internet, no descargará la lista negra actualizada.</li>
+</ul>
+
+<h3>Recomendaciones</h3>
+<ul>
+  <li>No compartir el <code>manual.html</code> con usuarios finales.</li>
+  <li>Mantener la clave secreta y el token de Telegram fuera de cualquier documento compartido.</li>
+  <li>Revisar periódicamente los avisos de Telegram para detectar patrones anómalos.</li>
+  <li>Regenerar el token de Telegram si en algún momento se sospecha que fue comprometido.</li>
+  <li>Considerar la ofuscación del código antes de distribuir el APK a terceros.</li>
+</ul>
+
+<div class="aviso aviso-ok" style="margin-top: 40px; text-align: center;">
+  <b>Fin del manual</b><br>
+  <span style="font-size:12px;">OSTIKEC v26.10.01 — © OSTICOR 2026 — Dr. C. Osmani Tito Corrioso</span><br>
+  <span style="font-size:12px;">Contacto: osmanitito94@zoho.com</span>
+</div>
+
+</div>
+</body>
+</html>
