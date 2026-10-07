@@ -1034,6 +1034,63 @@
     });
   }
 
+     /* Exporta el respaldo usando navigator.share (menú nativo del sistema)
+     y, si no está disponible, cae en la descarga directa. */
+  function exportarRespaldoCompleto() {
+    try {
+      const paquete = {
+        firma: 'OSTIKEC_CONFIG',
+        version: 2,
+        fecha: new Date().toISOString(),
+        negocios: OST().leerNegocios(),
+        negocioActivo: OST().leerActivoId(),
+        etiquetas: OST().leerMapaEtiquetas(),
+        estilos: OST().leerMapaEstilos(),
+        historial: OST().leerHistorial(),
+        numeracion: OST().leerMapaNumeracion(),
+        seguridad: OST().leerSeguridad(),
+        apariencia: OST().leerApariencia(),
+        campos: OST().leerCamposConfig()
+      };
+      const json = JSON.stringify(paquete, null, 2);
+      const blob = new Blob([json], { type: 'application/json' });
+      const fecha = new Date();
+      const dos = n => String(n).padStart(2, '0');
+      const nombreArchivo = 'ostikec_respaldo_'
+        + fecha.getFullYear() + dos(fecha.getMonth() + 1) + dos(fecha.getDate())
+        + '_' + dos(fecha.getHours()) + dos(fecha.getMinutes()) + '.json';
+
+      /* 1) Intento principal: menú nativo de compartir */
+      try {
+        const archivo = new File([blob], nombreArchivo, { type: 'application/json' });
+        if (navigator.canShare && navigator.canShare({ files: [archivo] })) {
+          navigator.share({ files: [archivo], title: 'Respaldo Ostikec' })
+            .catch(function () { descargarRespaldoDirecto(blob, nombreArchivo); });
+          return;
+        }
+      } catch (e) {}
+
+      /* 2) Respaldo: descarga directa */
+      descargarRespaldoDirecto(blob, nombreArchivo);
+    } catch (e) {
+      alert('No se pudo generar el respaldo: ' + e.message);
+    }
+  }
+
+  function descargarRespaldoDirecto(blob, nombreArchivo) {
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = nombreArchivo;
+    a.style.display = 'none';
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(function () {
+      if (a.parentNode) a.parentNode.removeChild(a);
+      URL.revokeObjectURL(url);
+    }, 1000);
+  }
+
   /* ============================================================
      OBSERVADOR DEL PANEL
      ============================================================ */
