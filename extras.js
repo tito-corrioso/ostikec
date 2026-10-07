@@ -2536,6 +2536,7 @@
     fechaHoraEmisionLocal: fechaHoraEmisionLocal,
     fechaHoraExportacionLocal: fechaHoraExportacionLocal,
     envolverTexto: envolverTexto,
+    sha256Hex: sha256Hex,
     colorDeContraste: colorDeContraste,
 
     /* Negocios */
@@ -2590,6 +2591,8 @@
     /* Panel */
     construirContenidoPanel: construirContenidoPanel,
     refrescarPanelSiAbierto: refrescarPanelSiAbierto,
+    abrirPanelFlotante: abrirPanelFlotante,
+    cerrarPanelFlotante: cerrarPanelFlotante,
 
     /* Exportadores originales (sin filtro) */
     exportarHistorialPDF: exportarHistorialPDF,
