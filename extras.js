@@ -316,9 +316,44 @@
     return (obj && typeof obj === 'object') ? obj : {};
   }
   function guardarMapaNumeracion(mapa) { guardarJSON(CLAVE_NUMERACION, mapa); }
-  function siguienteNumero() {
+    function siguienteNumero() {
     const clave = leerActivoId() || '_default';
     const mapa = leerMapaNumeracion();
+
+    /* --- Comprobación de reinicio periódico --- */
+    const configReinicio = leerJSON('ostikec_numeracion_reinicio', {
+      modo: 'nunca',
+      ultimoReinicio: 0
+    });
+
+    if (configReinicio.modo === 'mes' || configReinicio.modo === 'anio') {
+      const ahora = new Date();
+      const ultima = configReinicio.ultimoReinicio
+        ? new Date(configReinicio.ultimoReinicio)
+        : null;
+
+      let tocaReiniciar = false;
+      if (!ultima) {
+        tocaReiniciar = true;
+      } else if (configReinicio.modo === 'mes') {
+        if (ahora.getMonth() !== ultima.getMonth() ||
+            ahora.getFullYear() !== ultima.getFullYear()) {
+          tocaReiniciar = true;
+        }
+      } else if (configReinicio.modo === 'anio') {
+        if (ahora.getFullYear() !== ultima.getFullYear()) {
+          tocaReiniciar = true;
+        }
+      }
+
+      if (tocaReiniciar) {
+        mapa[clave] = 0;
+        configReinicio.ultimoReinicio = ahora.getTime();
+        guardarJSON('ostikec_numeracion_reinicio', configReinicio);
+        guardarMapaNumeracion(mapa);
+      }
+    }
+
     const actual = parseInt(mapa[clave] || '0', 10) || 0;
     const nuevo = actual + 1;
     mapa[clave] = nuevo;
