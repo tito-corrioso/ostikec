@@ -1015,15 +1015,11 @@
     barraSuperior.parentNode.insertBefore(banner, main);
 
     document.getElementById('btnBannerRespaldoAhora').addEventListener('click', function () {
-      try {
-        if (typeof OST().exportarConfiguracionCompleta === 'function') {
-          OST().exportarConfiguracionCompleta();
-        }
-        guardarUltimoRespaldo();
-        banner.parentNode.removeChild(banner);
-      } catch (e) {
-        alert('No se pudo generar el respaldo.');
-      }
+      exportarRespaldoCompleto();
+      guardarUltimoRespaldo();
+      setTimeout(function () {
+        if (banner.parentNode) banner.parentNode.removeChild(banner);
+      }, 150);
     });
 
     document.getElementById('btnBannerRespaldoLuego').addEventListener('click', function () {
