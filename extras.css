@@ -1,0 +1,808 @@
+/* ============================================================================
+   EXTRAS.CSS — Estilos añadidos sin tocar el CSS original
+   ============================================================================
+   Secciones:
+     1. Modal de Negocios y Servicios
+     2. Barra superior: título OSTIKEC pulsable
+     3. Modal de información del creador
+     4. Selector de etiquetas
+     5. Ojo para mostrar/ocultar la licencia
+     6. Mensaje promocional del login
+     7. Modal de confirmación al salir
+     8. Modal de Términos y Condiciones
+     9. Modal del Manual de uso
+     10. Texto pequeño de términos en el login
+     11. Compactación de la pantalla de login
+     12. Botón flotante del menú
+     13. Panel flotante (bottom sheet)
+     14. Secciones del panel
+     15. Paletas de colores y controles
+     16. Lista del historial
+     17. Gráfico de barras
+     18. Modo oscuro
+   ============================================================================ */
+
+/* ==========================================================================
+   1. MODAL DE NEGOCIOS Y SERVICIOS
+   ========================================================================== */
+#modalNegocios .modal-caja { max-width: 460px; }
+
+.neg-form {
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.neg-form label {
+  display: block; font-size: 12px; font-weight: 700;
+  color: #475569; margin-bottom: 6px;
+  text-transform: uppercase; letter-spacing: 0.5px;
+}
+
+.neg-form input {
+  width: 100%; padding: 12px 14px;
+  border: 2px solid #cbd5e1; border-radius: 10px;
+  font-size: 15px; font-family: inherit;
+  background: #ffffff; color: #1f2937;
+  outline: none; margin-bottom: 12px;
+  box-sizing: border-box; transition: border-color .15s ease;
+}
+.neg-form input:focus { border-color: #16324f; }
+.neg-form input::placeholder { color: #a3b0c2; }
+
+.neg-lista-titulo {
+  font-size: 13px; font-weight: 800; color: #16324f;
+  text-transform: uppercase; letter-spacing: 1px;
+  margin: 0 0 10px 0;
+}
+
+.neg-lista { max-height: 240px; overflow-y: auto; margin-bottom: 8px; }
+
+.neg-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 12px; border: 2px solid #e2e8f0;
+  border-radius: 10px; margin-bottom: 8px;
+  cursor: pointer; background: #ffffff;
+  transition: border-color .15s, background .15s;
+}
+.neg-item:active { background: #f1f5f9; }
+.neg-item.activo { border-color: #f2a900; background: #fff9e6; }
+
+.neg-item-texto { flex: 1; min-width: 0; }
+
+.neg-item-nombre {
+  font-size: 14px; font-weight: 700;
+  color: #1f2937; word-break: break-word;
+}
+
+.neg-item-servicio {
+  font-size: 12px; color: #64748b;
+  word-break: break-word; margin-top: 2px;
+}
+
+.neg-item-borrar {
+  width: 28px; height: 28px;
+  border: none; border-radius: 50%;
+  background: #fee2e2; color: #991b1b;
+  font-size: 14px; font-weight: 700;
+  cursor: pointer; flex-shrink: 0;
+  padding: 0; line-height: 1;
+}
+.neg-item-borrar:active { background: #fecaca; }
+
+.neg-vacio {
+  font-size: 13px; color: #94a3b8;
+  text-align: center; padding: 16px 0; font-style: italic;
+}
+
+/* ==========================================================================
+   2. BARRA SUPERIOR: título OSTIKEC pulsable
+   ========================================================================== */
+.barra-titulo {
+  cursor: pointer; user-select: none; -webkit-user-select: none;
+}
+.barra-titulo:active { opacity: 0.6; }
+
+/* ==========================================================================
+   3. MODAL: INFORMACIÓN DEL CREADOR
+   ========================================================================== */
+#modalInfo .modal-caja { max-width: 380px; }
+
+.info-creador { text-align: center; line-height: 1.7; }
+.info-creador p { margin: 0; padding: 0; }
+
+.info-creador .info-titulo {
+  font-size: 24px; font-weight: 800; color: #16324f;
+  letter-spacing: 2px; margin-bottom: 18px;
+}
+.info-creador .info-autor {
+  font-size: 14px; color: #1f2937; font-weight: 600; margin-bottom: 6px;
+}
+.info-creador .info-grupo {
+  font-size: 14px; color: #16324f; font-weight: 700; margin-bottom: 10px;
+}
+.info-creador .info-derechos {
+  font-size: 12px; color: #64748b; margin-bottom: 16px;
+}
+.info-creador .info-aviso {
+  font-size: 12px; color: #991b1b; background: #fee2e2;
+  border-radius: 8px; padding: 10px 12px; margin: 0 0 16px 0;
+  font-weight: 600; line-height: 1.5;
+}
+.info-creador .info-contacto {
+  font-size: 13px; color: #16324f; font-weight: 700; word-break: break-all;
+}
+
+/* ==========================================================================
+   4. SELECTOR DE ETIQUETAS (Ticket/Asiento e ID Servicio)
+   ========================================================================== */
+.campo-bloque select.select-etiqueta {
+  display: block;
+  width: 100%;
+  font-size: 13px;
+  font-weight: 700;
+  color: #475569;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 8px 10px;
+  border: 2px solid #cbd5e1;
+  border-radius: 8px;
+  background: #f8fafc;
+  font-family: inherit;
+  outline: none;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+.campo-bloque select.select-etiqueta:focus { border-color: #16324f; }
+
+.campo-bloque input.input-otro {
+  display: block;
+  width: 100%;
+  font-size: 13px;
+  font-weight: 600;
+  color: #16324f;
+  margin-bottom: 6px;
+  padding: 8px 10px;
+  border: 2px dashed #cbd5e1;
+  border-radius: 8px;
+  background: #ffffff;
+  font-family: inherit;
+  outline: none;
+  box-sizing: border-box;
+}
+.campo-bloque input.input-otro:focus {
+  border-color: #16324f;
+  border-style: solid;
+}
+
+/* ==========================================================================
+   5. OJO PARA MOSTRAR/OCULTAR LA LICENCIA
+   ========================================================================== */
+.btn-ojo-licencia {
+  position: absolute;
+  right: 7px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 34px;
+  height: 34px;
+  border: none;
+  border-radius: 50%;
+  background: #e2e8f0;
+  color: #475569;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  line-height: 1;
+}
+.btn-ojo-licencia:active { background: #cbd5e1; }
+
+#loginLicencia { padding-right: 46px !important; }
+
+/* ==========================================================================
+   6. MENSAJE PROMOCIONAL DEL LOGIN
+   ========================================================================== */
+.mensaje-promocional {
+  color: #9db4cc;
+  font-size: 12px;
+  text-align: center;
+  max-width: 380px;
+  margin: 0 0 22px 0;
+  line-height: 1.5;
+  padding: 0 14px;
+  font-style: italic;
+}
+
+/* ==========================================================================
+   7. MODAL DE CONFIRMACIÓN AL SALIR
+   ========================================================================== */
+#modalConfirmSalida .modal-caja { max-width: 380px; }
+
+.confirm-texto {
+  font-size: 14px;
+  color: #334155;
+  text-align: center;
+  line-height: 1.55;
+  margin: 4px 0 22px 0;
+  padding: 0 4px;
+}
+
+/* ==========================================================================
+   8. MODAL DE TÉRMINOS Y CONDICIONES
+   ========================================================================== */
+#modalTerminos .modal-caja { max-width: 460px; }
+
+#modalTerminos .modal-cuerpo {
+  max-height: 68vh;
+  overflow-y: auto;
+  padding-right: 18px;
+}
+
+.terminos-texto {
+  font-size: 13px;
+  color: #334155;
+  line-height: 1.6;
+}
+
+.terminos-texto h4 {
+  font-size: 13px;
+  font-weight: 800;
+  color: #16324f;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 14px 0 6px 0;
+}
+
+.terminos-texto h4:first-child { margin-top: 0; }
+.terminos-texto p { margin: 0 0 10px 0; }
+.terminos-texto ul { margin: 0 0 10px 0; padding-left: 20px; }
+.terminos-texto li { margin-bottom: 4px; }
+
+/* ==========================================================================
+   9. MODAL DEL MANUAL DE USO
+   ========================================================================== */
+#modalManual .modal-caja { max-width: 480px; }
+
+#modalManual .modal-cuerpo {
+  max-height: 70vh;
+  overflow-y: auto;
+  padding-right: 18px;
+}
+
+.manual-texto {
+  font-size: 13px;
+  color: #334155;
+  line-height: 1.6;
+}
+
+.manual-texto h4 {
+  font-size: 13px; font-weight: 800;
+  color: #16324f; text-transform: uppercase;
+  letter-spacing: 0.5px; margin: 16px 0 8px 0;
+}
+.manual-texto h4:first-child { margin-top: 0; }
+.manual-texto p { margin: 0 0 10px 0; }
+.manual-texto ul { margin: 0 0 10px 0; padding-left: 20px; }
+.manual-texto li { margin-bottom: 4px; }
+
+.manual-texto .manual-intro {
+  background: #fff9e6;
+  border-left: 3px solid #f2a900;
+  padding: 12px 14px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  color: #16324f;
+  font-weight: 600;
+}
+
+/* ==========================================================================
+   10. TEXTO PEQUEÑO DE TÉRMINOS EN EL LOGIN
+   ========================================================================== */
+.terminos-aviso {
+  color: #ffffff;
+  font-size: 11px;
+  text-align: center;
+  margin: 14px 0 0 0;
+  line-height: 1.4;
+  opacity: 0.85;
+  padding: 0 12px;
+}
+
+.terminos-aviso a {
+  color: #f2a900;
+  text-decoration: underline;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* ==========================================================================
+   11. COMPACTACIÓN DE LA PANTALLA DE LOGIN
+   ========================================================================== */
+#pantallaLogin {
+  height: 100vh;
+  height: 100svh;
+  overflow: hidden !important;
+}
+
+#pantallaLogin .login-wrap {
+  min-height: 0 !important;
+  height: 100%;
+  justify-content: flex-start !important;
+  padding: 30px 14px 14px 14px !important;
+}
+
+.mensaje-promocional {
+  font-size: 12px !important;
+  line-height: 1.35 !important;
+  margin: 0 0 14px 0 !important;
+  padding: 0 8px !important;
+}
+
+.logo-grande {
+  width: 95px !important;
+  height: 95px !important;
+  margin-bottom: 8px !important;
+}
+
+.titulo-app {
+  font-size: 30px !important;
+  letter-spacing: 1.8px !important;
+  margin: 0 0 4px 0 !important;
+}
+
+.login-wrap .subtitulo {
+  font-size: 12px !important;
+  line-height: 1.35 !important;
+  margin: 0 0 6px 0 !important;
+  padding: 0 !important;
+}
+
+.login-wrap > h1.titulo-app + p.subtitulo {
+  margin: 0 0 16px 0 !important;
+  font-size: 13px !important;
+}
+
+.login-wrap .tarjeta {
+  padding: 20px 16px !important;
+  border-radius: 14px !important;
+}
+
+.login-wrap .campo-bloque { margin-bottom: 13px !important; }
+.login-wrap .campo-bloque label { font-size: 12px !important; margin-bottom: 5px !important; }
+.login-wrap .campo input {
+  padding: 12px 46px 12px 14px !important;
+  font-size: 15px !important;
+  border-radius: 10px !important;
+}
+.login-wrap .btn { padding: 13px !important; font-size: 15px !important; border-radius: 10px !important; }
+
+.terminos-aviso {
+  font-size: 11px !important;
+  line-height: 1.3 !important;
+  margin: 10px 0 0 0 !important;
+  padding: 0 6px !important;
+}
+
+.login-wrap .subtitulo a { font-size: 12px !important; }
+
+/* ==========================================================================
+   12. BOTÓN FLOTANTE DEL MENÚ (solo pantalla 2)
+   ========================================================================== */
+.btn-flotante-menu {
+  position: fixed;
+  bottom: 22px;
+  left: 22px;
+  width: 56px;
+  height: 56px;
+  border: none;
+  border-radius: 50%;
+  background: #16324f;
+  color: #ffffff;
+  cursor: pointer;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  z-index: 90;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.28);
+  transition: transform .15s ease, background .15s ease;
+}
+.btn-flotante-menu:active {
+  transform: scale(0.94);
+  background: #0d2033;
+}
+/* Solo visible cuando la pantalla 2 está activa */
+body.creador-activo .btn-flotante-menu { display: flex; }
+
+/* ==========================================================================
+   13. PANEL FLOTANTE (bottom sheet)
+   ========================================================================== */
+.panel-flotante {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  max-height: 78vh;
+  background: #ffffff;
+  border-radius: 18px 18px 0 0;
+  box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.28);
+  z-index: 95;
+  transform: translateY(100%);
+  transition: transform .28s ease-out;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.panel-flotante.visible { transform: translateY(0); }
+
+.panel-flotante-cabecera {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  border-bottom: 1px solid #e2e8f0;
+  flex-shrink: 0;
+}
+.panel-flotante-cabecera h3 {
+  margin: 0;
+  font-size: 17px;
+  color: #16324f;
+  font-weight: 800;
+  letter-spacing: 0.4px;
+}
+.panel-flotante-cerrar {
+  width: 34px;
+  height: 34px;
+  border: none;
+  border-radius: 50%;
+  background: #f1f5f9;
+  color: #475569;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.panel-flotante-cuerpo {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px 14px 26px 14px;
+}
+
+.panel-flotante-fondo {
+  position: fixed;
+  inset: 0;
+  background: rgba(9, 20, 32, 0.55);
+  z-index: 94;
+  display: none;
+}
+.panel-flotante-fondo.visible { display: block; }
+
+/* ==========================================================================
+   14. SECCIONES DEL PANEL (acordeón)
+   ========================================================================== */
+.panel-seccion {
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  margin-bottom: 10px;
+  overflow: hidden;
+  transition: border-color .15s;
+}
+.panel-seccion.abierta { border-color: #16324f; }
+
+.panel-seccion-titulo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  background: #f8fafc;
+  cursor: pointer;
+  font-weight: 700;
+  color: #16324f;
+  font-size: 14px;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.panel-seccion-titulo:active { background: #eef2f7; }
+.panel-seccion-titulo .flecha {
+  font-size: 12px;
+  transition: transform .2s ease;
+  color: #64748b;
+}
+.panel-seccion.abierta .panel-seccion-titulo .flecha {
+  transform: rotate(180deg);
+}
+
+.panel-seccion-cuerpo {
+  display: none;
+  padding: 14px;
+  background: #ffffff;
+  border-top: 1px solid #e2e8f0;
+}
+.panel-seccion.abierta .panel-seccion-cuerpo { display: block; }
+
+/* ==========================================================================
+   15. CONTROLES DEL PANEL (labels, inputs, paletas)
+   ========================================================================== */
+.panel-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  color: #475569;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 12px 0 6px 0;
+}
+.panel-label:first-child { margin-top: 0; }
+
+.panel-input,
+.panel-select {
+  width: 100%;
+  padding: 9px 12px;
+  border: 2px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: inherit;
+  background: #ffffff;
+  color: #1f2937;
+  outline: none;
+  box-sizing: border-box;
+}
+.panel-input:focus,
+.panel-select:focus { border-color: #16324f; }
+
+/* Interruptor (switch) */
+.panel-switch {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 0;
+  font-size: 13px;
+  color: #334155;
+  font-weight: 600;
+}
+.panel-switch input[type="checkbox"] {
+  width: 42px;
+  height: 24px;
+  appearance: none;
+  -webkit-appearance: none;
+  background: #cbd5e1;
+  border-radius: 12px;
+  position: relative;
+  cursor: pointer;
+  outline: none;
+  transition: background .2s;
+  flex-shrink: 0;
+}
+.panel-switch input[type="checkbox"]::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 20px;
+  height: 20px;
+  background: #ffffff;
+  border-radius: 50%;
+  transition: transform .2s;
+}
+.panel-switch input[type="checkbox"]:checked { background: #16324f; }
+.panel-switch input[type="checkbox"]:checked::after { transform: translateX(18px); }
+
+/* Paleta de colores */
+.panel-paleta {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: 4px 0 8px 0;
+}
+.panel-color {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  cursor: pointer;
+  padding: 0;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  transition: border-color .15s, transform .15s;
+}
+.panel-color:active { transform: scale(0.92); }
+.panel-color.activo {
+  border-color: #16324f;
+  box-shadow: 0 0 0 2px #ffffff inset;
+}
+
+/* Botones pequeños del panel */
+.panel-btn {
+  display: inline-block;
+  padding: 9px 14px;
+  border: none;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  margin: 4px 4px 4px 0;
+}
+.panel-btn-primario { background: #16324f; color: #ffffff; }
+.panel-btn-acento { background: #f2a900; color: #16324f; }
+.panel-btn-secundario { background: #e2e8f0; color: #334155; }
+.panel-btn-peligro { background: #fee2e2; color: #991b1b; }
+.panel-btn:active { opacity: 0.75; }
+
+.panel-fila {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+.panel-fila .panel-btn { flex: 1; min-width: 100px; }
+
+/* ==========================================================================
+   16. LISTA DEL HISTORIAL
+   ========================================================================== */
+.panel-historial-lista {
+  max-height: 220px;
+  overflow-y: auto;
+  margin: 8px 0;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  background: #f8fafc;
+}
+.panel-historial-item {
+  padding: 8px 10px;
+  border-bottom: 1px solid #e2e8f0;
+  font-size: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+.panel-historial-item:last-child { border-bottom: none; }
+.panel-historial-item .h-nombre {
+  font-weight: 700;
+  color: #1f2937;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.panel-historial-item .h-fecha {
+  color: #64748b;
+  font-size: 11px;
+  flex-shrink: 0;
+}
+.panel-historial-item .h-btn {
+  background: #16324f;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 8px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.panel-historial-vacio {
+  padding: 16px;
+  text-align: center;
+  color: #94a3b8;
+  font-style: italic;
+  font-size: 12px;
+}
+
+.panel-contadores {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+  margin: 8px 0 4px 0;
+}
+.panel-contador {
+  background: #eef2f7;
+  border-radius: 8px;
+  padding: 8px 6px;
+  text-align: center;
+}
+.panel-contador .c-num {
+  font-size: 18px;
+  font-weight: 800;
+  color: #16324f;
+  line-height: 1.1;
+}
+.panel-contador .c-lbl {
+  font-size: 10px;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-top: 2px;
+}
+
+/* ==========================================================================
+   17. GRÁFICO DE BARRAS
+   ========================================================================== */
+.panel-grafico {
+  width: 100%;
+  height: 120px;
+  display: block;
+  margin: 10px 0;
+  background: #f8fafc;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+}
+
+/* ==========================================================================
+   18. MODO OSCURO
+   ========================================================================== */
+body.modo-oscuro {
+  background: #0d2033 !important;
+  color: #e2e8f0 !important;
+}
+body.modo-oscuro .contenido { background: #0d2033 !important; }
+body.modo-oscuro .tarjeta {
+  background: #1a2f45 !important;
+  color: #e2e8f0 !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5) !important;
+}
+body.modo-oscuro .seccion-titulo {
+  color: #f2a900 !important;
+  border-bottom-color: #f2a900 !important;
+}
+body.modo-oscuro .campo-bloque label {
+  color: #9db4cc !important;
+}
+body.modo-oscuro .campo input,
+body.modo-oscuro .select-etiqueta,
+body.modo-oscuro .input-otro {
+  background: #0f2338 !important;
+  color: #e2e8f0 !important;
+  border-color: #2a4761 !important;
+}
+body.modo-oscuro .campo input::placeholder {
+  color: #6b7f96 !important;
+}
+body.modo-oscuro .panel-flotante {
+  background: #1a2f45 !important;
+  color: #e2e8f0 !important;
+}
+body.modo-oscuro .panel-flotante-cabecera {
+  border-bottom-color: #2a4761 !important;
+}
+body.modo-oscuro .panel-flotante-cabecera h3 { color: #f2a900 !important; }
+body.modo-oscuro .panel-seccion { border-color: #2a4761 !important; }
+body.modo-oscuro .panel-seccion-titulo {
+  background: #0f2338 !important;
+  color: #f2a900 !important;
+}
+body.modo-oscuro .panel-seccion-cuerpo {
+  background: #1a2f45 !important;
+  border-top-color: #2a4761 !important;
+}
+body.modo-oscuro .panel-label { color: #9db4cc !important; }
+body.modo-oscuro .panel-input,
+body.modo-oscuro .panel-select {
+  background: #0f2338 !important;
+  color: #e2e8f0 !important;
+  border-color: #2a4761 !important;
+}
+body.modo-oscuro .panel-historial-lista {
+  background: #0f2338 !important;
+  border-color: #2a4761 !important;
+}
+body.modo-oscuro .panel-historial-item {
+  border-bottom-color: #2a4761 !important;
+  color: #e2e8f0 !important;
+}
+body.modo-oscuro .panel-historial-item .h-nombre { color: #e2e8f0 !important; }
+body.modo-oscuro .panel-contador {
+  background: #0f2338 !important;
+}
+body.modo-oscuro .panel-contador .c-num { color: #f2a900 !important; }
+body.modo-oscuro .panel-contador .c-lbl { color: #9db4cc !important; }
+body.modo-oscuro .btn-flotante-menu {
+  background: #f2a900 !important;
+  color: #16324f !important;
+}
+body.modo-oscuro .campo-bloque select.select-etiqueta option { color: #1f2937; }
