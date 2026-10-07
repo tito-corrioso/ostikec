@@ -2473,4 +2473,117 @@
 
   });
 
+  /* ============================================================
+     34. API PÚBLICA PARA MÓDULOS EXTERNOS (extras2.js, etc.)
+     ============================================================ */
+  window.OSTIKEC = {
+    /* Claves de almacenamiento */
+    CLAVES: {
+      NEGOCIOS:       CLAVE_NEGOCIOS,
+      NEGOCIO_ACTIVO: CLAVE_NEGOCIO_ACTIVO,
+      ETIQUETAS:      CLAVE_ETIQUETAS,
+      SESION:         CLAVE_SESION,
+      ESTILO:         CLAVE_ESTILO,
+      HISTORIAL:      CLAVE_HISTORIAL,
+      NUMERACION:     CLAVE_NUMERACION,
+      SEGURIDAD:      CLAVE_SEGURIDAD,
+      APARIENCIA:     CLAVE_APARIENCIA,
+      MENU_ESTADO:    CLAVE_MENU_ESTADO,
+      LOG_FALLOS:     CLAVE_LOG_FALLOS,
+      CAMPOS_CONFIG:  CLAVE_CAMPOS_CONFIG
+    },
+
+    /* Utilidades generales */
+    leerJSON: leerJSON,
+    guardarJSON: guardarJSON,
+    descargarBlob: descargarBlob,
+    fechaHoraEmisionLocal: fechaHoraEmisionLocal,
+    fechaHoraExportacionLocal: fechaHoraExportacionLocal,
+    envolverTexto: envolverTexto,
+    colorDeContraste: colorDeContraste,
+
+    /* Negocios */
+    leerNegocios: leerNegocios,
+    guardarNegocios: guardarNegocios,
+    leerActivoId: leerActivoId,
+    guardarActivoId: guardarActivoId,
+    obtenerNegocioActivo: obtenerNegocioActivo,
+
+    /* Etiquetas */
+    leerMapaEtiquetas: leerMapaEtiquetas,
+    obtenerConfiguracionActual: obtenerConfiguracionActual,
+    obtenerLabelMostrable: obtenerLabelMostrable,
+
+    /* Estilo */
+    leerMapaEstilos: leerMapaEstilos,
+    obtenerEstiloActual: obtenerEstiloActual,
+    guardarEstiloActual: guardarEstiloActual,
+    actualizarEstiloParcial: actualizarEstiloParcial,
+
+    /* Historial */
+    leerHistorial: leerHistorial,
+    guardarHistorial: guardarHistorial,
+    agregarAlHistorial: agregarAlHistorial,
+    duplicarTicketDelHistorial: duplicarTicketDelHistorial,
+
+    /* Numeración */
+    leerMapaNumeracion: leerMapaNumeracion,
+    siguienteNumero: siguienteNumero,
+
+    /* Seguridad */
+    leerSeguridad: leerSeguridad,
+    guardarSeguridad: guardarSeguridad,
+
+    /* Apariencia */
+    leerApariencia: leerApariencia,
+    guardarApariencia: guardarApariencia,
+    aplicarModoOscuro: aplicarModoOscuro,
+
+    /* Campos */
+    leerCamposConfig: leerCamposConfig,
+    guardarCamposConfig: guardarCamposConfig,
+    actualizarVisibilidadCamposOpcionales: actualizarVisibilidadCamposOpcionales,
+    obtenerCamposOpcionales: obtenerCamposOpcionales,
+
+    /* Helpers de dibujo en canvas */
+    dibujarCeldaCompacta: dibujarCeldaCompacta,
+    medirAlturaCelda: medirAlturaCelda,
+    dibujarQRCanvas: dibujarQRCanvas,
+    dibujarLogoForma: dibujarLogoForma,
+
+    /* Panel */
+    construirContenidoPanel: construirContenidoPanel,
+    refrescarPanelSiAbierto: refrescarPanelSiAbierto,
+
+    /* Exportadores originales (sin filtro) */
+    exportarHistorialPDF: exportarHistorialPDF,
+    exportarHistorialExcel: exportarHistorialExcel,
+
+    /* Variable del número de ticket (con getter/setter) */
+    get numeroTicketActual() { return numeroTicketActual; },
+    set numeroTicketActual(v) { numeroTicketActual = v; },
+
+    /* Constantes de tamaño */
+    TAM_ETIQUETA: TAM_ETIQUETA,
+    TAM_VALOR: TAM_VALOR,
+    LINE_HEIGHT: LINE_HEIGHT,
+    ESPACIO_CELDA: ESPACIO_CELDA,
+    ALTURA_ENCABEZADO: ALTURA_ENCABEZADO,
+    ALTURA_MINIMA: ALTURA_MINIMA,
+    TAM_QR_MINIMO: TAM_QR_MINIMO,
+
+    /* Constantes de estilo */
+    ESTILO_POR_DEFECTO: ESTILO_POR_DEFECTO,
+    CAMPOS_CONFIG_DEFECTO: CAMPOS_CONFIG_DEFECTO,
+    OPCIONES_ETIQUETAS: OPCIONES_ETIQUETAS,
+    PALETA_CINTAS: PALETA_CINTAS,
+    PALETA_FONDOS: PALETA_FONDOS,
+    PALETA_ACENTOS: PALETA_ACENTOS,
+    FUENTES_TICKET: FUENTES_TICKET,
+    TAMANOS_QR: TAMANOS_QR,
+    MAX_PIE: MAX_PIE,
+    MAX_MARCA_AGUA: MAX_MARCA_AGUA,
+    MAX_OTRO: MAX_OTRO
+  };
+
 })();
