@@ -449,15 +449,30 @@
     XLSX.writeFile(wb, 'ostikec_historial_' + Date.now() + '.xlsx');
   }
 
-  function actualizarListaVisual() {
+    function actualizarListaVisual() {
     const listas = document.querySelectorAll(
       '.panel-seccion[data-seccion="historial"] .panel-historial-lista'
     );
     if (listas.length === 0) return;
 
-    const filtrados = historialFiltrado();
-    const ultimos = filtrados.slice(-8).reverse();
+    /* Filtramos conservando el índice real en el array completo */
     const historialCompleto = OST().leerHistorial();
+    const filtro = leerFiltro();
+    const rango = rangoDeFechas(filtro);
+
+    const filtradosConIndice = [];
+    historialCompleto.forEach(function (h, i) {
+      if (!rango) {
+        filtradosConIndice.push({ indice: i, item: h });
+      } else if (h.fecha) {
+        const t = new Date(h.fecha).getTime();
+        if (t >= rango.desde && t <= rango.hasta) {
+          filtradosConIndice.push({ indice: i, item: h });
+        }
+      }
+    });
+
+    const ultimos = filtradosConIndice.slice(-8).reverse();
 
     listas.forEach(function (lista) {
       if (ultimos.length === 0) {
@@ -466,8 +481,9 @@
         return;
       }
 
-      lista.innerHTML = ultimos.map(function (h) {
-        const idxReal = historialCompleto.indexOf(h);
+      lista.innerHTML = ultimos.map(function (entrada) {
+        const h = entrada.item;
+        const idxReal = entrada.indice;
         const fechaTxt = h.fecha
           ? new Date(h.fecha).toLocaleString('es-ES',
               { day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit' })
