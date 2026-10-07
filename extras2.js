@@ -777,7 +777,7 @@
     observerPanel.observe(panelCuerpo, { childList: true });
   }
 
-  /* ============================================================
+    /* ============================================================
      ARRANQUE
      ============================================================ */
   window.addEventListener('DOMContentLoaded', function () {
@@ -790,18 +790,56 @@
         return;
       }
 
-      /* Instalar el wrapper de firma ANTES de inyectar controles */
+      /* Instalar el wrapper de firma una sola vez */
       instalarWrapperFirma();
 
-      observarPanel();
+      /* Intento inmediato */
+      setTimeout(intentarInyectarTodo, 200);
 
-      /* Por si el panel ya estaba construido */
+      /* Chequeo periódico: cada 400 ms comprueba si el panel existe
+         y si le faltan controles. Se auto-repara cuando el panel se
+         reconstruye (por ejemplo, al cambiar un filtro o un negocio). */
+      setInterval(function () {
+        const panelCuerpo = document.getElementById('panelCuerpo');
+        if (!panelCuerpo) return;
+
+        const seccionEstilo   = panelCuerpo.querySelector('.panel-seccion[data-seccion="estilo"]');
+        const seccionHistorial = panelCuerpo.querySelector('.panel-seccion[data-seccion="historial"]');
+
+        if (seccionEstilo && !seccionEstilo.querySelector('.plantillas-grid')) {
+          inyectarControlesPlantillas();
+        }
+        if (seccionEstilo && !seccionEstilo.querySelector('.firma-config')) {
+          inyectarControlesFirma();
+        }
+        if (seccionHistorial && !seccionHistorial.querySelector('.filtro-rango')) {
+          inyectarSelectorFiltro();
+          instalarInterceptorExportacion();
+          actualizarListaVisual();
+        }
+      }, 400);
+    }, 100);
+  });
+
+  /* Función auxiliar: intenta inyectar todo lo que falte ahora mismo */
+  function intentarInyectarTodo() {
+    const panelCuerpo = document.getElementById('panelCuerpo');
+    if (!panelCuerpo) return;
+
+    const seccionEstilo = panelCuerpo.querySelector('.panel-seccion[data-seccion="estilo"]');
+    const seccionHistorial = panelCuerpo.querySelector('.panel-seccion[data-seccion="historial"]');
+
+    if (seccionEstilo && !seccionEstilo.querySelector('.plantillas-grid')) {
+      inyectarControlesPlantillas();
+    }
+    if (seccionEstilo && !seccionEstilo.querySelector('.firma-config')) {
+      inyectarControlesFirma();
+    }
+    if (seccionHistorial && !seccionHistorial.querySelector('.filtro-rango')) {
       inyectarSelectorFiltro();
       instalarInterceptorExportacion();
       actualizarListaVisual();
-      inyectarControlesPlantillas();
-      inyectarControlesFirma();
-    }, 100);
-  });
+    }
+  }
 
 })();
