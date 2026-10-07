@@ -35,6 +35,7 @@
      31. Exportar / importar configuración completa
      32. Interceptor del botón Crear
      33. Arranque
+     34. API PÚBLICA PARA MÓDULOS EXTERNOS
    ============================================================================ */
 
 (function () {
