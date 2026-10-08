@@ -1356,9 +1356,11 @@
             '<button type="button" class="panel-btn panel-btn-peligro" id="btnBorrarPin">Borrar PIN</button>' +
           '</div>' +
           '<p class="pin-config-hint">Si olvidas el PIN, puedes recuperar el acceso usando el PIN maestro.</p>' +
-          '<div class="pin-aviso-maestro">' +
-            '<b>PIN maestro de recuperación:</b> ' + PIN_MAESTRO + '<br>' +
-            'Sirve siempre para desbloquear el panel aunque hayas olvidado tu PIN.' +
+         '<div class="pin-aviso-maestro">' +
+            '<b>PIN maestro de recuperación:</b> ' +
+              (OST().calcularPinMaestroActual() || '——') + '<br>' +
+            'Es único para tu cuenta (teléfono + licencia). Anótalo en un lugar seguro. ' +
+            'Sirve para desbloquear el panel si olvidas tu PIN personal.' +
           '</div>' +
         '</div>';
 
