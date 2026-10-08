@@ -21,6 +21,7 @@
      17. Gráfico de barras
      18. Campos opcionales inyectados en el formulario
      19. Modo oscuro
+     20. Añadir padding a la cinta superior para no interferencia
    ============================================================================ */
 
 /* ==========================================================================
@@ -454,3 +455,22 @@ body.modo-oscuro .panel-contador .c-num { color: #f2a900 !important; }
 body.modo-oscuro .panel-contador .c-lbl { color: #9db4cc !important; }
 body.modo-oscuro .btn-flotante-menu { background: #f2a900 !important; color: #16324f !important; }
 body.modo-oscuro .campo-bloque select.select-etiqueta option { color: #1f2937; }
+
+/* ==========================================================================
+   20. SAFE AREA — Cinta superior para cámaras perforadas / notch
+   ==========================================================================
+   Reserva un espacio en la parte alta de la barra azul para que la cámara
+   frontal (punch-hole o notch) no tape el logo ni los botones (manual,
+   negocios, lector, salir). El espacio sobrante queda del mismo azul,
+   simulando una cinta decorativa.
+   ========================================================================== */
+.barra-superior {
+  /* Fallback: mínimo visual seguro para teléfonos sin notch detectable */
+  padding-top: 34px !important;
+}
+@supports (padding-top: env(safe-area-inset-top)) {
+  .barra-superior {
+    /* Suma el alto real del notch al padding base, con mínimo de 34 px */
+    padding-top: max(34px, calc(12px + env(safe-area-inset-top))) !important;
+  }
+}
