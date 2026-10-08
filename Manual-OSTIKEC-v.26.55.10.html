@@ -1,0 +1,2835 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manual OSTIKEC — v26.55.10</title>
+
+<!-- Estilos reales de la app: así los mockups del panel son fieles -->
+<link rel="stylesheet" href="extras.css">
+<link rel="stylesheet" href="extras2.css">
+
+<style>
+/* ============================================================================
+   MANUAL OSTIKEC — Estilos propios del manual
+   ============================================================================ */
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0; padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  background: #f4f6f9;
+  color: #1f2937;
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+.hoja {
+  max-width: 980px;
+  margin: 0 auto 40px auto;
+  background: #ffffff;
+  padding: 46px 56px;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.07);
+}
+
+/* ---------- Portada ---------- */
+.portada {
+  text-align: center;
+  padding: 80px 40px 60px 40px;
+  background: linear-gradient(160deg, #16324f 0%, #0d2033 100%);
+  color: #ffffff;
+  border-radius: 10px;
+  margin-bottom: 40px;
+}
+.portada .logo-ot {
+  width: 130px; height: 130px;
+  margin: 0 auto 24px auto;
+  border-radius: 50%;
+  background: #f2a900; color: #16324f;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 60px; font-weight: 800; letter-spacing: 2px;
+  border: 6px solid #16324f;
+  box-shadow: 0 0 0 4px #f2a900 inset;
+}
+.portada h1 { font-size: 42px; margin: 0 0 10px 0; letter-spacing: 3px; font-weight: 800; }
+.portada .subtitulo { font-size: 15px; color: #9db4cc; margin: 0 0 40px 0; letter-spacing: 1px; }
+.portada .meta {
+  border-top: 1px solid #2a4761;
+  padding-top: 24px; margin-top: 40px;
+  font-size: 13px; color: #9db4cc; line-height: 1.9;
+}
+.portada .meta b { color: #f2a900; }
+
+/* ---------- Tipografía ---------- */
+h2 {
+  color: #16324f; font-size: 26px;
+  border-bottom: 3px solid #f2a900;
+  padding-bottom: 8px; margin: 44px 0 22px 0;
+  letter-spacing: 0.5px;
+}
+h2:first-of-type { margin-top: 0; }
+h3 { color: #16324f; font-size: 19px; margin: 32px 0 12px 0; letter-spacing: 0.3px; }
+h4 {
+  color: #334155; font-size: 16px; margin: 22px 0 10px 0;
+  text-transform: uppercase; letter-spacing: 0.8px; font-weight: 700;
+}
+p { margin: 0 0 12px 0; }
+
+/* ---------- Índice ---------- */
+.indice {
+  background: #eef2f7;
+  border-left: 4px solid #f2a900;
+  padding: 22px 26px; border-radius: 8px; margin-bottom: 30px;
+}
+.indice h3 { margin-top: 0; }
+.indice ol { margin: 0; padding-left: 22px; }
+.indice ol li { margin-bottom: 5px; }
+.indice a { color: #16324f; text-decoration: none; font-weight: 600; }
+.indice a:hover { text-decoration: underline; }
+
+/* ---------- Botón imprimir ---------- */
+.btn-imprimir {
+  position: fixed; top: 20px; right: 20px; z-index: 999;
+  background: #f2a900; color: #16324f;
+  border: none; padding: 12px 20px;
+  font-size: 14px; font-weight: 700;
+  border-radius: 10px; cursor: pointer;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+  font-family: inherit;
+}
+.btn-imprimir:hover { background: #d99a00; }
+
+/* ---------- Avisos ---------- */
+.aviso {
+  padding: 14px 18px; border-radius: 8px;
+  margin: 16px 0; font-size: 14px; line-height: 1.55;
+}
+.aviso-info    { background: #eef2f7; border-left: 4px solid #16324f; color: #16324f; }
+.aviso-ok      { background: #dcfce7; border-left: 4px solid #166534; color: #166534; }
+.aviso-warn    { background: #fee2e2; border-left: 4px solid #991b1b; color: #991b1b; }
+.aviso-dorado  { background: #fff9e6; border-left: 4px solid #f2a900; color: #7a5500; }
+
+/* ---------- Código ---------- */
+pre {
+  background: #0d2033; color: #e2e8f0;
+  padding: 16px 18px; border-radius: 8px;
+  overflow-x: auto; font-family: 'Courier New', Courier, monospace;
+  font-size: 13px; line-height: 1.5;
+  margin: 12px 0 18px 0;
+}
+code {
+  font-family: 'Courier New', Courier, monospace;
+  background: #eef2f7; color: #16324f;
+  padding: 2px 6px; border-radius: 4px; font-size: 13px;
+}
+pre code { background: transparent; color: inherit; padding: 0; border-radius: 0; font-size: 13px; }
+
+/* ---------- Tablas ---------- */
+table {
+  width: 100%; border-collapse: collapse;
+  margin: 16px 0 22px 0; font-size: 14px;
+}
+th {
+  background: #16324f; color: #ffffff;
+  padding: 10px 12px; text-align: left; font-weight: 700;
+}
+td { padding: 9px 12px; border-bottom: 1px solid #e2e8f0; vertical-align: top; }
+tr:nth-child(even) td { background: #f8fafc; }
+
+/* ---------- Listas ---------- */
+ul, ol { margin: 0 0 14px 0; padding-left: 24px; }
+li { margin-bottom: 5px; }
+
+/* ---------- Separador de partes ---------- */
+.parte {
+  background: #16324f; color: #ffffff;
+  padding: 22px 26px; border-radius: 10px;
+  margin: 50px 0 26px 0; text-align: center;
+}
+.parte h2 { color: #ffffff; border: none; margin: 0; font-size: 24px; letter-spacing: 2px; }
+.parte p { margin: 6px 0 0 0; color: #9db4cc; font-size: 13px; }
+
+/* ============================================================================
+   MOCKUPS DE PANTALLAS (login, creador, validador, ticket)
+   ============================================================================ */
+.mock {
+  max-width: 340px; margin: 20px auto 26px auto;
+  border: 8px solid #1f2937; border-radius: 24px;
+  overflow: hidden; background: #eef2f7;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+}
+.mock-caption {
+  text-align: center; font-size: 12px;
+  color: #64748b; font-style: italic;
+  margin: -18px 0 24px 0;
+}
+.mock-ancho { max-width: 480px; }
+
+/* Login */
+.mk-login {
+  min-height: 560px;
+  background: linear-gradient(160deg, #16324f 0%, #0d2033 100%);
+  padding: 24px 16px;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: flex-start;
+  color: #ffffff;
+}
+.mk-promo {
+  color: #9db4cc; font-size: 10px; text-align: center;
+  font-style: italic; margin-bottom: 12px;
+  line-height: 1.4; padding: 0 10px;
+}
+.mk-logo {
+  width: 72px; height: 72px; border-radius: 50%;
+  background: #f2a900; color: #16324f;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 32px; font-weight: 800; margin-bottom: 8px;
+  border: 4px solid #16324f;
+}
+.mk-titulo { font-size: 22px; font-weight: 800; letter-spacing: 2px; margin: 0 0 2px 0; }
+.mk-subtitulo { font-size: 10px; color: #9db4cc; margin: 0 0 14px 0; }
+.mk-tarjeta {
+  background: #ffffff; border-radius: 12px;
+  padding: 14px 12px; width: 100%; max-width: 280px;
+}
+.mk-campo { margin-bottom: 10px; }
+.mk-campo label {
+  display: block; font-size: 9px; font-weight: 700;
+  color: #475569; text-transform: uppercase;
+  letter-spacing: 0.5px; margin-bottom: 3px;
+}
+.mk-input {
+  width: 100%; padding: 8px 10px;
+  border: 2px solid #cbd5e1; border-radius: 8px;
+  font-size: 12px; background: #ffffff; color: #1f2937;
+  font-family: inherit;
+}
+.mk-input:disabled { opacity: 1; cursor: default; color: #1f2937; background: #ffffff; }
+.mk-input::placeholder { color: #a3b0c2; opacity: 1; }
+.mk-input-con-ojo { position: relative; }
+.mk-input-con-ojo .mk-input { padding-right: 32px; }
+.mk-ojo {
+  position: absolute; right: 4px; top: 50%;
+  transform: translateY(-50%);
+  width: 24px; height: 24px; border-radius: 50%;
+  background: #e2e8f0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; color: #475569;
+}
+.mk-btn-acento {
+  width: 100%; padding: 10px; background: #f2a900; color: #16324f;
+  border: none; border-radius: 8px; font-size: 12px;
+  font-weight: 700; text-align: center; margin-top: 4px;
+}
+.mk-pie {
+  margin-top: 14px; text-align: center;
+  color: #9db4cc; font-size: 9px; line-height: 1.7;
+}
+.mk-pie .mk-link { color: #f2a900; font-weight: 700; }
+.mk-pie .mk-terminos { color: #ffffff; font-size: 8px; margin-top: 6px; }
+.mk-pie .mk-terminos a { color: #f2a900; }
+
+/* Barra superior */
+.mk-barra {
+  background: #16324f; color: #ffffff;
+  padding: 8px 10px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.mk-barra .mk-izq { display: flex; align-items: center; gap: 6px; }
+.mk-logo-mini {
+  width: 24px; height: 24px; border-radius: 50%;
+  background: #f2a900; color: #16324f;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 800; font-size: 10px;
+}
+.mk-barra .mk-titulo-mini { font-size: 12px; font-weight: 800; letter-spacing: 1px; }
+.mk-barra .mk-der { display: flex; gap: 4px; }
+.mk-btn-icono {
+  width: 24px; height: 24px; border-radius: 6px;
+  background: rgba(255, 255, 255, 0.14);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; color: #ffffff;
+}
+
+/* Cuerpo de pantalla */
+.mk-cuerpo { background: #eef2f7; padding: 12px 10px; min-height: 480px; }
+.mk-formulario { background: #ffffff; border-radius: 10px; padding: 12px 10px; }
+.mk-seccion-titulo {
+  font-size: 10px; font-weight: 800; color: #16324f;
+  text-transform: uppercase; letter-spacing: 1px;
+  border-bottom: 2px solid #f2a900;
+  padding-bottom: 4px; margin-bottom: 10px;
+}
+.mk-input-con-limpiar { position: relative; }
+.mk-input-con-limpiar .mk-input { padding-right: 30px; }
+.mk-btn-limpiar {
+  position: absolute; right: 3px; top: 50%;
+  transform: translateY(-50%);
+  width: 22px; height: 22px; border-radius: 50%;
+  background: #e2e8f0; color: #475569;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; font-weight: 700;
+}
+.mk-select {
+  width: 100%; padding: 6px 8px;
+  border: 2px solid #cbd5e1; border-radius: 7px;
+  background: #f8fafc; font-size: 10px; font-weight: 700;
+  color: #475569; text-transform: uppercase;
+  letter-spacing: 0.4px; margin-bottom: 3px; font-family: inherit;
+}
+.mk-select:disabled { opacity: 1; cursor: default; }
+.mk-acciones { display: flex; gap: 8px; margin-top: 10px; }
+.mk-acciones .mk-btn-sec,
+.mk-acciones .mk-btn-pri {
+  flex: 1; padding: 8px; text-align: center;
+  border-radius: 8px; font-size: 11px; font-weight: 700;
+}
+.mk-btn-sec { background: #e2e8f0; color: #334155; }
+.mk-btn-pri { background: #16324f; color: #ffffff; }
+
+/* Modales dentro del mockup */
+.mk-modal {
+  background: rgba(9, 20, 32, 0.75);
+  padding: 20px 12px; min-height: 480px;
+  display: flex; align-items: center; justify-content: center;
+}
+.mk-modal-caja {
+  background: #ffffff; border-radius: 12px;
+  width: 100%; max-width: 280px; overflow: hidden;
+}
+.mk-modal-cab {
+  padding: 10px 12px; border-bottom: 1px solid #e2e8f0;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.mk-modal-cab h4 {
+  margin: 0; font-size: 12px; color: #16324f;
+  text-transform: none; letter-spacing: 0;
+}
+.mk-modal-cerrar {
+  width: 22px; height: 22px; border-radius: 50%;
+  background: #f1f5f9;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 700; color: #475569;
+}
+.mk-modal-cuerpo { padding: 12px; }
+.mk-modal-cuerpo p {
+  font-size: 10px; line-height: 1.45;
+  margin: 0 0 8px 0; color: #334155;
+}
+.mk-modal-cuerpo label {
+  display: block; font-size: 9px; font-weight: 700;
+  color: #475569; text-transform: uppercase; margin-bottom: 3px;
+}
+.mk-modal-cuerpo .mk-input { margin-bottom: 8px; }
+.mk-item-neg {
+  display: flex; align-items: center; gap: 6px;
+  padding: 8px; border: 2px solid #e2e8f0;
+  border-radius: 8px; margin-bottom: 6px; font-size: 10px;
+}
+.mk-item-neg.activo { border-color: #f2a900; background: #fff9e6; }
+.mk-item-neg .mk-item-texto { flex: 1; }
+.mk-item-neg .mk-item-nom { font-weight: 700; color: #1f2937; }
+.mk-item-neg .mk-item-serv { color: #64748b; font-size: 9px; }
+.mk-item-neg .mk-item-borr {
+  width: 20px; height: 20px; border-radius: 50%;
+  background: #fee2e2; color: #991b1b;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 9px; font-weight: 700;
+}
+
+/* Ticket dentro de mockup */
+.mk-ticket {
+  background: #ffffff;
+  border: 4px solid #16324f;
+  border-radius: 6px;
+  max-width: 320px;
+  margin: 20px auto;
+  overflow: hidden;
+  font-family: Arial, sans-serif;
+}
+.mk-ticket-enc {
+  background: #16324f; color: #ffffff;
+  padding: 10px 12px;
+  display: flex; align-items: center; gap: 10px;
+  position: relative;
+}
+.mk-ticket-logo {
+  width: 40px; height: 40px; border-radius: 50%;
+  background: #f2a900; color: #16324f;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 800; font-size: 16px; flex-shrink: 0;
+}
+.mk-ticket-nombre-inst {
+  position: absolute; top: 8px; right: 10px;
+  font-size: 9px; color: #ffffff; font-weight: 700;
+  text-align: right; max-width: 130px; line-height: 1.2;
+}
+.mk-ticket-titulo-enc { flex: 1; }
+.mk-ticket-titulo-enc .mk-t-nom {
+  font-size: 16px; font-weight: 800; letter-spacing: 1px;
+}
+.mk-ticket-titulo-enc .mk-t-sub {
+  font-size: 9px; color: #f2a900; font-weight: 700; margin-top: 2px;
+}
+.mk-ticket-cuerpo { padding: 12px; background: #ffffff; }
+.mk-ticket-celda { margin-bottom: 8px; }
+.mk-ticket-celda .mk-lbl {
+  font-size: 9px; color: #64748b; font-weight: 700;
+  text-transform: uppercase; margin-bottom: 2px;
+}
+.mk-ticket-celda .mk-val {
+  font-size: 13px; color: #0f172a; font-weight: 700;
+}
+.mk-ticket-fila { display: flex; gap: 12px; }
+.mk-ticket-fila > div { flex: 1; }
+.mk-ticket-qr {
+  background: #ffffff; border: 1px dashed #cbd5e1;
+  padding: 20px; margin: 14px 0 8px 0;
+  text-align: center; font-size: 10px; color: #94a3b8;
+}
+.mk-ticket-qr .mk-qr-cuadro {
+  width: 120px; height: 120px;
+  margin: 0 auto 8px auto;
+  background: repeating-conic-gradient(#1f2937 0% 25%, #ffffff 0% 50%) 50% / 14px 14px;
+  border: 4px solid #ffffff;
+  box-shadow: 0 0 0 1px #cbd5e1;
+}
+.mk-ticket-pie {
+  text-align: center; font-size: 9px;
+  color: #64748b; padding: 8px 0 0 0;
+  border-top: 1px solid #cbd5e1;
+}
+.mk-ticket-pie .mk-t-emit { font-weight: 700; color: #64748b; font-size: 8px; margin-bottom: 2px; }
+.mk-ticket-pie .mk-t-fecha { font-weight: 700; color: #16324f; font-size: 12px; }
+.mk-ticket-servicio {
+  text-align: center; font-size: 9px; color: #16324f;
+  font-weight: 700; margin-top: 8px;
+  padding-top: 6px; border-top: 1px solid #cbd5e1;
+}
+.mk-ticket-firma {
+  margin-top: 8px; padding-top: 6px;
+  border-top: 1px solid #cbd5e1;
+  text-align: center;
+}
+.mk-ticket-firma .mk-f-linea {
+  width: 70%; height: 1px; background: #0f172a;
+  margin: 10px auto 3px auto;
+}
+.mk-ticket-firma .mk-f-txt {
+  font-size: 8px; color: #64748b; font-weight: 700;
+  text-transform: uppercase;
+}
+
+/* ============================================================================
+   MOCKUPS DEL PANEL (usan clases reales de extras.css / extras2.css)
+   ============================================================================ */
+/* Envoltura para neutralizar position:fixed del panel real */
+.mock-panel-real {
+  max-width: 460px;
+  margin: 22px auto 30px auto;
+  background: #eef2f7;
+  padding: 14px;
+  border-radius: 14px;
+  border: 1px solid #cbd5e1;
+}
+.mock-panel-real .panel-flotante {
+  position: static !important;
+  transform: none !important;
+  bottom: auto !important;
+  left: auto !important;
+  right: auto !important;
+  max-height: none !important;
+  border-radius: 16px !important;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.14) !important;
+  display: flex !important;
+}
+.mock-panel-real .panel-flotante-fondo { display: none !important; }
+/* Forzar que las secciones se vean como se verían en el panel real */
+.mock-panel-real .panel-seccion-cuerpo { display: none; }
+.mock-panel-real .panel-seccion.abierta .panel-seccion-cuerpo { display: block; }
+.mock-panel-real .panel-flotante-cuerpo { padding-bottom: 14px; }
+
+/* Estilos para el <select> de plantillas */
+.plantilla-muestra span { display: block; flex: 1; }
+
+/* ============================================================================
+   PALETA DE COLORES (sección "Paleta de colores")
+   ============================================================================ */
+.paleta {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 12px;
+  margin: 16px 0 24px 0;
+}
+.paleta .color {
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+}
+.paleta .muestra { height: 60px; }
+.paleta .datos {
+  padding: 8px 10px;
+  font-size: 10px;
+  line-height: 1.5;
+  font-family: 'Courier New', monospace;
+}
+.paleta .datos b {
+  display: block;
+  font-size: 11px;
+  color: #16324f;
+  font-family: -apple-system, Arial, sans-serif;
+  margin-bottom: 3px;
+}
+
+/* ============================================================================
+   IMPRESIÓN
+   ============================================================================ */
+@media print {
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  body { background: #ffffff; font-size: 11pt; line-height: 1.5; orphans: 3; widows: 3; }
+  .hoja { box-shadow: none; max-width: none; margin: 0; padding: 0; border-radius: 0; }
+  .btn-imprimir { display: none !important; }
+  .portada { border-radius: 0; page-break-after: always; }
+  h2 { page-break-after: avoid; }
+  h3, h4 { page-break-after: avoid; }
+  pre, table, .mock, .mock-panel-real, .aviso, .indice, .paleta { page-break-inside: avoid; }
+  .parte { page-break-before: always; page-break-after: avoid; border-radius: 0; }
+  a { color: #16324f; text-decoration: none; }
+  .mock { border-width: 4px; box-shadow: none; }
+}
+@page { size: A4 portrait; margin: 1.5cm; }
+</style>
+</head>
+<body>
+
+<button class="btn-imprimir" onclick="window.print()">🖨️ Imprimir / Guardar PDF</button>
+
+<div class="hoja">
+
+<!-- =========================================================================
+     PORTADA
+     ========================================================================= -->
+<div class="portada">
+  <div class="logo-ot">OT</div>
+  <h1>OSTIKEC</h1>
+  <p class="subtitulo">Sistema de tickets electrónicos con código QR</p>
+  <p style="font-size:13px; color:#9db4cc; max-width:560px; margin:0 auto 30px auto; line-height:1.7;">
+    Manual completo de uso y funcionamiento técnico
+  </p>
+  <div class="meta">
+    <div><b>Versión:</b> 26.55.10</div>
+    <div><b>Fecha:</b> 8 de octubre de 2026</div>
+    <div><b>Autor:</b> Dr. C. Osmani Tito Corrioso</div>
+    <div><b>Grupo:</b> OSTICOR 2026</div>
+    <div><b>Contacto:</b> osmanitito94@zoho.com</div>
+    <div><b>Telegram:</b> <a href="https://t.me/+4atqFg3ymcpjNWFh" style="color:#f2a900;">Canal oficial OSTIKEC</a></div>
+  </div>
+</div>
+
+<!-- =========================================================================
+     ÍNDICE
+     ========================================================================= -->
+<div class="indice">
+  <h3>Índice</h3>
+  <ol>
+    <li><a href="#parte1">Manual de usuario</a></li>
+    <li><a href="#que-es">¿Qué es OSTIKEC?</a></li>
+    <li><a href="#beneficios">Beneficios para tu negocio</a></li>
+    <li><a href="#pantalla1">Pantalla 1 — Inicio de sesión</a></li>
+    <li><a href="#pantalla2">Pantalla 2 — Creador de tickets</a></li>
+    <li><a href="#pantalla3">Pantalla 3 — Validador</a></li>
+    <li><a href="#negocios">Sistema de negocios y etiquetas</a></li>
+    <li><a href="#panel">Panel de opciones (6 secciones)</a></li>
+    <li><a href="#ticket-generado">El ticket generado</a></li>
+    <li><a href="#faq">Preguntas frecuentes</a></li>
+    <li><a href="#parte2">Manual técnico</a></li>
+    <li><a href="#arquitectura">Arquitectura de archivos</a></li>
+    <li><a href="#flujo">Flujo de la aplicación</a></li>
+    <li><a href="#licencias">Sistema de licencias (SHA-256)</a></li>
+    <li><a href="#sesion">Sesión y huella del dispositivo</a></li>
+    <li><a href="#cifrado">Cifrado y firma digital</a></li>
+    <li><a href="#qr">Construcción y lectura del QR</a></li>
+    <li><a href="#panel-tecnico">Panel flotante: arquitectura</a></li>
+    <li><a href="#estilos-tecnico">Sistema de estilos y plantillas</a></li>
+    <li><a href="#historial-tecnico">Historial, filtros y numeración</a></li>
+    <li><a href="#pin-tecnico">PIN del panel y PIN maestro</a></li>
+    <li><a href="#respaldo-tecnico">Sistema de respaldo</a></li>
+    <li><a href="#api">API pública <code>window.OSTIKEC</code></a></li>
+    <li><a href="#telegram">Reporte a Telegram</a></li>
+    <li><a href="#killswitch">Kill switch remoto</a></li>
+    <li><a href="#paleta">Paleta de colores</a></li>
+    <li><a href="#operaciones">Operaciones comunes</a></li>
+    <li><a href="#nueva-config">Añadir una configuración al panel</a></li>
+    <li><a href="#seguridad">Seguridad y limitaciones</a></li>
+  </ol>
+</div>
+
+<!-- =========================================================================
+     PARTE 1 — MANUAL DE USUARIO
+     ========================================================================= -->
+<div class="parte" id="parte1">
+  <h2>PARTE 1 — MANUAL DE USUARIO</h2>
+  <p>Guía de uso de OSTIKEC para negocios y usuarios finales</p>
+</div>
+
+<h2 id="que-es">¿Qué es OSTIKEC?</h2>
+
+<p><b>OSTIKEC</b> es un sistema de tickets electrónicos con código QR diseñado para negocios y empresas que necesitan entregar comprobantes verificables de forma rápida, segura y sin depender de internet.</p>
+
+<p>Cada vez que un cliente compra un producto, reserva un asiento, contrata un servicio o recibe cualquier tipo de comprobante, tu equipo puede generar un ticket con su código QR único. Ese ticket se imprime, se comparte por WhatsApp, se guarda como imagen o se muestra en pantalla. Días después, cuando el cliente presente el ticket, cualquier dispositivo autorizado puede escanear el código y verificar en segundos que es auténtico.</p>
+
+<div class="aviso aviso-info">
+  <b>Versión actual:</b> 26.55.10. Esta versión incorpora un panel de opciones completo con estilos personalizables, plantillas, historial, estadísticas, PIN de seguridad y respaldo.
+</div>
+
+<h2 id="beneficios">Beneficios para tu negocio</h2>
+
+<div class="aviso aviso-dorado">
+  <b>Profesionaliza tu operación.</b> Con OSTIKEC, cada venta queda respaldada por un comprobante verificable. Tus clientes reciben un ticket con la imagen de tu marca, el nombre de tu negocio y los datos completos del servicio.
+</div>
+
+<h3>¿Por qué elegir OSTIKEC?</h3>
+
+<ul>
+  <li><b>Funciona sin internet.</b> No necesitas conexión para generar o validar tickets. Todo sucede dentro del dispositivo.</li>
+  <li><b>Seguridad real contra falsificaciones.</b> Cada código QR va cifrado y firmado digitalmente. Si alguien intenta alterar un dato o inventar un ticket, la validación fallará.</li>
+  <li><b>Verificación de emisor.</b> Cada ticket guarda internamente el teléfono del dispositivo que lo emitió. Al validarlo, se muestra junto a los datos.</li>
+  <li><b>Multi-negocio.</b> Puedes manejar varios negocios o servicios desde una misma instalación. Cada uno con su propio nombre, datos de servicio y etiquetas personalizadas.</li>
+  <li><b>Estilo personalizable.</b> Colores, plantillas, logo, tipografía, orientación, marca de agua y firma al pie. Tu ticket puede tener la identidad visual de tu negocio.</li>
+  <li><b>Historial y estadísticas.</b> Consulta cuántos tickets has generado hoy, esta semana, este mes o en total. Filtra por fecha, negocio o nombre.</li>
+  <li><b>Exportación a PDF y Excel.</b> Genera reportes del historial con un solo toque.</li>
+  <li><b>Respaldo completo.</b> Exporta toda tu configuración a un archivo para restaurarla en otro dispositivo.</li>
+  <li><b>PIN de seguridad.</b> Protege el acceso al panel de opciones con un PIN de 4 dígitos.</li>
+  <li><b>Revocación remota.</b> Si tu licencia es comprometida, puede ser bloqueada de forma automática.</li>
+</ul>
+
+<div class="aviso aviso-ok">
+  <b>Ideal para:</b> teatros, cines, eventos, conciertos, festivales, agencias de viaje, ómnibus y transporte, escuelas, academias, rifas, clubes, gimnasios, restaurantes, alquileres, servicios profesionales, facturación simple y cualquier negocio que necesite un comprobante verificable.
+</div>
+
+<h2 id="pantalla1">Pantalla 1 — Inicio de sesión</h2>
+
+<p>Es la primera pantalla que verás al abrir la aplicación. Aquí se ingresa con el <b>número de teléfono</b> y el <b>número de licencia</b> asignados por el desarrollador.</p>
+
+<div class="mock">
+  <div class="mk-login">
+    <p class="mk-promo"><em>¡Haz que tu empresa crezca con seguridad! ¡Dale confianza a tus clientes con OSTIKEC!</em></p>
+    <div class="mk-logo">OT</div>
+    <div class="mk-titulo">OSTIKEC</div>
+    <div class="mk-subtitulo">Sistema de tickets electrónicos</div>
+    <div class="mk-tarjeta">
+      <div class="mk-campo">
+        <label>Número de teléfono</label>
+        <input class="mk-input" type="text" placeholder="Ej. 56224466" disabled>
+      </div>
+      <div class="mk-campo">
+        <label>Número de licencia</label>
+        <div class="mk-input-con-ojo">
+          <input class="mk-input" type="password" value="OT-C001" disabled>
+          <span class="mk-ojo">👁</span>
+        </div>
+      </div>
+      <div class="mk-btn-acento">Entrar</div>
+    </div>
+    <div class="mk-pie">
+      v.26.55.10<br>
+      <span class="mk-link">Únete a OSTIKEC en Telegram</span><br>
+      © OSTICOR 2026
+      <div class="mk-terminos">Al utilizar OSTIKEC aceptas los <a>Términos y Condiciones</a></div>
+    </div>
+  </div>
+</div>
+<p class="mock-caption">Pantalla 1 — Inicio de sesión</p>
+
+<h4>Elementos de la pantalla</h4>
+
+<table>
+  <tr><th>Elemento</th><th>Descripción</th></tr>
+  <tr><td>Mensaje promocional</td><td>Texto en cursiva arriba del logo. Es un enganche para el usuario.</td></tr>
+  <tr><td>Logo OT</td><td>Identificador visual de OSTIKEC.</td></tr>
+  <tr><td>Campo de teléfono</td><td>Acepta solo dígitos. Se normaliza automáticamente (si escribes <code>+53</code> al inicio, se elimina).</td></tr>
+  <tr><td>Campo de licencia</td><td>Se muestra enmascarado con asteriscos. El ojo a la derecha permite mostrarla temporalmente para verificar que se escribió bien.</td></tr>
+  <tr><td>Botón Entrar</td><td>Verifica las credenciales contra la lista autorizada. Si son válidas, entra al tipo de pantalla correspondiente (creador o validador).</td></tr>
+  <tr><td>Enlace a Telegram</td><td>Invita al grupo oficial de OSTIKEC en Telegram.</td></tr>
+  <tr><td>Aviso de términos</td><td>Enlace que abre el modal de Términos y Condiciones. Es obligatorio aceptarlo al usar la aplicación.</td></tr>
+</table>
+
+<h4>Cómo entrar</h4>
+
+<ol>
+  <li>Escribe el número de teléfono autorizado.</li>
+  <li>Escribe el número de licencia. Puedes pulsar el ojo si quieres verificar lo que escribiste.</li>
+  <li>Pulsa <b>Entrar</b>.</li>
+  <li>Si los datos son válidos, la aplicación abrirá la pantalla que corresponda a tu tipo de licencia.</li>
+</ol>
+
+<div class="aviso aviso-warn">
+  <b>Importante:</b> tu número de teléfono y tu licencia son personales e intransferibles. No los compartas con nadie. Si compartes tu licencia, tanto tú como la persona que la use podríais perder el acceso.
+</div>
+
+<h2 id="pantalla2">Pantalla 2 — Creador de tickets</h2>
+
+<p>Es la pantalla donde tu equipo genera los tickets. Cada ticket lleva un código QR único que puede ser verificado después.</p>
+
+<div class="mock mock-ancho">
+  <div class="mk-barra">
+    <div class="mk-izq">
+      <div class="mk-logo-mini">OT</div>
+      <span class="mk-titulo-mini">OSTIKEC</span>
+    </div>
+    <div class="mk-der">
+      <span class="mk-btn-icono">📖</span>
+      <span class="mk-btn-icono">💼</span>
+      <span class="mk-btn-icono">▦</span>
+      <span class="mk-btn-icono">⏏</span>
+    </div>
+  </div>
+  <div class="mk-cuerpo">
+    <div class="mk-formulario">
+      <div class="mk-seccion-titulo">Datos del ticket</div>
+      <div class="mk-campo">
+        <label>Fecha</label>
+        <div class="mk-input-con-limpiar">
+          <input class="mk-input" type="text" placeholder="DD/MM/AA" disabled>
+          <span class="mk-btn-limpiar">✕</span>
+        </div>
+      </div>
+      <div class="mk-campo">
+        <label>Nombre</label>
+        <div class="mk-input-con-limpiar">
+          <input class="mk-input" type="text" placeholder="Nombre y apellidos" disabled>
+          <span class="mk-btn-limpiar">✕</span>
+        </div>
+      </div>
+      <div class="mk-campo">
+        <label>Teléfono</label>
+        <div class="mk-input-con-limpiar">
+          <input class="mk-input" type="text" placeholder="Número de teléfono" disabled>
+          <span class="mk-btn-limpiar">✕</span>
+        </div>
+      </div>
+      <div class="mk-campo">
+        <select class="mk-select" disabled>
+          <option>No. Asiento</option>
+        </select>
+        <div class="mk-input-con-limpiar">
+          <input class="mk-input" type="text" placeholder="Número de ticket/asiento" disabled>
+          <span class="mk-btn-limpiar">✕</span>
+        </div>
+      </div>
+      <div class="mk-campo">
+        <select class="mk-select" disabled>
+          <option>ID Servicio</option>
+        </select>
+        <div class="mk-input-con-limpiar">
+          <input class="mk-input" type="text" placeholder="Identificador del servicio" disabled>
+          <span class="mk-btn-limpiar">✕</span>
+        </div>
+      </div>
+      <div class="mk-acciones">
+        <div class="mk-btn-sec">Limpiar</div>
+        <div class="mk-btn-pri">Crear Ostikec</div>
+      </div>
+    </div>
+  </div>
+</div>
+<p class="mock-caption">Pantalla 2 — Formulario del creador</p>
+
+<h4>Elementos de la pantalla</h4>
+
+<table>
+  <tr><th>Elemento</th><th>Descripción</th></tr>
+  <tr><td>Botón Manual (📖)</td><td>Abre el manual de uso de la aplicación con explicaciones del sistema y de la seguridad.</td></tr>
+  <tr><td>Botón Negocios (💼)</td><td>Abre el modal de negocios y servicios. Permite guardar varios negocios y cambiar entre ellos.</td></tr>
+  <tr><td>Botón Lector QR (▦)</td><td>Abre el lector de códigos QR para leer un ticket existente y rellenar el formulario con sus datos.</td></tr>
+  <tr><td>Botón Salir (⏏)</td><td>Cierra la sesión. Antes de cerrar, pide confirmación para evitar salidas accidentales.</td></tr>
+  <tr><td>Campo Fecha</td><td>Se autocompleta con el formato DD/MM/AA mientras escribes.</td></tr>
+  <tr><td>Campo Nombre</td><td>Acepta texto libre. Se recomienda escribir nombre y apellidos completos.</td></tr>
+  <tr><td>Campo Teléfono</td><td>Acepta texto libre. Puedes escribir números, espacios, guiones.</td></tr>
+  <tr><td>Selector Ticket/Asiento</td><td>Lista desplegable configurable por negocio. Las opciones son: No. Ticket, No. Asiento, No. Factura, No. Servicio, No. Orden, Referencia, Código, Precio, ID Servicio y Otro. Si eliges Otro, aparece un campo para escribir una etiqueta personalizada (máx. 20 caracteres).</td></tr>
+  <tr><td>Selector ID Servicio</td><td>Otra lista desplegable con las mismas opciones. Por defecto vale ID Servicio.</td></tr>
+  <tr><td>Campos opcionales</td><td>Si activas Correo, Dirección o Notas en el panel, aparecerán campos adicionales entre los dos selectores y el botón Crear. Nunca viajan en el QR: solo se imprimen en el ticket.</td></tr>
+  <tr><td>Botones Limpiar / Crear</td><td>Limpiar borra todos los campos. Crear genera el ticket con su QR.</td></tr>
+  <tr><td>Botón flotante ⚙</td><td>Aparece abajo a la izquierda. Abre el panel de opciones (estilos, historial, respaldo, etc.). Si tienes PIN configurado, se pedirá antes de abrirlo.</td></tr>
+</table>
+
+<h4>Cómo generar un ticket</h4>
+
+<ol>
+  <li>Rellena todos los campos con los datos del cliente.</li>
+  <li>Si ya guardaste el negocio correspondiente, selecciónalo con el botón de la maleta antes de crear el ticket.</li>
+  <li>Pulsa <b>Crear Ostikec</b>. Aparecerá el ticket generado como imagen.</li>
+  <li>Puedes <b>Descargar</b> el ticket como imagen PNG o pulsar <b>Compartir</b> para enviarlo por WhatsApp, Telegram, correo o cualquier aplicación del teléfono.</li>
+</ol>
+
+<h2 id="pantalla3">Pantalla 3 — Validador</h2>
+
+<p>Es la pantalla que usan los encargados de puerta o recepción para verificar la autenticidad de un ticket. Solo puede leer códigos QR, no puede crear tickets.</p>
+
+<div class="mock">
+  <div class="mk-barra">
+    <div class="mk-izq">
+      <div class="mk-logo-mini">OT</div>
+      <span class="mk-titulo-mini">OSTIKEC</span>
+    </div>
+    <div class="mk-der">
+      <span class="mk-btn-icono">⏏</span>
+    </div>
+  </div>
+  <div class="mk-cuerpo">
+    <div class="mk-formulario">
+      <div class="mk-seccion-titulo">Validar ticket</div>
+      <p style="font-size:10px; color:#64748b; margin:0 0 12px 0;">
+        Escanee el código QR del ticket para verificar si es válido y ver su información.
+      </p>
+      <div class="mk-btn-acento">Escanear código QR</div>
+    </div>
+  </div>
+</div>
+<p class="mock-caption">Pantalla 3 — Validador</p>
+
+<h4>Cómo validar un ticket</h4>
+
+<ol>
+  <li>Pulsa <b>Escanear código QR</b>.</li>
+  <li>Apunta la cámara al código del ticket. También puedes subir una imagen del código desde la galería.</li>
+  <li>La aplicación verifica la firma digital y muestra el resultado:
+    <ul>
+      <li>Si es válido: <b>✔ TICKET VÁLIDO</b> con todos los datos del ticket y el teléfono emisor.</li>
+      <li>Si no es válido: <b>✘ TICKET NO VÁLIDO</b> con el motivo (firma no coincide, código ajeno, etc.).</li>
+    </ul>
+  </li>
+</ol>
+
+<div class="aviso aviso-info">
+  <b>Nota:</b> las etiquetas de los campos 4 y 5 en la pantalla de validación aparecen siempre como <b>"Campo 4"</b> y <b>"Campo 5"</b>, independientemente de las etiquetas que haya elegido el emisor. Esto es así por diseño: el validador no necesita saber si el emisor usó "Factura" o "Asiento", solo necesita ver el dato.
+</div>
+
+<div class="aviso aviso-dorado">
+  <b>Modo ciego.</b> Si en el panel activas "Modo validador ciego", la fila <b>Emitido por</b> no se mostrará en la pantalla del validador. Es útil cuando no quieres que el personal de puerta vea el teléfono del emisor.
+</div>
+
+<h2 id="negocios">Sistema de negocios y etiquetas</h2>
+
+<p>Uno de los pilares de OSTIKEC es poder manejar varios negocios desde una misma instalación. Cada negocio tiene su propio nombre, sus datos de servicio y sus etiquetas personalizadas para los campos 4 y 5.</p>
+
+<div class="mock mock-ancho">
+  <div class="mk-modal">
+    <div class="mk-modal-caja">
+      <div class="mk-modal-cab">
+        <h4>Negocios y servicios</h4>
+        <span class="mk-modal-cerrar">✕</span>
+      </div>
+      <div class="mk-modal-cuerpo">
+        <label>Nombre de la Institución</label>
+        <input class="mk-input" type="text" placeholder="Ej. Teatro Nacional" disabled>
+        <label>Datos del Servicio</label>
+        <input class="mk-input" type="text" placeholder="Ej. Función de las 8:00 PM" disabled>
+        <div class="mk-btn-acento" style="margin-bottom:10px;">Guardar combinación</div>
+
+        <div style="font-size:9px; font-weight:800; color:#16324f; text-transform:uppercase; margin-bottom:6px;">Combinaciones guardadas</div>
+        <div class="mk-item-neg activo">
+          <div class="mk-item-texto">
+            <div class="mk-item-nom">Teatro Nacional</div>
+            <div class="mk-item-serv">Función de las 8:00 PM - Sala A</div>
+          </div>
+          <div class="mk-item-borr">✕</div>
+        </div>
+        <div class="mk-item-neg">
+          <div class="mk-item-texto">
+            <div class="mk-item-nom">Ómnibus La Habana</div>
+            <div class="mk-item-serv">Salida 15/10/2026 - 07:30 AM</div>
+          </div>
+          <div class="mk-item-borr">✕</div>
+        </div>
+
+        <div class="mk-acciones" style="margin-top:10px;">
+          <div class="mk-btn-sec">Exportar</div>
+          <div class="mk-btn-acento" style="flex:1; padding:8px; font-size:11px; border-radius:8px;">Importar</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<p class="mock-caption">Modal de negocios y servicios</p>
+
+<h3>Cómo guardar un negocio</h3>
+<ol>
+  <li>Pulsa el botón de la maleta (💼).</li>
+  <li>Escribe el Nombre de la Institución y los Datos del Servicio.</li>
+  <li>Pulsa <b>Guardar combinación</b>. La combinación queda disponible y activa automáticamente.</li>
+  <li>Para cambiar entre negocios, basta tocar una combinación de la lista.</li>
+</ol>
+
+<h3>Cómo exportar e importar</h3>
+<ul>
+  <li><b>Exportar:</b> guarda todas las combinaciones y etiquetas en un archivo <code>.json</code> que puedes enviar por WhatsApp, correo, etc. Ideal para pasarlas a otro dispositivo.</li>
+  <li><b>Importar:</b> carga un archivo <code>.json</code> generado antes. Los duplicados se omiten automáticamente.</li>
+</ul>
+
+<h3>Etiquetas personalizadas</h3>
+<p>Cada negocio puede tener sus propias etiquetas para los campos 4 y 5. Por ejemplo:</p>
+<ul>
+  <li>Un teatro podría usar <b>No. Asiento</b> y <b>No. Función</b>.</li>
+  <li>Una agencia de viajes podría usar <b>No. Factura</b> y <b>Precio</b>.</li>
+  <li>Una escuela podría usar <b>No. Matrícula</b> y <b>Curso</b>.</li>
+</ul>
+<p>Las etiquetas se guardan por negocio, así que al cambiar de negocio se recargan automáticamente. Los selectores aparecen arriba de cada campo en el formulario del creador; también puedes escribir una etiqueta propia si eliges <b>Otro</b>.</p>
+
+<h2 id="panel">Panel de opciones</h2>
+
+<p>El panel de opciones es el centro de configuración de OSTIKEC. Se abre con el <b>botón flotante ⚙</b> que aparece en la esquina inferior izquierda de la pantalla del creador. Está organizado en <b>6 secciones</b> tipo acordeón: solo una puede estar abierta a la vez. El panel recuerda cuál tenías abierta la última vez.</p>
+
+<div class="mock-panel-real">
+  <div class="panel-flotante">
+    <div class="panel-flotante-cabecera">
+      <h3>Opciones</h3>
+      <button class="panel-flotante-cerrar" type="button">✕</button>
+    </div>
+    <div class="panel-flotante-cuerpo" id="panelCuerpoDemo">
+      <div class="panel-seccion" data-seccion="estilo">
+        <div class="panel-seccion-titulo">🎨 Estilo del ticket <span class="flecha">▼</span></div>
+      </div>
+      <div class="panel-seccion" data-seccion="campos">
+        <div class="panel-seccion-titulo">📋 Campos y datos <span class="flecha">▼</span></div>
+      </div>
+      <div class="panel-seccion" data-seccion="historial">
+        <div class="panel-seccion-titulo">📊 Historial y estadísticas <span class="flecha">▼</span></div>
+      </div>
+      <div class="panel-seccion" data-seccion="seguridad">
+        <div class="panel-seccion-titulo">🔒 Seguridad <span class="flecha">▼</span></div>
+      </div>
+      <div class="panel-seccion" data-seccion="apariencia">
+        <div class="panel-seccion-titulo">🌙 Apariencia <span class="flecha">▼</span></div>
+      </div>
+      <div class="panel-seccion" data-seccion="respaldo">
+        <div class="panel-seccion-titulo">💾 Respaldo <span class="flecha">▼</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+<p class="mock-caption">Panel de opciones — vista general con las 6 secciones cerradas</p>
+
+<div class="aviso aviso-info">
+  <b>Consejo:</b> el panel se cierra tocando la X de arriba a la derecha, o tocando el fondo oscuro detrás del panel.
+</div>
+
+<!-- =====================================================================
+     SECCIÓN 1 — ESTILO
+     ===================================================================== -->
+<h3>🎨 Estilo del ticket</h3>
+
+<p>Es la sección más grande y la que más impacto tiene en el aspecto del ticket. Aquí configuras colores, plantillas, tipografía, orientación, marca de agua y firma.</p>
+
+<div class="mock-panel-real">
+  <div class="panel-flotante">
+    <div class="panel-flotante-cabecera">
+      <h3>Opciones</h3>
+      <button class="panel-flotante-cerrar" type="button">✕</button>
+    </div>
+    <div class="panel-flotante-cuerpo">
+      <div class="panel-seccion abierta" data-seccion="estilo">
+        <div class="panel-seccion-titulo">🎨 Estilo del ticket <span class="flecha">▼</span></div>
+        <div class="panel-seccion-cuerpo">
+
+          <div class="vista-previa-contenedor">
+            <label class="panel-label">Vista previa</label>
+            <div class="vista-previa-wrap">
+              <canvas id="vistaPreviaDemo" style="display:block;border-radius:4px;box-shadow:0 2px 8px rgba(0,0,0,0.12);"></canvas>
+            </div>
+          </div>
+
+          <label class="panel-label">Plantilla base</label>
+          <div class="plantillas-grid">
+            <button type="button" class="plantilla-boton activa">
+              <div class="plantilla-muestra">
+                <span style="background:#16324f"></span>
+                <span style="background:#f2a900"></span>
+                <span style="background:#ffffff;border:1px solid #e2e8f0"></span>
+              </div>
+              <div class="plantilla-nombre">Estándar</div>
+              <div class="plantilla-desc">Azul OSTIKEC + dorado</div>
+            </button>
+            <button type="button" class="plantilla-boton">
+              <div class="plantilla-muestra">
+                <span style="background:#1f2937"></span>
+                <span style="background:#64748b"></span>
+                <span style="background:#ffffff;border:1px solid #e2e8f0"></span>
+              </div>
+              <div class="plantilla-nombre">Factura</div>
+              <div class="plantilla-desc">Formal, blanco y negro</div>
+            </button>
+            <button type="button" class="plantilla-boton">
+              <div class="plantilla-muestra">
+                <span style="background:#6b21a8"></span>
+                <span style="background:#db2777"></span>
+                <span style="background:#fffbeb;border:1px solid #e2e8f0"></span>
+              </div>
+              <div class="plantilla-nombre">Evento</div>
+              <div class="plantilla-desc">Morado y rosa</div>
+            </button>
+            <button type="button" class="plantilla-boton">
+              <div class="plantilla-muestra">
+                <span style="background:#166534"></span>
+                <span style="background:#16a34a"></span>
+                <span style="background:#ffffff;border:1px solid #e2e8f0"></span>
+              </div>
+              <div class="plantilla-nombre">Recibo</div>
+              <div class="plantilla-desc">Verde formal</div>
+            </button>
+          </div>
+
+          <label class="panel-label">Color de la cinta superior</label>
+          <div class="panel-paleta">
+            <button class="panel-color activo" style="background:#16324f" title="Azul OSTIKEC"></button>
+            <button class="panel-color" style="background:#1f2937" title="Negro"></button>
+            <button class="panel-color" style="background:#991b1b" title="Rojo"></button>
+            <button class="panel-color" style="background:#166534" title="Verde"></button>
+            <button class="panel-color" style="background:#6b21a8" title="Morado"></button>
+            <button class="panel-color" style="background:#c2410c" title="Naranja"></button>
+            <button class="panel-color" style="background:#9d174d" title="Rosa"></button>
+            <button class="panel-color" style="background:#475569" title="Gris"></button>
+          </div>
+
+          <label class="panel-label">Color del fondo</label>
+          <div class="panel-paleta">
+            <button class="panel-color activo" style="background:#ffffff" title="Blanco"></button>
+            <button class="panel-color" style="background:#fffbeb" title="Crema"></button>
+            <button class="panel-color" style="background:#f8fafc" title="Gris claro"></button>
+            <button class="panel-color" style="background:#f0f9ff" title="Celeste"></button>
+          </div>
+
+          <label class="panel-label">Color del acento</label>
+          <div class="panel-paleta">
+            <button class="panel-color activo" style="background:#f2a900" title="Dorado OSTIKEC"></button>
+            <button class="panel-color" style="background:#2563eb" title="Azul"></button>
+            <button class="panel-color" style="background:#16a34a" title="Verde"></button>
+            <button class="panel-color" style="background:#dc2626" title="Rojo"></button>
+            <button class="panel-color" style="background:#9333ea" title="Morado"></button>
+            <button class="panel-color" style="background:#ea580c" title="Naranja"></button>
+            <button class="panel-color" style="background:#db2777" title="Rosa"></button>
+            <button class="panel-color" style="background:#64748b" title="Gris"></button>
+          </div>
+
+          <label class="panel-switch">Mostrar logo <input type="checkbox" checked></label>
+
+          <label class="panel-label">Forma del logo</label>
+          <select class="panel-select">
+            <option>Círculo</option>
+            <option>Cuadrado</option>
+            <option>Hexágono</option>
+          </select>
+
+          <label class="panel-label">Tamaño del QR</label>
+          <select class="panel-select">
+            <option>Pequeño</option>
+            <option selected>Mediano</option>
+            <option>Grande</option>
+          </select>
+
+          <label class="panel-label">Orientación</label>
+          <select class="panel-select">
+            <option selected>Vertical</option>
+            <option>Horizontal</option>
+          </select>
+
+          <label class="panel-label">Fuente</label>
+          <select class="panel-select">
+            <option selected>Arial</option>
+            <option>Helvetica</option>
+            <option>Times New Roman</option>
+            <option>Courier New</option>
+          </select>
+
+          <label class="panel-label">Pie personalizable (máx. 60)</label>
+          <input class="panel-input" type="text" value="Gracias por su compra">
+
+          <label class="panel-label">Marca de agua (máx. 30)</label>
+          <input class="panel-input" type="text" value="COPIA">
+
+          <div class="firma-config">
+            <label class="panel-switch">Bloque de firma al pie del ticket <input type="checkbox" checked></label>
+            <label class="panel-label" style="margin-top:8px;">Texto de la firma</label>
+            <input type="text" value="Firma">
+          </div>
+
+          <div class="panel-fila">
+            <button class="panel-btn panel-btn-acento" type="button">Regenerar ticket</button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<p class="mock-caption">Sección 1 — Estilo del ticket (con plantillas, vista previa y todos los controles)</p>
+
+<h4>Qué hace cada control</h4>
+
+<table>
+  <tr><th>Control</th><th>Qué hace</th></tr>
+  <tr><td>Vista previa</td><td>Miniatura del ticket que se actualiza en tiempo real al cambiar cualquier opción. No es el ticket real: es una representación a escala.</td></tr>
+  <tr><td>Plantilla base</td><td>Aplica una combinación preestablecida de colores + fuente + orientación. Hay 4: Estándar, Factura, Evento y Recibo.</td></tr>
+  <tr><td>Color de la cinta superior</td><td>Color de la franja superior donde va el logo OT y el nombre OSTIKEC.</td></tr>
+  <tr><td>Color del fondo</td><td>Color del papel del ticket.</td></tr>
+  <tr><td>Color del acento</td><td>Color de detalles: subtítulo, número correlativo, pie, etc.</td></tr>
+  <tr><td>Mostrar logo</td><td>Muestra u oculta el círculo con las letras "OT".</td></tr>
+  <tr><td>Forma del logo</td><td>Círculo, cuadrado con esquinas redondeadas o hexágono.</td></tr>
+  <tr><td>Tamaño del QR</td><td>Pequeño (300 px), Mediano (400 px) o Grande (500 px). Afecta la legibilidad desde lejos.</td></tr>
+  <tr><td>Orientación</td><td>Vertical (720×1080 aprox.) u Horizontal (1080×720). La horizontal compacta los datos a la izquierda y pone el QR a la derecha.</td></tr>
+  <tr><td>Fuente</td><td>Tipografía usada en todo el ticket. Arial, Helvetica, Times New Roman o Courier New.</td></tr>
+  <tr><td>Pie personalizable</td><td>Texto que aparece debajo de la fecha de emisión. Ej. "Gracias por su compra".</td></tr>
+  <tr><td>Marca de agua</td><td>Texto grande, semitransparente y rotado, dibujado sobre el ticket. Ej. "COPIA".</td></tr>
+  <tr><td>Bloque de firma</td><td>Si está activo, añade al pie del ticket una línea horizontal con el texto que elijas debajo (ej. "Firma"). Útil para tickets que requieren rúbrica manual.</td></tr>
+  <tr><td>Regenerar ticket</td><td>Vuelve a dibujar el ticket visible con los cambios actuales. Si no hay ticket en pantalla, muestra un aviso.</td></tr>
+</table>
+
+<h4>Las 4 plantillas base</h4>
+
+<table>
+  <tr><th>Plantilla</th><th>Cinta</th><th>Acento</th><th>Fondo</th><th>Fuente</th><th>Ideal para</th></tr>
+  <tr><td><b>Estándar</b></td><td>#16324f</td><td>#f2a900</td><td>#ffffff</td><td>Arial</td><td>Uso general</td></tr>
+  <tr><td><b>Factura</b></td><td>#1f2937</td><td>#64748b</td><td>#ffffff</td><td>Courier New</td><td>Facturación formal</td></tr>
+  <tr><td><b>Evento</b></td><td>#6b21a8</td><td>#db2777</td><td>#fffbeb</td><td>Arial</td><td>Conciertos, fiestas</td></tr>
+  <tr><td><b>Recibo</b></td><td>#166534</td><td>#16a34a</td><td>#ffffff</td><td>Helvetica</td><td>Recibos de pago</td></tr>
+</table>
+
+<!-- =====================================================================
+     SECCIÓN 2 — CAMPOS
+     ===================================================================== -->
+<h3>📋 Campos y datos</h3>
+
+<p>Controla qué campos opcionales aparecen en el formulario y en el ticket, además de la numeración automática.</p>
+
+<div class="mock-panel-real">
+  <div class="panel-flotante">
+    <div class="panel-flotante-cabecera">
+      <h3>Opciones</h3>
+      <button class="panel-flotante-cerrar" type="button">✕</button>
+    </div>
+    <div class="panel-flotante-cuerpo">
+      <div class="panel-seccion abierta" data-seccion="campos">
+        <div class="panel-seccion-titulo">📋 Campos y datos <span class="flecha">▼</span></div>
+        <div class="panel-seccion-cuerpo">
+          <label class="panel-switch">Campo Correo <input type="checkbox"></label>
+          <label class="panel-switch">Campo Dirección <input type="checkbox"></label>
+          <label class="panel-switch">Campo Notas <input type="checkbox" checked></label>
+          <label class="panel-switch">Ocultar campos vacíos en el ticket <input type="checkbox" checked></label>
+          <label class="panel-switch">Numeración automática (solo visual) <input type="checkbox" checked></label>
+          <label class="panel-label">Prefijo de numeración</label>
+          <input class="panel-input" type="text" value="T-">
+          <p style="font-size:11px;color:#64748b;margin:10px 0 0 0;">
+            Los campos opcionales aparecen en el formulario y en el ticket. Nunca se incluyen en el código QR.
+          </p>
+
+          <div class="numeracion-reinicio-config">
+            <label class="panel-label">Reiniciar numeración</label>
+            <select class="panel-select">
+              <option>Nunca (correlativo continuo)</option>
+              <option selected>Cada mes</option>
+              <option>Cada año</option>
+            </select>
+            <p class="numeracion-reinicio-hint">
+              El contador se reiniciará automáticamente al empezar el próximo periodo.
+              Afecta solo al negocio activo.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<p class="mock-caption">Sección 2 — Campos y datos</p>
+
+<table>
+  <tr><th>Control</th><th>Qué hace</th></tr>
+  <tr><td>Campo Correo</td><td>Muestra un campo adicional <code>inCorreo</code> en el formulario. Se imprime en el ticket si tiene valor.</td></tr>
+  <tr><td>Campo Dirección</td><td>Muestra un campo adicional <code>inDireccion</code>.</td></tr>
+  <tr><td>Campo Notas</td><td>Muestra un campo adicional <code>inNotas</code> de texto libre.</td></tr>
+  <tr><td>Ocultar campos vacíos</td><td>Si está activo, los campos opcionales sin valor no se dibujan en el ticket (no aparecen ni con un guion).</td></tr>
+  <tr><td>Numeración automática</td><td>Activa un contador por negocio. Cada ticket recibe un número tipo <code>T-0001</code> que aparece arriba a la derecha en el ticket.</td></tr>
+  <tr><td>Prefijo de numeración</td><td>Texto que va antes del número (máx. 6 caracteres). Por defecto <code>T-</code>.</td></tr>
+  <tr><td>Reiniciar numeración</td><td>Nunca / Cada mes / Cada año. El contador vuelve a 0 automáticamente al empezar el periodo.</td></tr>
+</table>
+
+<div class="aviso aviso-warn">
+  <b>La numeración es solo visual.</b> El número <code>T-0001</code> NO viaja dentro del código QR. Se dibuja en el ticket pero no forma parte de los datos verificables. Sirve para que el cliente y el operador tengan una referencia, pero la validez del ticket depende de la firma digital, no del número.
+</div>
+
+<!-- =====================================================================
+     SECCIÓN 3 — HISTORIAL
+     ===================================================================== -->
+<h3>📊 Historial y estadísticas</h3>
+
+<p>Muestra un resumen de los tickets generados, con filtros por fecha, negocio, nombre y estado de uso. También permite exportar a PDF o Excel.</p>
+
+<div class="mock-panel-real">
+  <div class="panel-flotante">
+    <div class="panel-flotante-cabecera">
+      <h3>Opciones</h3>
+      <button class="panel-flotante-cerrar" type="button">✕</button>
+    </div>
+    <div class="panel-flotante-cuerpo">
+      <div class="panel-seccion abierta" data-seccion="historial">
+        <div class="panel-seccion-titulo">📊 Historial y estadísticas <span class="flecha">▼</span></div>
+        <div class="panel-seccion-cuerpo">
+
+          <div class="filtro-rango">
+            <label class="filtro-rango-label">Filtrar por fecha de emisión</label>
+            <select class="filtro-rango-select">
+              <option>Todo el historial</option>
+              <option>Hoy</option>
+              <option>Esta semana (desde el lunes)</option>
+              <option>Este mes</option>
+              <option>Rango personalizado</option>
+            </select>
+
+            <div class="filtro-extra-campo" style="margin-top:10px;">
+              <label class="filtro-rango-label">Filtrar por negocio</label>
+              <select class="filtro-rango-select">
+                <option>Todos los negocios</option>
+                <option>Teatro Nacional</option>
+                <option>Ómnibus La Habana</option>
+              </select>
+            </div>
+
+            <div class="filtro-extra-campo">
+              <label class="filtro-rango-label">Buscar por nombre</label>
+              <input type="text" class="filtro-rango-input" placeholder="Ej. Juan">
+            </div>
+
+            <label class="filtro-extra-check">
+              <input type="checkbox"> Solo tickets no usados
+            </label>
+
+            <div class="filtro-rango-info">Se incluirán todos los tickets del historial (128).</div>
+          </div>
+
+          <div class="panel-contadores">
+            <div class="panel-contador"><div class="c-num">12</div><div class="c-lbl">Hoy</div></div>
+            <div class="panel-contador"><div class="c-num">47</div><div class="c-lbl">7 días</div></div>
+            <div class="panel-contador"><div class="c-num">83</div><div class="c-lbl">Mes</div></div>
+            <div class="panel-contador"><div class="c-num">128</div><div class="c-lbl">Total</div></div>
+          </div>
+
+          <canvas class="panel-grafico" id="graficoDemo" style="width:100%;height:120px;"></canvas>
+
+          <label class="panel-label">Últimos tickets</label>
+          <div class="panel-historial-lista">
+            <div class="panel-historial-item">
+              <button class="h-check activo" type="button">✓</button>
+              <span class="h-nombre">Juan Pérez García</span>
+              <span class="h-fecha">08/10 14:30</span>
+              <button class="h-btn" type="button">Duplicar</button>
+            </div>
+            <div class="panel-historial-item">
+              <button class="h-check" type="button">✓</button>
+              <span class="h-nombre">María López</span>
+              <span class="h-fecha">08/10 12:05</span>
+              <button class="h-btn" type="button">Duplicar</button>
+            </div>
+            <div class="panel-historial-item marcado">
+              <button class="h-check activo" type="button">✓</button>
+              <span class="h-nombre">Carlos Rodríguez</span>
+              <span class="h-fecha">07/10 20:15</span>
+              <button class="h-btn" type="button">Duplicar</button>
+            </div>
+            <div class="panel-historial-item">
+              <button class="h-check" type="button">✓</button>
+              <span class="h-nombre">Ana Martínez</span>
+              <span class="h-fecha">07/10 18:42</span>
+              <button class="h-btn" type="button">Duplicar</button>
+            </div>
+          </div>
+
+          <div class="panel-fila">
+            <button class="panel-btn panel-btn-secundario" type="button">Exportar PDF</button>
+            <button class="panel-btn panel-btn-acento" type="button">Exportar Excel</button>
+          </div>
+          <div class="panel-fila">
+            <button class="panel-btn panel-btn-peligro" type="button">Borrar historial</button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<p class="mock-caption">Sección 3 — Historial y estadísticas (con filtros, contadores, gráfico y lista)</p>
+
+<h4>Contadores</h4>
+<table>
+  <tr><th>Contador</th><th>Qué cuenta</th></tr>
+  <tr><td><b>Hoy</b></td><td>Tickets generados desde las 00:00 de hoy.</td></tr>
+  <tr><td><b>7 días</b></td><td>Tickets generados en los últimos 7 días (incluyendo hoy).</td></tr>
+  <tr><td><b>Mes</b></td><td>Tickets generados desde el día 1 del mes actual.</td></tr>
+  <tr><td><b>Total</b></td><td>Todos los tickets guardados en el historial (máximo 500).</td></tr>
+</table>
+
+<h4>Gráfico de barras</h4>
+<p>Barras de los últimos 7 días (D, L, M, M, J, V, S). La altura de cada barra es proporcional al número de tickets generados ese día. Los días sin tickets se muestran con una barra mínima gris.</p>
+
+<h4>Filtros</h4>
+<table>
+  <tr><th>Filtro</th><th>Valores</th></tr>
+  <tr><td>Rango de fecha</td><td>Todo / Hoy / Esta semana / Este mes / Rango personalizado. Si eliges personalizado aparecen dos campos <code>DD/MM/AA</code>.</td></tr>
+  <tr><td>Negocio</td><td>Todos los negocios o uno específico.</td></tr>
+  <tr><td>Nombre</td><td>Búsqueda de texto parcial dentro del nombre del cliente.</td></tr>
+  <tr><td>Solo no usados</td><td>Excluye los tickets marcados como usados.</td></tr>
+</table>
+
+<h4>La lista de últimos tickets</h4>
+<p>Muestra los últimos 8 tickets que coinciden con los filtros activos. Cada fila tiene:</p>
+<ul>
+  <li><b>Círculo ✓:</b> marca el ticket como usado (se pone verde y tacha el nombre).</li>
+  <li><b>Nombre:</b> el nombre del cliente.</li>
+  <li><b>Fecha:</b> fecha y hora de generación.</li>
+  <li><b>Duplicar:</b> carga los datos de ese ticket en el formulario para reutilizarlos.</li>
+</ul>
+
+<h4>Exportar</h4>
+<ul>
+  <li><b>Exportar PDF:</b> genera un PDF A4 con cabecera OSTIKEC, filtros aplicados y una tabla con todos los tickets que coinciden.</li>
+  <li><b>Exportar Excel:</b> genera un <code>.xlsx</code> con dos hojas: <b>Historial</b> (todos los datos) y <b>Resumen</b> (tickets por negocio).</li>
+  <li>Ambos exportadores respetan los filtros activos. Si no hay tickets que coincidan, muestran un aviso.</li>
+</ul>
+
+<!-- =====================================================================
+     SECCIÓN 4 — SEGURIDAD
+     ===================================================================== -->
+<h3>🔒 Seguridad</h3>
+
+<p>Opciones de privacidad y protección del panel mediante PIN.</p>
+
+<div class="mock-panel-real">
+  <div class="panel-flotante">
+    <div class="panel-flotante-cabecera">
+      <h3>Opciones</h3>
+      <button class="panel-flotante-cerrar" type="button">✕</button>
+    </div>
+    <div class="panel-flotante-cuerpo">
+      <div class="panel-seccion abierta" data-seccion="seguridad">
+        <div class="panel-seccion-titulo">🔒 Seguridad <span class="flecha">▼</span></div>
+        <div class="panel-seccion-cuerpo">
+          <label class="panel-switch">Modo validador ciego <input type="checkbox"></label>
+          <p style="font-size:11px;color:#64748b;margin:6px 0 10px 0;">
+            Si está activo, el validador no verá el teléfono del emisor.
+          </p>
+          <label class="panel-switch">Registrar intentos fallidos <input type="checkbox" checked></label>
+          <label class="panel-label">Últimas validaciones fallidas</label>
+          <div class="panel-historial-lista">
+            <div class="panel-historial-item">
+              <span class="h-nombre">Firma no coincide</span>
+              <span class="h-fecha">08/10 11:02</span>
+            </div>
+            <div class="panel-historial-item">
+              <span class="h-nombre">Código ajeno</span>
+              <span class="h-fecha">07/10 19:44</span>
+            </div>
+          </div>
+          <div class="panel-fila">
+            <button class="panel-btn panel-btn-peligro" type="button">Borrar registro</button>
+          </div>
+
+          <div class="pin-config">
+            <label class="panel-label">PIN del panel</label>
+            <label class="panel-switch">Activar PIN para abrir el panel <input type="checkbox" checked></label>
+            <label class="panel-label" style="margin-top:8px;">Nuevo PIN (4 dígitos)</label>
+            <input type="tel" inputmode="numeric" maxlength="4" placeholder="••••">
+            <label class="panel-label">Confirmar PIN</label>
+            <input type="tel" inputmode="numeric" maxlength="4" placeholder="••••">
+            <div class="panel-fila">
+              <button class="panel-btn panel-btn-primario" type="button">Guardar PIN</button>
+              <button class="panel-btn panel-btn-peligro" type="button">Borrar PIN</button>
+            </div>
+            <p class="pin-config-hint">Si olvidas el PIN, puedes recuperar el acceso usando el PIN maestro.</p>
+            <div class="pin-aviso-maestro">
+              <b>PIN maestro de recuperación:</b> A3F9B2<br>
+              Es único para tu cuenta (teléfono + licencia). Anótalo en un lugar seguro.
+              Sirve para desbloquear el panel si olvidas tu PIN personal.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<p class="mock-caption">Sección 4 — Seguridad</p>
+
+<table>
+  <tr><th>Control</th><th>Qué hace</th></tr>
+  <tr><td>Modo validador ciego</td><td>Si está activo, la fila "Emitido por" no se muestra al validador. El teléfono del emisor sigue guardado en el QR, simplemente no se pinta en pantalla.</td></tr>
+  <tr><td>Registrar intentos fallidos</td><td>Si está activo, cada validación fallida se guarda en un log (máx. 200 entradas). Se muestran las últimas 5.</td></tr>
+  <tr><td>Borrar registro</td><td>Elimina todo el log de validaciones fallidas. Pide confirmación.</td></tr>
+  <tr><td>Activar PIN</td><td>Si está activo, el panel pide un PIN de 4 dígitos antes de abrirse.</td></tr>
+  <tr><td>Nuevo PIN / Confirmar PIN</td><td>Los dos campos deben coincidir. El PIN se guarda como hash SHA-256, nunca en texto plano.</td></tr>
+  <tr><td>Guardar PIN</td><td>Guarda el PIN y activa la protección automáticamente.</td></tr>
+  <tr><td>Borrar PIN</td><td>Desactiva la protección y borra el hash guardado.</td></tr>
+  <tr><td>PIN maestro</td><td>Código de 6 caracteres hexadecimales en mayúsculas (0-9, A-F). Se calcula con <code>sha256(teléfono + licencia + CLAVE_SECRETA)</code>, primeros 6 caracteres en mayúsculas. Sirve para desbloquear el panel si olvidas el PIN personal. No cambia nunca.</td></tr>
+</table>
+
+<div class="aviso aviso-dorado">
+  <b>Anota tu PIN maestro.</b> Es único para tu cuenta y no se puede regenerar sin cambiar de licencia. Si lo pierdes y olvidas también el PIN personal, tendrás que contactar al desarrollador.
+</div>
+
+<h4>¿Cómo funciona el bloqueo por intentos?</h4>
+<p>Tras <b>3 intentos fallidos</b> consecutivos, el panel se bloquea durante <b>5 minutos</b>. Durante ese tiempo el campo de PIN aparece deshabilitado y el mensaje indica cuántos minutos faltan. Pasado el tiempo, se puede volver a intentar.</p>
+
+<!-- =====================================================================
+     SECCIÓN 5 — APARIENCIA
+     ===================================================================== -->
+<h3>🌙 Apariencia</h3>
+
+<p>Actualmente solo contiene el modo oscuro.</p>
+
+<div class="mock-panel-real" style="max-width:420px;">
+  <div class="panel-flotante">
+    <div class="panel-flotante-cabecera">
+      <h3>Opciones</h3>
+      <button class="panel-flotante-cerrar" type="button">✕</button>
+    </div>
+    <div class="panel-flotante-cuerpo">
+      <div class="panel-seccion abierta" data-seccion="apariencia">
+        <div class="panel-seccion-titulo">🌙 Apariencia <span class="flecha">▼</span></div>
+        <div class="panel-seccion-cuerpo">
+          <label class="panel-switch">Modo oscuro <input type="checkbox"></label>
+          <p style="font-size:11px;color:#64748b;margin:6px 0 0 0;">
+            El modo oscuro solo afecta a la interfaz. El ticket generado siempre es claro.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<p class="mock-caption">Sección 5 — Apariencia</p>
+
+<div class="aviso aviso-info">
+  <b>Ojo:</b> el modo oscuro solo cambia la interfaz de la app (fondo, tarjetas, panel). El ticket generado siempre se dibuja con los colores que hayas elegido en la sección Estilo, sin importar el modo de la interfaz.
+</div>
+
+<!-- =====================================================================
+     SECCIÓN 6 — RESPALDO
+     ===================================================================== -->
+<h3>💾 Respaldo</h3>
+
+<p>Exporta o importa toda la configuración de OSTIKEC en un solo archivo.</p>
+
+<div class="mock-panel-real" style="max-width:420px;">
+  <div class="panel-flotante">
+    <div class="panel-flotante-cabecera">
+      <h3>Opciones</h3>
+      <button class="panel-flotante-cerrar" type="button">✕</button>
+    </div>
+    <div class="panel-flotante-cuerpo">
+      <div class="panel-seccion abierta" data-seccion="respaldo">
+        <div class="panel-seccion-titulo">💾 Respaldo <span class="flecha">▼</span></div>
+        <div class="panel-seccion-cuerpo">
+          <p style="font-size:12px;color:#475569;margin:0 0 10px 0;">
+            Exporta toda la configuración (negocios, etiquetas, estilos, historial y preferencias)
+            a un solo archivo .json.
+          </p>
+          <div class="panel-fila">
+            <button class="panel-btn panel-btn-primario" type="button">Exportar todo</button>
+            <button class="panel-btn panel-btn-acento" type="button">Importar todo</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<p class="mock-caption">Sección 6 — Respaldo</p>
+
+<h4>Qué incluye un respaldo</h4>
+<ul>
+  <li>Negocios y negocio activo</li>
+  <li>Etiquetas personalizadas por negocio</li>
+  <li>Estilos del ticket por negocio</li>
+  <li>Historial completo de tickets</li>
+  <li>Numeración por negocio</li>
+  <li>Configuración de seguridad</li>
+  <li>Apariencia (modo oscuro)</li>
+  <li>Configuración de campos opcionales</li>
+</ul>
+
+<div class="aviso aviso-warn">
+  <b>Importante:</b> importar un respaldo <b>reemplaza toda</b> la configuración actual. Antes de importar, la app pide confirmación. Asegúrate de que el archivo es el correcto.
+</div>
+
+<h4>Banner de respaldo mensual</h4>
+<p>Si pasan <b>30 días o más</b> sin hacer un respaldo, aparece un banner amarillo arriba del contenido en la pantalla del creador:</p>
+
+<div class="banner-respaldo" style="margin: 20px 0; border-radius: 8px;">
+  <div class="banner-respaldo-texto">
+    Han pasado <b>34 días</b> desde su último respaldo. Le recomendamos hacer uno.
+  </div>
+  <div class="banner-respaldo-botones">
+    <button type="button" class="banner-respaldo-btn banner-respaldo-btn-primario">Hacer respaldo</button>
+    <button type="button" class="banner-respaldo-btn banner-respaldo-btn-secundario">Más tarde</button>
+  </div>
+  <button type="button" class="banner-respaldo-cerrar">No volver a recordar</button>
+</div>
+
+<table>
+  <tr><th>Botón</th><th>Qué hace</th></tr>
+  <tr><td>Hacer respaldo</td><td>Exporta el archivo <code>ostikec_respaldo_AAAAMMDD_HHMM.json</code> y quita el banner.</td></tr>
+  <tr><td>Más tarde</td><td>Quita el banner hasta la próxima apertura.</td></tr>
+  <tr><td>No volver a recordar</td><td>Silencia el banner durante 100 años.</td></tr>
+</table>
+
+<h2 id="ticket-generado">El ticket generado</h2>
+
+<p>Así se ve un ticket con la plantilla Estándar y el bloque de firma activo:</p>
+
+<div class="mk-ticket">
+  <div class="mk-ticket-enc">
+    <div class="mk-ticket-logo">OT</div>
+    <div class="mk-ticket-titulo-enc">
+      <div class="mk-t-nom">OSTIKEC</div>
+      <div class="mk-t-sub">TICKET/SERVICIO/FACTURA</div>
+    </div>
+    <div class="mk-ticket-nombre-inst">TEATRO NACIONAL</div>
+  </div>
+  <div class="mk-ticket-cuerpo">
+    <div class="mk-ticket-celda">
+      <div class="mk-lbl">Nombre</div>
+      <div class="mk-val">Juan Pérez García</div>
+    </div>
+    <div class="mk-ticket-fila">
+      <div class="mk-ticket-celda">
+        <div class="mk-lbl">Fecha</div>
+        <div class="mk-val">15/10/26</div>
+      </div>
+      <div class="mk-ticket-celda">
+        <div class="mk-lbl">Teléfono</div>
+        <div class="mk-val">56224466</div>
+      </div>
+    </div>
+    <div class="mk-ticket-fila">
+      <div class="mk-ticket-celda">
+        <div class="mk-lbl">No. Asiento</div>
+        <div class="mk-val">12</div>
+      </div>
+      <div class="mk-ticket-celda">
+        <div class="mk-lbl">ID Servicio</div>
+        <div class="mk-val">SVC-2026-001</div>
+      </div>
+    </div>
+    <div class="mk-ticket-qr">
+      <div class="mk-qr-cuadro"></div>
+      Código QR con los datos cifrados
+    </div>
+    <div class="mk-ticket-servicio">
+      FUNCIÓN DE LAS 8:00 PM - SALA A
+    </div>
+    <div class="mk-ticket-pie">
+      <div class="mk-t-emit">EMITIDO</div>
+      <div class="mk-t-fecha">01/10/2026 14:30</div>
+    </div>
+    <div class="mk-ticket-firma">
+      <div class="mk-f-linea"></div>
+      <div class="mk-f-txt">Firma</div>
+    </div>
+  </div>
+</div>
+<p class="mock-caption">Ticket generado (plantilla Estándar, con firma al pie)</p>
+
+<div class="aviso aviso-info">
+  Las etiquetas "No. Asiento" e "ID Servicio" son solo un ejemplo. Cada negocio las configura según lo que necesite. El número correlativo <code>T-0001</code> aparece arriba a la derecha cuando la numeración automática está activa.
+</div>
+
+<h2 id="faq">Preguntas frecuentes</h2>
+
+<h4>¿Funciona sin internet?</h4>
+<p>Sí. La generación y validación de tickets funciona 100% offline. Solo se necesita internet para: (1) descargar la lista negra del kill switch, (2) enviar avisos a Telegram, (3) abrir el enlace de Telegram del login. Nada de esto es obligatorio para operar.</p>
+
+<h4>¿Puedo tener varios negocios en el mismo teléfono?</h4>
+<p>Sí. El modal de Negocios permite guardar tantas combinaciones como quieras. Cada una con su propio nombre, datos de servicio y etiquetas personalizadas. Cambias entre ellas con un toque.</p>
+
+<h4>¿Puedo usar la misma licencia en dos teléfonos a la vez?</h4>
+<p>No se recomienda. La sesión guarda la huella del dispositivo. Si cambias de teléfono, la app te pedirá volver a introducir teléfono y licencia. Además, cada login queda registrado en Telegram con la huella del equipo, lo que permite detectar usos indebidos.</p>
+
+<h4>¿Qué hago si pierdo mi licencia?</h4>
+<p>Contacta al desarrollador: <b>osmanitito94@zoho.com</b>. Las licencias se pueden regenerar o revocar de forma remota.</p>
+
+<h4>¿Cómo sé si un ticket es auténtico?</h4>
+<p>Abre la pantalla del validador y escanea el QR. Si el ticket es auténtico, verás un banner verde con "✔ TICKET VÁLIDO". Si alguien alteró los datos, verás "✘ TICKET NO VÁLIDO".</p>
+
+<h4>¿Qué significa "El formato no corresponde a un ticket Ostikec"?</h4>
+<p>Que el QR que escaneaste no fue generado por OSTIKEC. Puede ser un QR de una página web, de un producto o de otra aplicación.</p>
+
+<h4>¿Qué significa "La firma de verificación NO coincide"?</h4>
+<p>Que el QR sí tiene el formato de OSTIKEC pero los datos fueron alterados después de generarse. Es un intento de falsificación.</p>
+
+<h4>¿Por qué el validador no ve el teléfono del emisor?</h4>
+<p>Porque el <b>modo validador ciego</b> está activo. Puedes desactivarlo en Panel → Seguridad.</p>
+
+<h4>¿Cómo hago un respaldo?</h4>
+<p>Panel → 💾 Respaldo → <b>Exportar todo</b>. Se descarga un archivo <code>.json</code>. Guárdalo en un lugar seguro (correo, nube, WhatsApp).</p>
+
+<h4>¿Cómo restauro un respaldo?</h4>
+<p>Panel → 💾 Respaldo → <b>Importar todo</b>. Selecciona el archivo <code>.json</code>. <b>Atención:</b> esto reemplaza toda tu configuración actual.</p>
+
+<h4>¿Qué es el PIN maestro?</h4>
+<p>Es un código de 6 caracteres hexadecimales en mayúsculas único para tu cuenta. Se calcula a partir de tu teléfono, tu licencia y una clave interna. Sirve para desbloquear el panel si olvidas tu PIN personal. Aparece en Panel → Seguridad, dentro de un recuadro amarillo.</p>
+
+<h4>¿Olvidé el PIN del panel, qué hago?</h4>
+<p>Abre el panel, introduce el PIN maestro en lugar del PIN personal. Una vez dentro, cambia el PIN o desactívalo.</p>
+
+<h4>¿Puedo imprimir un ticket?</h4>
+<p>Sí. Descarga el ticket como PNG, luego ábrelo en la galería del teléfono y usa la opción de imprimir del sistema. También puedes compartirlo por WhatsApp Web o por correo e imprimirlo desde un ordenador.</p>
+
+<h4>¿El QR cambia si regenero el mismo ticket?</h4>
+<p>Sí. Cada vez que pulsas "Crear Ostikec" se genera un QR nuevo porque incluye la fecha y hora de emisión dentro de los datos firmados. Aunque escribas los mismos datos, el QR será distinto.</p>
+
+<h4>¿Puedo ver quién emitió un ticket?</h4>
+<p>Sí. Al validar un ticket, si el modo ciego está desactivado, aparece una fila "Emitido por" con el teléfono del dispositivo que lo generó.</p>
+
+<h4>¿Cómo cambio el idioma?</h4>
+<p>Actualmente OSTIKEC está solo en español. Si necesitas otro idioma, contacta al desarrollador.</p>
+
+<h4>¿Puedo usar OSTIKEC en iPhone?</h4>
+<p>La app está empaquetada para Android con AppMint. Para iPhone habría que generar una versión aparte. Contacta al desarrollador si te interesa.</p>
+
+<h4>¿El historial se borra al cerrar la app?</h4>
+<p>No. El historial se guarda en <code>localStorage</code> y persiste entre sesiones. Solo se borra si pulsas "Borrar historial" o si desinstalas la app.</p>
+
+<h4>¿Cuántos tickets guarda el historial?</h4>
+<p>Los últimos <b>500</b>. Cuando se supera ese número, los más antiguos se descartan automáticamente.</p>
+
+<h4>¿Puedo firmar el ticket a mano?</h4>
+<p>Sí. Activa el "Bloque de firma" en Panel → Estilo. Aparecerá una línea horizontal al pie del ticket con el texto que elijas. El cliente o el operador pueden firmar sobre la línea impresa.</p>
+
+<!-- =========================================================================
+     PARTE 2 — MANUAL TÉCNICO
+     ========================================================================= -->
+<div class="parte" id="parte2">
+  <h2>PARTE 2 — MANUAL TÉCNICO</h2>
+  <p>Arquitectura, lógica interna y seguridad del sistema</p>
+</div>
+
+<div class="aviso aviso-warn">
+  <b>Este manual está dirigido al desarrollador o mantenedor de la aplicación.</b> Contiene detalles del funcionamiento interno, la estructura del código y las consideraciones de seguridad. Se recomienda no compartirlo con usuarios finales.
+</div>
+
+<h2 id="arquitectura">Arquitectura de archivos</h2>
+
+<p>OSTIKEC está construido como una aplicación web empaquetada como APK. No hay backend propio: toda la lógica corre en el cliente y las únicas comunicaciones externas opcionales son Telegram y GitHub Pages (kill switch).</p>
+
+<table>
+  <tr><th>Archivo</th><th>Obligatorio</th><th>Función</th></tr>
+  <tr>
+    <td><code>index.html</code></td>
+    <td>✅ Sí</td>
+    <td>HTML, CSS embebido y JavaScript principal. Contiene el login, las pantallas 2 y 3, el cifrado, la firma, la lectura QR y el arranque.</td>
+  </tr>
+  <tr>
+    <td><code>qrcode.js</code></td>
+    <td>✅ Sí</td>
+    <td>Librería que genera las matrices del código QR. Sin ella no se pueden crear tickets.</td>
+  </tr>
+  <tr>
+    <td><code>html5-qrcode.min.js</code></td>
+    <td>✅ Sí</td>
+    <td>Librería que lee códigos QR desde la cámara o desde un archivo. Sin ella no se pueden validar tickets.</td>
+  </tr>
+  <tr>
+    <td><code>extras.css</code></td>
+    <td>✅ Sí</td>
+    <td>Estilos añadidos: modal de negocios, ojo de licencia, mensaje promocional, compactación del login, modales de términos/manual/confirmación, panel flotante, controles del panel, modo oscuro.</td>
+  </tr>
+  <tr>
+    <td><code>extras.js</code></td>
+    <td>✅ Sí</td>
+    <td>Lógica base de extras: negocios, etiquetas, estilo del ticket, historial, numeración, seguridad, apariencia, campos configurables, panel flotante, exportación a PDF/Excel, respaldo completo, API <code>window.OSTIKEC</code>.</td>
+  </tr>
+  <tr>
+    <td><code>extras2.css</code></td>
+    <td>✅ Sí</td>
+    <td>Estilos del módulo 2: filtros del historial, plantillas, firma, PIN, banner de respaldo, vista previa.</td>
+  </tr>
+  <tr>
+    <td><code>extras2.js</code></td>
+    <td>✅ Sí</td>
+    <td>Módulo 2: filtros combinados, plantillas base, firma al pie, marcar usados, reinicio de numeración, PIN del panel, banner de respaldo, vista previa mini.</td>
+  </tr>
+  <tr>
+    <td><code>panel.js</code></td>
+    <td>⚠️ Opcional</td>
+    <td>Envía avisos a Telegram sobre accesos y tickets generados. Si se elimina, no se envían reportes.</td>
+  </tr>
+  <tr>
+    <td><code>bloqueo.js</code></td>
+    <td>⚠️ Opcional</td>
+    <td>Kill switch remoto: consulta <code>blocked.json</code> en GitHub y bloquea la app si el usuario está revocado.</td>
+  </tr>
+  <tr>
+    <td><code>jspdf.umd.min.js</code></td>
+    <td>⚠️ Opcional</td>
+    <td>Librería para exportar el historial a PDF. Si falta, el botón muestra un aviso.</td>
+  </tr>
+  <tr>
+    <td><code>xlsx.full.min.js</code></td>
+    <td>⚠️ Opcional</td>
+    <td>Librería para exportar el historial a Excel. Si falta, el botón muestra un aviso.</td>
+  </tr>
+  <tr>
+    <td><code>blocked.json</code></td>
+    <td>⚠️ Opcional</td>
+    <td>Lista de usuarios bloqueados. Se aloja en el repositorio de GitHub, no en el APK.</td>
+  </tr>
+  <tr>
+    <td><code>manual.html</code></td>
+    <td>❌ No</td>
+    <td>Este manual. No forma parte del APK, solo del repositorio.</td>
+  </tr>
+</table>
+
+<h3>Orden de carga (crítico)</h3>
+
+<pre><code>1. index.html       → define la lógica principal, modoActual, CLAVE_SESION
+2. jspdf.umd.min.js → window.jspdf
+3. xlsx.full.min.js → window.XLSX
+4. extras.js        → define window.OSTIKEC (API pública)
+5. extras2.js       → consume window.OSTIKEC (debe ir DESPUÉS de extras.js)
+6. panel.js         → envía avisos a Telegram
+7. bloqueo.js       → kill switch</code></pre>
+
+<div class="aviso aviso-warn">
+  <b>extras2.js DEBE cargarse después de extras.js.</b> Si se invierte el orden, <code>window.OSTIKEC</code> no existirá y extras2.js hará <code>return</code> silencioso tras un <code>console.warn</code>. Todas las funcionalidades del módulo 2 (plantillas, firma, filtros, PIN) quedarían desactivadas.
+</div>
+
+<h3>Estructura del ZIP para AppMint</h3>
+
+<pre><code>ostikec.zip
+├── index.html
+├── extras.css
+├── extras.js
+├── extras2.css
+├── extras2.js
+├── panel.js
+├── bloqueo.js
+├── qrcode.js
+├── html5-qrcode.min.js
+├── jspdf.umd.min.js
+└── xlsx.full.min.js</code></pre>
+
+<p>El <code>manual.html</code>, <code>blocked.json</code> y los archivos de documentación <b>no se incluyen</b> en el ZIP.</p>
+
+<h2 id="flujo">Flujo de la aplicación</h2>
+
+<h3>Arranque</h3>
+<ol>
+  <li>Se cargan las librerías y los estilos.</li>
+  <li><code>index.html</code> registra sus listeners en <code>DOMContentLoaded</code>.</li>
+  <li><code>extras.js</code> expone <code>window.OSTIKEC</code> y aplica modo oscuro si estaba guardado.</li>
+  <li><code>extras2.js</code> espera 100 ms, verifica <code>window.OSTIKEC</code> y arranca sus módulos (wrapper de firma, interceptores, observers).</li>
+  <li><code>panel.js</code> instala interceptores en <code>#btnEntrar</code> y <code>#btnCrear</code>, y reintenta la cola de Telegram.</li>
+  <li><code>bloqueo.js</code> descarga la lista negra y la cachea.</li>
+  <li>Si hay sesión guardada y la huella coincide, se salta directo a la pantalla correspondiente.</li>
+</ol>
+
+<h3>Inicio de sesión</h3>
+<ol>
+  <li>El usuario escribe teléfono y licencia.</li>
+  <li>Se normaliza el teléfono (quita <code>+53</code> o <code>53</code> si sobran dígitos).</li>
+  <li>Se calcula <code>sha256(SALT_LICENCIAS + '|' + telefono + '|' + LICENCIA_MAYÚSCULAS)</code>.</li>
+  <li>Se busca una entrada en <code>USUARIOS_AUTORIZADOS</code> cuyo <code>hashCred</code> coincida (comparación con <code>.toLowerCase()</code> para ser tolerante a mayúsculas/minúsculas).</li>
+  <li>Si coincide, se guarda la sesión con <code>tel</code>, <code>licencia</code>, <code>tipo</code>, <code>huella</code> y <code>fecha</code>.</li>
+  <li><code>bloqueo.js</code> intercepta el click de <code>#btnEntrar</code> con <code>setTimeout(200)</code> y comprueba la lista negra. Si el usuario está bloqueado, muestra la pantalla de bloqueo y cierra la sesión.</li>
+  <li><code>panel.js</code> intercepta el mismo click con <code>setTimeout(300)</code> y envía a Telegram los datos del login si la pantalla cambió correctamente.</li>
+</ol>
+
+<h3>Generación de un ticket</h3>
+<ol>
+  <li>El usuario rellena los campos.</li>
+  <li><code>extras.js</code> intercepta <code>#btnCrear</code> clonando el nodo y sustituyéndolo.</li>
+  <li>Al hacer click, <code>extras.js</code>:
+    <ul>
+      <li>Recoge los datos del formulario (incluyendo los campos opcionales).</li>
+      <li>Si la numeración está activa, llama a <code>siguienteNumero()</code> y obtiene <code>numeroTicketActual</code>.</li>
+      <li>Llama al <code>generarTicket()</code> original de <code>index.html</code>.</li>
+      <li>Si el ticket se mostró correctamente, agrega una entrada al historial con <code>{fecha, no, f, n, t, a, i, e, negId}</code>.</li>
+    </ul>
+  </li>
+  <li><code>generarTicket()</code> construye el QR con <code>construirContenidoQR()</code>. El wrapper de <code>extras.js</code> inyecta <code>datos.e = sesion.tel</code> antes de cifrar.</li>
+  <li>Se cifra el JSON, se calcula la firma SHA-256 y se forma <code>OTK1|&lt;cifrado&gt;|&lt;firma&gt;</code>.</li>
+  <li><code>window.dibujarTicket</code> dibuja el ticket. El wrapper de <code>extras.js</code> usa los colores, plantilla, campos opcionales y negocio activo. El wrapper de <code>extras2.js</code> añade, si corresponde, el bloque de firma al pie.</li>
+  <li><code>panel.js</code> intercepta el click con <code>setTimeout(300)</code> y envía a Telegram el nombre del negocio activo.</li>
+</ol>
+
+<h3>Validación de un ticket</h3>
+<ol>
+  <li>El usuario abre el lector QR (desde el creador o desde el validador).</li>
+  <li>Se captura con la cámara o con archivo.</li>
+  <li><code>leerContenidoQR(texto)</code> divide por <code>|</code>, comprueba el prefijo <code>OTK1</code>, descifra y recalcula la firma.</li>
+  <li>Si la firma coincide, <code>datos</code> queda disponible.</li>
+  <li><code>procesarLectura</code> enruta al validador o al creador según <code>modoActual</code>.</li>
+  <li>Los wrappers de <code>extras.js</code> interceptan <code>mostrarResultadoValidacion</code> y <code>mostrarResultadoValidador</code>:
+    <ul>
+      <li>Renombran las filas 4 y 5 a "Campo 4" y "Campo 5".</li>
+      <li>Añaden la fila "Emitido por" con <code>datos.e</code> si el modo ciego no está activo.</li>
+      <li>Registran el fallo en el log si la validación no fue válida.</li>
+    </ul>
+  </li>
+</ol>
+
+<h2 id="licencias">Sistema de licencias (SHA-256)</h2>
+
+<p>Las licencias <b>ya no se guardan en texto plano</b>. En su lugar se guarda el hash SHA-256 de <code>SALT_LICENCIAS + '|' + telefono + '|' + LICENCIA_MAYÚSCULAS</code>.</p>
+
+<pre><code>const SALT_LICENCIAS = 'Ostikec-Salt-Licencias-2026-v1';
+
+const USUARIOS_AUTORIZADOS = [
+  { hashCred: '6439...8AE8', tipo: 'creador'   },
+  { hashCred: '3F58...E17D', tipo: 'validador' },
+  { hashCred: 'E9B5...450B', tipo: 'creador'   },
+  { hashCred: 'B683...87AB', tipo: 'validador' },
+  /* Usuario Validador Universal */
+  { hashCred: '4FD6...C598', tipo: 'validador' }
+];</code></pre>
+
+<h3>Por qué se hizo este cambio</h3>
+<p>Antes, un atacante que descompilara el APK veía directamente los pares teléfono/licencia. Ahora solo ve hashes. Para obtener un par válido tendría que hacer fuerza bruta sobre SHA-256, lo cual es inviable.</p>
+
+<h3>Cómo añadir un usuario nuevo</h3>
+<ol>
+  <li>Abre una calculadora SHA-256 online, por ejemplo <code>https://emn178.github.io/online-tools/sha256.html</code>.</li>
+  <li>Escribe, en una sola línea y sin espacios:<br>
+    <code>Ostikec-Salt-Licencias-2026-v1|TELEFONO|LICENCIA_MAYÚSCULAS</code><br>
+    Por ejemplo: <code>Ostikec-Salt-Licencias-2026-v1|54089688|OT-C001-88-O</code>
+  </li>
+  <li>Copia el hash resultante (64 caracteres hexadecimales).</li>
+  <li>Añade una línea nueva al array con <code>{ hashCred: '&lt;hash&gt;', tipo: 'creador' }</code> o <code>'validador'</code>.</li>
+  <li>Vuelve a compilar el APK.</li>
+</ol>
+
+<div class="aviso aviso-warn">
+  <b>Nunca cambies <code>SALT_LICENCIAS</code></b> una vez tengas usuarios registrados. Invalidaría todos los hashes existentes y nadie podría entrar.
+</div>
+
+<h2 id="sesion">Sesión y huella del dispositivo</h2>
+
+<h3>Huella del dispositivo</h3>
+<pre><code>function huellaDispositivo() {
+  const partes = [
+    navigator.userAgent,
+    navigator.language,
+    navigator.platform || '',
+    screen.width, screen.height, screen.colorDepth,
+    window.devicePixelRatio,
+    new Date().getTimezoneOffset()
+  ];
+  return sha256Hex(partes.join('|')).substring(0, 16);
+}</code></pre>
+
+<p>Son 16 caracteres hexadecimales (64 bits). No es un identificador único garantizado: dos teléfonos idénticos con el mismo idioma, resolución y zona horaria pueden generar la misma huella. Sirve como referencia razonable para detectar cambios de equipo.</p>
+
+<h3>Sesión guardada</h3>
+<pre><code>{
+  "tel": "54089688",
+  "licencia": "OT-C001-88-O",
+  "tipo": "creador",
+  "huella": "a1b2c3d4e5f6a7b8",
+  "fecha": 1759156200000
+}</code></pre>
+
+<p>Al restaurar la sesión, <code>obtenerSesionValida()</code> no solo comprueba la huella: también recalcula el hash de la credencial y verifica que siga apareciendo en <code>USUARIOS_AUTORIZADOS</code>. Así, si revocas una licencia editando el array, el usuario pierde el acceso aunque tenga la sesión guardada.</p>
+
+<h2 id="cifrado">Cifrado y firma digital</h2>
+
+<h3>Cifrado reversible del QR</h3>
+<p>Esquema propio: Base64 + desplazamiento variable sobre el alfabeto Base64. El resultado sigue siendo Base64 válido, así que el QR nunca se rompe.</p>
+
+<pre><code>const CLAVE_CIFRADO = 17;
+const ALFABETO_B64 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
+
+function cifrarCadena(textoPlano) {
+  const base64 = btoa(unescape(encodeURIComponent(textoPlano)));
+  let salida = '';
+  for (let i = 0; i &lt; base64.length; i++) {
+    const ch = base64[i];
+    if (ch === '=') { salida += '='; continue; }
+    const indice = ALFABETO_B64.indexOf(ch);
+    salida += ALFABETO_B64[(indice + CLAVE_CIFRADO + i * 3) % 64];
+  }
+  return salida;
+}</code></pre>
+
+<p>El desplazamiento depende de la posición <code>i</code>, lo que hace que el cifrado no sea un simple César. Sigue siendo reversible si se conoce el alfabeto y la constante.</p>
+
+<h3>Firma SHA-256</h3>
+<pre><code>function construirContenidoQR(datos) {
+  const json = JSON.stringify(datos);
+  const cuerpo = cifrarCadena(json);
+  const firma = sha256Hex(CLAVE_SECRETA + json).substring(0, 12).toUpperCase();
+  return PREFIJO_TICKET + '|' + cuerpo + '|' + firma;
+}</code></pre>
+
+<p><code>CLAVE_SECRETA</code> es una constante de 26 caracteres que vive en <code>index.html</code>. La firma son los primeros 12 caracteres hex del SHA-256 (48 bits). Es suficiente para detectar alteraciones accidentales o manuales.</p>
+
+<h3>Verificación al leer</h3>
+<pre><code>function leerContenidoQR(texto) {
+  const partes = texto.trim().split('|');
+  if (partes.length !== 3) return { valido: false, error: 'El formato no corresponde a un ticket Ostikec.' };
+  if (partes[0] !== PREFIJO_TICKET) return { valido: false, error: 'Este código no fue generado por Ostikec.' };
+
+  let json;
+  try { json = descifrarCadena(partes[1]); }
+  catch (e) { return { valido: false, error: 'No se pudo descifrar el contenido.' }; }
+
+  const firmaEsperada = sha256Hex(CLAVE_SECRETA + json).substring(0, 12).toUpperCase();
+  if (firmaEsperada !== partes[2]) {
+    return { valido: false, error: 'La firma de verificación NO coincide. Ticket falsificado o alterado.' };
+  }
+
+  let datos;
+  try { datos = JSON.parse(json); }
+  catch (e) { return { valido: false, error: 'Los datos internos están dañados.' }; }
+
+  return { valido: true, datos };
+}</code></pre>
+
+<h2 id="qr">Construcción y lectura del QR</h2>
+
+<h3>Estructura del JSON firmado</h3>
+<pre><code>{
+  "f": "15/10/26",          // fecha del servicio
+  "n": "Juan Pérez García", // nombre del cliente
+  "t": "56224466",          // teléfono del cliente
+  "a": "12",                // campo 4 (etiqueta configurable)
+  "i": "SVC-2026-001",      // campo 5 (etiqueta configurable)
+  "e": "54089688"           // teléfono del dispositivo emisor (añadido por extras.js)
+}</code></pre>
+
+<div class="aviso aviso-info">
+  Los campos opcionales (correo, dirección, notas) <b>NO viajan en el QR</b>. Solo se dibujan en el canvas visual del ticket. Esto es intencional: si viajaran, el QR crecería y podría perder legibilidad, además de que el validador no necesita esa información.
+</div>
+
+<h3>Contenido final</h3>
+<pre><code>OTK1|Y2JjZGRlZmdoaWprbG1ub3BxcnN0|A3F9B21C4D80</code></pre>
+
+<h3>Dibujo del ticket</h3>
+<p><code>window.dibujarTicket</code> es reemplazado por <code>extras.js</code> en <code>instalarDibujarTicketPersonalizado()</code>. Esa función:</p>
+<ul>
+  <li>Mide primero las celdas con un canvas auxiliar (para calcular la altura total).</li>
+  <li>Luego dibuja el ticket en <code>#canvasTicket</code>.</li>
+  <li>Respeta el estilo activo (colores, fuente, orientación, tamaño QR, marca de agua, pie).</li>
+  <li>Dibuja el negocio activo arriba a la derecha y sus datos de servicio arriba del pie.</li>
+  <li>Si la numeración está activa, pinta <code>T-0001</code> arriba a la derecha.</li>
+</ul>
+
+<p><code>extras2.js</code> envuelve esta función para añadir el bloque de firma. La marca <code>wrapper.__ostikecFirmaInstalada = true</code> evita que el wrapper se instale más de una vez.</p>
+
+<h2 id="panel-tecnico">Panel flotante: arquitectura</h2>
+
+<p>El panel vive en <code>extras.js</code> (secciones 26 y 27). Se compone de:</p>
+
+<ul>
+  <li><b>Botón flotante</b> <code>#btnFlotanteMenu</code>: creado en <code>crearBotonFlotante()</code>. Solo visible cuando <code>body.creador-activo</code>.</li>
+  <li><b>Fondo oscuro</b> <code>#panelFlotanteFondo</code>: creado en <code>crearPanelFlotante()</code>. Cierra el panel al hacer click.</li>
+  <li><b>Panel</b> <code>#panelFlotante</code>: contenedor con cabecera y cuerpo desplazable.</li>
+  <li><b>Cuerpo</b> <code>#panelCuerpo</code>: se rellena con <code>construirContenidoPanel()</code>.</li>
+</ul>
+
+<h3>Construcción del contenido</h3>
+<pre><code>function construirContenidoPanel() {
+  const cont = document.getElementById('panelCuerpo');
+  cont.innerHTML =
+    construirSeccionEstilo() +
+    construirSeccionCampos() +
+    construirSeccionHistorial() +
+    construirSeccionSeguridad() +
+    construirSeccionApariencia() +
+    construirSeccionRespaldo();
+  instalarAcordeon();
+  instalarListenersPanel();
+  /* Restaurar la sección abierta guardada */
+}</code></pre>
+
+<p>Cada <code>construirSeccion*()</code> devuelve HTML plano. Los valores por defecto se leen de <code>localStorage</code> mediante las funciones <code>obtenerEstiloActual()</code>, <code>leerCamposConfig()</code>, etc.</p>
+
+<h3>Acordeón</h3>
+<pre><code>function instalarAcordeon() {
+  const secciones = document.querySelectorAll('.panel-seccion');
+  secciones.forEach(function (sec) {
+    const titulo = sec.querySelector('.panel-seccion-titulo');
+    if (!titulo || titulo.dataset.accInstalado === '1') return;
+    titulo.dataset.accInstalado = '1';
+    titulo.addEventListener('click', function () {
+      const estaAbierta = sec.classList.contains('abierta');
+      secciones.forEach(s => s.classList.remove('abierta'));
+      if (!estaAbierta) {
+        sec.classList.add('abierta');
+        guardarJSON(CLAVE_MENU_ESTADO, { abierta: sec.dataset.seccion });
+      } else {
+        guardarJSON(CLAVE_MENU_ESTADO, { abierta: '' });
+      }
+    });
+  });
+}</code></pre>
+
+<p>Solo una sección puede estar abierta a la vez. El estado se guarda en <code>localStorage['ostikec_menu_estado']</code> para restaurarlo al reabrir el panel.</p>
+
+<h3>Listeners del panel</h3>
+<p><code>instalarListenersPanel()</code> conecta:</p>
+<ul>
+  <li>Botones de paleta (color cinta, fondo, acento) → <code>actualizarEstiloParcial()</code> y reconstrucción completa.</li>
+  <li>Switches de campos opcionales, ocultar vacíos, numeración, modo ciego, log de fallos, modo oscuro.</li>
+  <li>Inputs de prefijo, pie, marca de agua, firma.</li>
+  <li>Botones de exportar PDF/Excel, borrar historial, borrar log.</li>
+  <li>Botones de exportar/importar configuración completa.</li>
+  <li>Botones de guardar/borrar PIN.</li>
+  <li>Botones de plantilla, filtros del historial (extras2.js), etc.</li>
+</ul>
+
+<h3>Refresco automático</h3>
+<p><code>refrescarPanelSiAbierto()</code> reconstruye el contenido del panel si está visible. Se llama desde:</p>
+<ul>
+  <li>Al seleccionar/borrar un negocio.</li>
+  <li>Al cambiar la configuración de etiquetas.</li>
+  <li>Al importar negocios o configuración.</li>
+  <li>Al crear un ticket (para actualizar el historial).</li>
+</ul>
+
+<h3>Observer de extras2.js</h3>
+<p><code>extras2.js</code> observa <code>#panelCuerpo</code> con un <code>MutationObserver</code> para inyectar sus controles (plantillas, firma, vista previa, filtros, PIN) cada vez que el panel se reconstruye:</p>
+
+<pre><code>observerPanel = new MutationObserver(function () {
+  observerPanel.disconnect();
+  setTimeout(function () {
+    inyectarSelectorFiltro();
+    instalarInterceptorExportacion();
+    actualizarListaVisual();
+    inyectarControlesPlantillas();
+    inyectarControlesFirma();
+    inyectarControlesReinicio();
+    inyectarControlesPin();
+    inyectarVistaPrevia();
+    observarPanel();
+  }, 15);
+});
+observerPanel.observe(panelCuerpo, { childList: true });</code></pre>
+
+<p>Además, un <code>setInterval</code> de 400 ms comprueba cada sección y vuelve a inyectar si falta algo. Es redundante pero protege contra fallos del observer.</p>
+
+<h2 id="estilos-tecnico">Sistema de estilos y plantillas</h2>
+
+<h3>Clave de almacenamiento</h3>
+<p>Cada negocio tiene su propio estilo guardado en <code>ostikec_estilo_ticket</code> como un mapa <code>{ negId: estilo }</code>. El negocio <code>_default</code> aplica cuando no hay negocio activo.</p>
+
+<pre><code>const ESTILO_POR_DEFECTO = {
+  colorCinta: '#16324f',
+  colorFondo: '#ffffff',
+  colorAcento: '#f2a900',
+  mostrarLogo: true,
+  formaLogo: 'circulo',
+  tamanoQR: 400,
+  orientacion: 'vertical',
+  fuente: 'Arial',
+  pie: '',
+  marcaAgua: ''
+};</code></pre>
+
+<h3>Actualización parcial</h3>
+<pre><code>function actualizarEstiloParcial(cambios) {
+  const estilo = obtenerEstiloActual();
+  Object.assign(estilo, cambios);
+  guardarEstiloActual(estilo);
+}</code></pre>
+
+<p>Cada control del panel llama a esta función y luego a <code>construirContenidoPanel()</code> para repintar la sección con el estado actualizado.</p>
+
+<h3>Plantillas base (extras2.js)</h3>
+<pre><code>const PLANTILLAS = {
+  estandar: { estilo: { colorCinta: '#16324f', colorFondo: '#ffffff', colorAcento: '#f2a900', fuente: 'Arial',        orientacion: 'vertical' } },
+  factura:  { estilo: { colorCinta: '#1f2937', colorFondo: '#ffffff', colorAcento: '#64748b', fuente: 'Courier New',  orientacion: 'vertical' } },
+  evento:   { estilo: { colorCinta: '#6b21a8', colorFondo: '#fffbeb', colorAcento: '#db2777', fuente: 'Arial',        orientacion: 'vertical' } },
+  recibo:   { estilo: { colorCinta: '#166534', colorFondo: '#ffffff', colorAcento: '#16a34a', fuente: 'Helvetica',    orientacion: 'vertical' } }
+};</code></pre>
+
+<p><code>detectarPlantillaActual()</code> compara el estilo activo con cada plantilla. Si coinciden los 4 campos clave (cinta, fondo, acento, fuente), esa plantilla se marca como activa.</p>
+
+<h3>Paletas disponibles</h3>
+<table>
+  <tr><th>Paleta</th><th>Colores</th></tr>
+  <tr><td>Cintas (8)</td><td>#16324f, #1f2937, #991b1b, #166534, #6b21a8, #c2410c, #9d174d, #475569</td></tr>
+  <tr><td>Fondos (4)</td><td>#ffffff, #fffbeb, #f8fafc, #f0f9ff</td></tr>
+  <tr><td>Acentos (8)</td><td>#f2a900, #2563eb, #16a34a, #dc2626, #9333ea, #ea580c, #db2777, #64748b</td></tr>
+</table>
+
+<h3>Firma al pie (extras2.js)</h3>
+<pre><code>const CLAVE_FIRMA = 'ostikec_firma_config';
+// { activa: boolean, texto: string }</code></pre>
+
+<p>El wrapper de <code>dibujarTicket</code> en extras2.js detecta si la firma está activa, crea un canvas temporal con <code>nuevoH = H + 100</code>, dibuja el ticket original arriba, y añade una franja con línea horizontal y texto centrado debajo.</p>
+
+<h2 id="historial-tecnico">Historial, filtros y numeración</h2>
+
+<h3>Almacenamiento del historial</h3>
+<pre><code>const CLAVE_HISTORIAL = 'ostikec_historial';
+const MAX_HISTORIAL = 500;
+
+// Cada entrada:
+{
+  fecha: "2026-10-08T14:30:00.000Z", // ISO de creación
+  no:    "T-0001",                    // número correlativo (o '')
+  f:     "15/10/26",                  // fecha del servicio
+  n:     "Juan Pérez",                // nombre
+  t:     "56224466",                  // teléfono cliente
+  a:     "12",                        // campo 4
+  i:     "SVC-001",                   // campo 5
+  e:     "54089688",                  // teléfono emisor
+  negId: "neg_...",                   // id del negocio activo
+  usado: false                        // marcado por el usuario en extras2
+}</code></pre>
+
+<h3>Contadores y gráfico</h3>
+<p>Se calculan al construir la sección Historial:</p>
+<ul>
+  <li><b>Hoy:</b> <code>t &gt;= inicioDelDia</code>.</li>
+  <li><b>7 días:</b> <code>t &gt;= hoy - 6*86400000</code>.</li>
+  <li><b>Mes:</b> <code>t &gt;= primer día del mes actual</code>.</li>
+  <li><b>Total:</b> <code>historial.length</code>.</li>
+</ul>
+
+<p>El gráfico de barras se dibuja con canvas nativo. Cada barra tiene altura proporcional al máximo de los últimos 7 días. Se etiqueta con la inicial del día (D, L, M, M, J, V, S).</p>
+
+<h3>Filtros (extras2.js)</h3>
+<pre><code>const CLAVE_FILTRO = 'ostikec_filtro_fechas';
+// { rango, desde, hasta, negocioId, nombre, soloNoUsados }</code></pre>
+
+<p><code>crearPredicadoFiltro()</code> devuelve una función que se aplica a cada entrada del historial. Se usa tanto para la lista visual como para la exportación.</p>
+
+<p><code>rangoDeFechas()</code> convierte el rango seleccionado en <code>{ desde, hasta }</code> en milisegundos. <code>parsearFechaDDMMAA()</code> valida el formato <code>DD/MM/AA</code> y acepta años de 2 dígitos (se interpretan como 20XX).</p>
+
+<h3>Marcar como usado</h3>
+<pre><code>function toggleUsado(indice) {
+  const historial = OST().leerHistorial();
+  historial[indice].usado = !historial[indice].usado;
+  OST().guardarHistorial(historial);
+  actualizarListaVisual();
+  actualizarInfo();
+}</code></pre>
+
+<p>Los tickets usados se muestran con fondo verde claro y el nombre tachado. El filtro "Solo no usados" los excluye.</p>
+
+<h3>Numeración (extras.js §7)</h3>
+<pre><code>const CLAVE_NUMERACION = 'ostikec_numeracion';
+const CLAVE_REINICIO  = 'ostikec_numeracion_reinicio';
+// numeracion: { negId: numeroActual }
+// reinicio:   { modo: 'nunca'|'mes'|'anio', ultimoReinicio: timestamp }</code></pre>
+
+<p><code>siguienteNumero()</code> comprueba primero si toca reiniciar según el modo. Si toca, pone el contador del negocio activo a 0, guarda la fecha del reinicio y devuelve 1. Si no toca, incrementa y devuelve.</p>
+
+<p>El resultado se guarda en <code>numeroTicketActual</code> y se pinta en el ticket si <code>numeracionActiva === true</code>. <b>Nunca se incluye en el QR.</b></p>
+
+<h2 id="pin-tecnico">PIN del panel y PIN maestro</h2>
+
+<h3>Configuración del PIN</h3>
+<pre><code>const CLAVE_PIN_CONFIG   = 'ostikec_pin_panel';    // { activo, hash }
+const CLAVE_PIN_INTENTOS = 'ostikec_pin_intentos'; // { fallos, bloqueadoHasta }
+const PIN_LONGITUD       = 4;
+const MAX_INTENTOS_PIN   = 3;
+const MINUTOS_BLOQUEO_PIN = 5;</code></pre>
+
+<p>El PIN se guarda como <code>sha256Hex(pin)</code>. Nunca en texto plano.</p>
+
+<h3>Interceptor del botón flotante</h3>
+<pre><code>function interceptarBotonFlotante() {
+  const btn = document.getElementById('btnFlotanteMenu');
+  const clon = btn.cloneNode(true);
+  btn.parentNode.replaceChild(clon, btn);
+  clon.addEventListener('click', function (e) {
+    e.stopPropagation();
+    const cfg = leerConfigPin();
+    if (!cfg.activo || !cfg.hash) { OST().abrirPanelFlotante(); return; }
+    if (pinVerificadoEnSesion) { OST().abrirPanelFlotante(); return; }
+    const int = leerIntentosPin();
+    if (int.bloqueadoHasta > Date.now()) { mostrarModalPin(true); return; }
+    mostrarModalPin(false);
+  });
+}</code></pre>
+
+<p><code>pinVerificadoEnSesion</code> es un booleano en memoria. Se resetea a <code>false</code> al pulsar <code>#btnEntrar</code>, así cada login pide el PIN de nuevo.</p>
+
+<h3>Verificación</h3>
+<pre><code>function intentarVerificarPin() {
+  const pin = document.getElementById('inpPinModal').value.trim();
+  if (pin.length !== PIN_LONGITUD) { /* error */ }
+
+  /* 1. Comprobar PIN maestro */
+  const pinMaestro = OST().calcularPinMaestroActual();
+  if (pinMaestro && pin === pinMaestro) { /* OK */ }
+
+  /* 2. Comprobar contra el hash guardado */
+  const cfg = leerConfigPin();
+  if (OST().sha256Hex(pin) === cfg.hash) { /* OK */ }
+
+  /* 3. Fallo */
+  const int = leerIntentosPin();
+  int.fallos++;
+  if (int.fallos >= MAX_INTENTOS_PIN) {
+    int.bloqueadoHasta = Date.now() + (MINUTOS_BLOQUEO_PIN * 60 * 1000);
+    int.fallos = 0;
+  }
+  guardarIntentosPin(int);
+}</code></pre>
+
+<h3>PIN maestro</h3>
+<pre><code>function calcularPinMaestroActual() {
+  const sesion = JSON.parse(localStorage.getItem(CLAVE_SESION) || '{}');
+  if (!sesion || !sesion.tel || !sesion.licencia) return null;
+  const semilla = sesion.tel + sesion.licencia + CLAVE_SECRETA;
+  return sha256Hex(semilla).substring(0, 6).toUpperCase();
+}</code></pre>
+
+<p>El PIN maestro es determinista: siempre el mismo para el mismo par teléfono/licencia. Se muestra en Panel → Seguridad para que el usuario lo anote. Como el resultado se obtiene del hash SHA-256 (que es hexadecimal), los 6 caracteres son siempre dígitos 0-9 y letras A-F en mayúsculas.</p>
+
+<div class="aviso aviso-info">
+  El PIN maestro se comprueba <b>antes</b> que el PIN personal. Esto permite al usuario recuperar el acceso si olvida su PIN. El sistema impide que el PIN personal coincida con el PIN maestro al guardarlo.
+</div>
+
+<h2 id="respaldo-tecnico">Sistema de respaldo</h2>
+
+<h3>Exportar todo</h3>
+<pre><code>function exportarConfiguracionCompleta() {
+  const paquete = {
+    firma: 'OSTIKEC_CONFIG',
+    version: 2,
+    fecha: new Date().toISOString(),
+    negocios: leerNegocios(),
+    negocioActivo: leerActivoId(),
+    etiquetas: leerMapaEtiquetas(),
+    estilos: leerMapaEstilos(),
+    historial: leerHistorial(),
+    numeracion: leerMapaNumeracion(),
+    seguridad: leerSeguridad(),
+    apariencia: leerApariencia(),
+    campos: leerCamposConfig()
+  };
+  const blob = new Blob([JSON.stringify(paquete, null, 2)], { type: 'application/json' });
+  descargarBlob(blob, 'ostikec_respaldo_' + Date.now() + '.json');
+}</code></pre>
+
+<p>La firma <code>'OSTIKEC_CONFIG'</code> distingue un respaldo completo de una simple exportación de negocios (que usa <code>'OSTIKEC_NEGOCIOS'</code>).</p>
+
+<h3>Importar todo</h3>
+<pre><code>function importarConfiguracionCompleta(archivo) {
+  /* ... */
+  if (datos.firma !== 'OSTIKEC_CONFIG') { alert('El archivo no es un respaldo válido de OSTIKEC.'); return; }
+  if (!confirm('¿Reemplazar TODA la configuración actual con la del respaldo? Se perderán los datos actuales.')) return;
+  /* ... escribir cada bloque en localStorage ... */
+}</code></pre>
+
+<h3>Banner de respaldo (extras2.js)</h3>
+<pre><code>const CLAVE_RESPALDO = 'ostikec_ultimo_respaldo';
+const DIAS_RESPALDO = 30;</code></pre>
+
+<p><code>diasDesdeUltimoRespaldo()</code> devuelve el número de días o <code>null</code>. Si nunca se ha hecho respaldo, se guarda la fecha actual silenciosamente (para no mostrar el banner la primera vez). Si han pasado 30+ días, se inyecta el banner antes del <code>&lt;main&gt;</code>.</p>
+
+<h2 id="api">API pública <code>window.OSTIKEC</code></h2>
+
+<p><code>extras.js</code> expone un objeto global con utilidades, lectores y escritores. Está pensado para que <code>extras2.js</code> y otros módulos futuros puedan usar las mismas funciones sin duplicar código.</p>
+
+<pre><code>window.OSTIKEC = {
+  /* Claves de almacenamiento */
+  CLAVES: { NEGOCIOS, NEGOCIO_ACTIVO, ETIQUETAS, SESION, ESTILO, HISTORIAL,
+            NUMERACION, SEGURIDAD, APARIENCIA, MENU_ESTADO, LOG_FALLOS, CAMPOS_CONFIG },
+
+  /* Utilidades generales */
+  leerJSON, guardarJSON, descargarBlob,
+  fechaHoraEmisionLocal, fechaHoraExportacionLocal,
+  envolverTexto, sha256Hex, calcularPinMaestroActual, colorDeContraste,
+
+  /* Negocios */
+  leerNegocios, guardarNegocios, leerActivoId, guardarActivoId, obtenerNegocioActivo,
+
+  /* Etiquetas */
+  leerMapaEtiquetas, obtenerConfiguracionActual, obtenerLabelMostrable,
+
+  /* Estilo */
+  leerMapaEstilos, obtenerEstiloActual, guardarEstiloActual, actualizarEstiloParcial,
+
+  /* Historial */
+  leerHistorial, guardarHistorial, agregarAlHistorial, duplicarTicketDelHistorial,
+
+  /* Numeración */
+  leerMapaNumeracion, siguienteNumero,
+
+  /* Seguridad */
+  leerSeguridad, guardarSeguridad,
+
+  /* Apariencia */
+  leerApariencia, guardarApariencia, aplicarModoOscuro,
+
+  /* Campos */
+  leerCamposConfig, guardarCamposConfig,
+  actualizarVisibilidadCamposOpcionales, obtenerCamposOpcionales,
+
+  /* Helpers de dibujo */
+  dibujarCeldaCompacta, medirAlturaCelda, dibujarQRCanvas, dibujarLogoForma,
+
+  /* Panel */
+  construirContenidoPanel, refrescarPanelSiAbierto,
+  abrirPanelFlotante, cerrarPanelFlotante,
+
+  /* Exportadores */
+  exportarHistorialPDF, exportarHistorialExcel,
+
+  /* Variable del número de ticket (con getter/setter) */
+  get numeroTicketActual() { return numeroTicketActual; },
+  set numeroTicketActual(v) { numeroTicketActual = v; },
+
+  /* Constantes */
+  TAM_ETIQUETA, TAM_VALOR, LINE_HEIGHT, ESPACIO_CELDA,
+  ALTURA_ENCABEZADO, ALTURA_MINIMA, TAM_QR_MINIMO,
+  ESTILO_POR_DEFECTO, CAMPOS_CONFIG_DEFECTO,
+  OPCIONES_ETIQUETAS, PALETA_CINTAS, PALETA_FONDOS, PALETA_ACENTOS,
+  FUENTES_TICKET, TAMANOS_QR, MAX_PIE, MAX_MARCA_AGUA, MAX_OTRO
+};</code></pre>
+
+<h3>Ejemplo de uso</h3>
+<pre><code>// Leer el historial y exportar solo los de hoy
+const historial = window.OSTIKEC.leerHistorial();
+const hoy = new Date(); hoy.setHours(0,0,0,0);
+const deHoy = historial.filter(h => new Date(h.fecha).getTime() >= hoy.getTime());
+
+// Cambiar el color de la cinta y regenerar el ticket visible
+window.OSTIKEC.actualizarEstiloParcial({ colorCinta: '#6b21a8' });
+window.OSTIKEC.construirContenidoPanel();</code></pre>
+
+<h2 id="telegram">Reporte a Telegram</h2>
+
+<p>Cuando <code>panel.js</code> está presente, la app envía avisos a un chat de Telegram usando un bot. Esto permite al desarrollador tener constancia de todos los accesos y tickets generados.</p>
+
+<h3>Cómo se envían los mensajes</h3>
+<pre><code>const TELEGRAM_TOKEN   = '&lt;TU_TOKEN&gt;';
+const TELEGRAM_CHAT_ID = '&lt;TU_CHAT_ID&gt;';
+const API_URL = 'https://api.telegram.org/bot' + TELEGRAM_TOKEN + '/sendMessage';
+
+function enviarMensaje(texto) {
+  const url = API_URL
+    + '?chat_id=' + encodeURIComponent(TELEGRAM_CHAT_ID)
+    + '&text=' + encodeURIComponent(texto)
+    + '&parse_mode=HTML';
+
+  /* Truco anti-CORS: usar una imagen invisible */
+  const img = new Image();
+  img.src = url;
+
+  encolar({ texto: texto, fecha: Date.now() });
+}</code></pre>
+
+<p>El truco de la imagen evita los bloqueos CORS del WebView de Android. No se necesita leer la respuesta. Los valores reales de token y chat_id están en <code>panel.js</code>.</p>
+
+<h3>Cola de reintentos</h3>
+<pre><code>const CLAVE_COLA = 'ostikec_cola_telegram';</code></pre>
+
+<p>Cada mensaje se guarda en la cola (<code>localStorage</code>) con máximo 100 entradas. Al arrancar, <code>reintentarCola()</code> se ejecuta 4 segundos después y reenvía todo lo pendiente.</p>
+
+<h3>Datos enviados</h3>
+<table>
+  <tr><th>Evento</th><th>Datos</th></tr>
+  <tr>
+    <td><b>Login</b></td>
+    <td>Huella, teléfono y licencia <b>en texto plano</b>, tipo (creador/validador), fecha y hora. Se enmarca con iconos 🚨🔴 para distinguirlo visualmente de un ticket.</td>
+  </tr>
+  <tr>
+    <td><b>Ticket creado</b></td>
+    <td>Huella, nombre del negocio activo (o "(Sin negocio asignado)"), fecha y hora. Se enmarca con 🎫.</td>
+  </tr>
+</table>
+
+<div class="aviso aviso-warn">
+  <b>Nota de seguridad:</b> el mensaje de login envía teléfono y licencia en texto plano al chat de Telegram del desarrollador. Esto es intencional (permite identificar quién entra), pero implica que el chat de Telegram debe considerarse un canal confidencial. Si se compromete el token del bot o el chat, se comprometen las credenciales de los usuarios.
+</div>
+
+<h2 id="killswitch">Kill switch remoto</h2>
+
+<p><code>bloqueo.js</code> permite revocar licencias de forma remota sin recompilar el APK.</p>
+
+<h3>Cómo funciona</h3>
+<ol>
+  <li>Al abrir la aplicación, se descarga <code>blocked.json</code> desde GitHub Pages con cache-busting (<code>?t=Date.now()</code>).</li>
+  <li>Se guarda en <code>localStorage['ostikec_lista_negra']</code>.</li>
+  <li>Al pulsar <code>#btnEntrar</code>, <code>verificarBloqueo()</code> comprueba si el teléfono y la licencia introducidos están en la lista.</li>
+  <li>Si coinciden, se muestra una pantalla fija (overlay <code>#pantallaBloqueo</code>) con el motivo y se cierran las pantallas 2 y 3.</li>
+</ol>
+
+<h3>Modos de coincidencia</h3>
+<pre><code>const coincideTel = bTel && bTel === tel;
+const coincideLic = bLic && bLic === lic;
+
+if (coincideTel && (!bLic || coincideLic)) return b;   // bloqueo por dispositivo o por par
+</code></pre>
+
+<p>Se puede bloquear:</p>
+<ul>
+  <li>Solo por teléfono (dispositivo robado).</li>
+  <li>Por teléfono + licencia (bloqueo específico).</li>
+</ul>
+
+<h3>Fail-open</h3>
+<p>Si nunca hubo conexión, la lista local es <code>null</code> y <code>estaBloqueado()</code> devuelve <code>null</code> sin bloquear. Esto evita que un usuario legítimo quede fuera por falta de internet.</p>
+
+<h3>Formato de <code>blocked.json</code></h3>
+<pre><code>{
+  "actualizado": "2026-09-30",
+  "bloqueados": [
+    {
+      "telefono": "55555555",
+      "licencia": "VV-V555-55-V",
+      "motivo": "Licencia de prueba",
+      "fecha": "2026-09-30"
+    }
+  ]
+}</code></pre>
+
+<div class="aviso aviso-info">
+  El bloqueo solo se verifica al pulsar <code>#btnEntrar</code>. Si el usuario tiene sesión guardada y no cierra sesión, no se le bloqueará hasta que cierre sesión y vuelva a entrar. Es una limitación conocida del diseño actual.
+</div>
+
+<h2 id="paleta">Paleta de colores</h2>
+
+<div class="paleta">
+  <div class="color">
+    <div class="muestra" style="background:#16324f;"></div>
+    <div class="datos">
+      <b>Azul principal</b>
+      HEX: #16324f<br>
+      RGB: 22, 50, 79<br>
+      HSL: 210, 56%, 20%
+    </div>
+  </div>
+  <div class="color">
+    <div class="muestra" style="background:#0d2033;"></div>
+    <div class="datos">
+      <b>Azul fondo login</b>
+      HEX: #0d2033<br>
+      RGB: 13, 32, 51<br>
+      HSL: 211, 59%, 13%
+    </div>
+  </div>
+  <div class="color">
+    <div class="muestra" style="background:#f2a900;"></div>
+    <div class="datos">
+      <b>Dorado acento</b>
+      HEX: #f2a900<br>
+      RGB: 242, 169, 0<br>
+      HSL: 42, 100%, 47%
+    </div>
+  </div>
+  <div class="color">
+    <div class="muestra" style="background:#9db4cc;"></div>
+    <div class="datos">
+      <b>Azul claro subtítulos</b>
+      HEX: #9db4cc<br>
+      RGB: 157, 180, 204<br>
+      HSL: 211, 27%, 71%
+    </div>
+  </div>
+  <div class="color">
+    <div class="muestra" style="background:#eef2f7;"></div>
+    <div class="datos">
+      <b>Gris fondo claro</b>
+      HEX: #eef2f7<br>
+      RGB: 238, 242, 247<br>
+      HSL: 213, 36%, 95%
+    </div>
+  </div>
+  <div class="color">
+    <div class="muestra" style="background:#64748b;"></div>
+    <div class="datos">
+      <b>Gris texto secundario</b>
+      HEX: #64748b<br>
+      RGB: 100, 116, 139<br>
+      HSL: 215, 16%, 47%
+    </div>
+  </div>
+  <div class="color">
+    <div class="muestra" style="background:#cbd5e1;"></div>
+    <div class="datos">
+      <b>Gris bordes</b>
+      HEX: #cbd5e1<br>
+      RGB: 203, 213, 225<br>
+      HSL: 213, 27%, 84%
+    </div>
+  </div>
+  <div class="color">
+    <div class="muestra" style="background:#dcfce7;"></div>
+    <div class="datos">
+      <b>Verde éxito fondo</b>
+      HEX: #dcfce7<br>
+      RGB: 220, 252, 231<br>
+      HSL: 143, 84%, 93%
+    </div>
+  </div>
+  <div class="color">
+    <div class="muestra" style="background:#166534;"></div>
+    <div class="datos">
+      <b>Verde éxito texto</b>
+      HEX: #166534<br>
+      RGB: 22, 101, 52<br>
+      HSL: 142, 64%, 24%
+    </div>
+  </div>
+  <div class="color">
+    <div class="muestra" style="background:#fee2e2;"></div>
+    <div class="datos">
+      <b>Rojo error fondo</b>
+      HEX: #fee2e2<br>
+      RGB: 254, 226, 226<br>
+      HSL: 0, 93%, 94%
+    </div>
+  </div>
+  <div class="color">
+    <div class="muestra" style="background:#991b1b;"></div>
+    <div class="datos">
+      <b>Rojo error texto</b>
+      HEX: #991b1b<br>
+      RGB: 153, 27, 27<br>
+      HSL: 0, 70%, 35%
+    </div>
+  </div>
+  <div class="color">
+    <div class="muestra" style="background:#ffffff; border-bottom: 1px solid #e2e8f0;"></div>
+    <div class="datos">
+      <b>Blanco puro</b>
+      HEX: #ffffff<br>
+      RGB: 255, 255, 255<br>
+      HSL: 0, 0%, 100%
+    </div>
+  </div>
+</div>
+
+<h2 id="operaciones">Operaciones comunes</h2>
+
+<h3>Cómo añadir una nueva licencia</h3>
+<ol>
+  <li>Abre una calculadora SHA-256 online.</li>
+  <li>Calcula el hash de: <code>Ostikec-Salt-Licencias-2026-v1|TELEFONO|LICENCIA_MAYÚSCULAS</code></li>
+  <li>Copia el hash.</li>
+  <li>Edita <code>index.html</code> y añade una entrada a <code>USUARIOS_AUTORIZADOS</code>.</li>
+  <li>Vuelve a comprimir el ZIP y súbelo a AppMint.</li>
+  <li>Genera un nuevo APK y distribúyelo.</li>
+</ol>
+
+<h3>Cómo bloquear una licencia</h3>
+<ol>
+  <li>Abre <code>blocked.json</code> en GitHub.</li>
+  <li>Añade una entrada con teléfono, licencia y motivo.</li>
+  <li>Guarda los cambios.</li>
+  <li>En la próxima apertura con conexión, el dispositivo afectado descargará la lista y se bloqueará.</li>
+</ol>
+
+<h3>Cómo regenerar el token de Telegram</h3>
+<ol>
+  <li>Abre Telegram, busca <code>@BotFather</code>.</li>
+  <li>Escribe <code>/mybots</code> y elige tu bot.</li>
+  <li>Selecciona "API Token" → "Revoke current token".</li>
+  <li>Copia el nuevo token.</li>
+  <li>Reemplaza el valor en <code>panel.js</code>.</li>
+  <li>Regenera el APK.</li>
+</ol>
+
+<h3>Cómo cambiar la clave secreta</h3>
+<div class="aviso aviso-warn">
+  Cambiar <code>CLAVE_SECRETA</code> invalida <b>todos</b> los tickets generados antes del cambio. Solo debe hacerse si la clave fue comprometida.
+</div>
+<ol>
+  <li>Abre <code>index.html</code>.</li>
+  <li>Busca <code>CLAVE_SECRETA</code>.</li>
+  <li>Cámbiala por un valor nuevo, largo y aleatorio.</li>
+  <li>Regenera el APK.</li>
+</ol>
+
+<h3>Cómo compilar el APK</h3>
+<ol>
+  <li>Comprime en un ZIP: <code>index.html</code>, <code>extras.css</code>, <code>extras.js</code>, <code>extras2.css</code>, <code>extras2.js</code>, <code>panel.js</code>, <code>bloqueo.js</code>, <code>qrcode.js</code>, <code>html5-qrcode.min.js</code>, <code>jspdf.umd.min.js</code>, <code>xlsx.full.min.js</code>.</li>
+  <li>Entra a AppMint (o la plataforma de empaquetado que uses).</li>
+  <li>Selecciona el modo "ZIP to APK" / "Offline ZIP".</li>
+  <li>Sube el ZIP y configura el nombre, paquete e ícono.</li>
+  <li>Genera el APK y descárgalo.</li>
+  <li>Instálalo en los dispositivos autorizados.</li>
+</ol>
+
+<h2 id="nueva-config">Añadir una configuración al panel</h2>
+
+<p>Si más adelante quieres añadir una nueva opción al panel, sigue esta plantilla.</p>
+
+<h3>Paso 1 — Definir la clave y los valores por defecto</h3>
+<pre><code>const CLAVE_MI_CONFIG = 'ostikec_mi_config';
+const MI_CONFIG_DEFECTO = { activo: false, valor: 'algo' };
+
+function leerMiConfig() {
+  return Object.assign({}, MI_CONFIG_DEFECTO, leerJSON(CLAVE_MI_CONFIG, {}));
+}
+function guardarMiConfig(cfg) { guardarJSON(CLAVE_MI_CONFIG, cfg); }</code></pre>
+
+<h3>Paso 2 — Añadir el bloque HTML en la sección correspondiente</h3>
+<pre><code>function construirSeccionCampos() {
+  const cfg = leerCamposConfig();
+  const miCfg = leerMiConfig();
+  return '' +
+    '&lt;div class="panel-seccion" data-seccion="campos"&gt;' +
+      /* ... controles existentes ... */
+      '&lt;label class="panel-switch"&gt;Mi opción nueva ' +
+        '&lt;input type="checkbox" id="chkMiOpcion"' + (miCfg.activo ? ' checked' : '') + '&gt;' +
+      '&lt;/label&gt;' +
+    '&lt;/div&gt;';
+}</code></pre>
+
+<h3>Paso 3 — Registrar el listener</h3>
+<pre><code>function instalarListenersPanel() {
+  /* ... otros listeners ... */
+  const chkMi = document.getElementById('chkMiOpcion');
+  if (chkMi) chkMi.addEventListener('change', function () {
+    const cfg = leerMiConfig();
+    cfg.activo = this.checked;
+    guardarMiConfig(cfg);
+    /* Aplicar el efecto en la app si es necesario */
+  });
+}</code></pre>
+
+<h3>Paso 4 — Aplicar el efecto en la lógica</h3>
+<p>Llama a <code>leerMiConfig()</code> donde necesites leer el valor (por ejemplo, en <code>dibujarTicket</code>) y actúa en consecuencia.</p>
+
+<h3>Paso 5 — Exponer la API si otros módulos la van a usar</h3>
+<pre><code>window.OSTIKEC.leerMiConfig = leerMiConfig;
+window.OSTIKEC.guardarMiConfig = guardarMiConfig;</code></pre>
+
+<h3>Paso 6 — Documentar en el manual</h3>
+<ul>
+  <li>En <b>Parte 1</b>: qué hace la opción, dónde encontrarla, qué efecto tiene en el ticket o en la app.</li>
+  <li>En <b>Parte 2</b>: dónde vive el código, qué clave usa, cómo se propaga el cambio.</li>
+  <li>En <b>el ZIP del manual</b>: añadir una captura del panel con la opción.</li>
+</ul>
+
+<div class="aviso aviso-info">
+  <b>Convención de nombres:</b> las claves de localStorage deben empezar siempre por <code>ostikec_</code>. Así se distinguen de las claves de otras apps o de datos temporales.
+</div>
+
+<h2 id="seguridad">Seguridad y limitaciones</h2>
+
+<h3>Capas existentes</h3>
+<table>
+  <tr><th>Capa</th><th>Qué protege</th><th>Fortaleza</th></tr>
+  <tr><td>Licencia con hash SHA-256</td><td>Acceso a la app</td><td>Alta (no se puede leer de un APK descompilado)</td></tr>
+  <tr><td>Huella del dispositivo</td><td>Detección de cambio de equipo</td><td>Media (no única en teléfonos idénticos)</td></tr>
+  <tr><td>Cifrado reversible del QR</td><td>Camuflaje de los datos</td><td>Media (reversible conociendo el alfabeto)</td></tr>
+  <tr><td>Firma SHA-256 (12 hex)</td><td>Integridad de los datos</td><td>Alta contra alteración manual</td></tr>
+  <tr><td>Teléfono emisor en el QR</td><td>Atribución de emisión</td><td>Alta (queda registrado quién emitió)</td></tr>
+  <tr><td>PIN del panel (4 dígitos)</td><td>Acceso a la configuración</td><td>Media (4 dígitos, con bloqueo de 5 min)</td></tr>
+  <tr><td>PIN maestro (6 hex)</td><td>Recuperación de acceso</td><td>Media (determinista, ligado a la licencia)</td></tr>
+  <tr><td>Reporte a Telegram</td><td>Detección de uso indebido</td><td>Alta para revisión periódica</td></tr>
+  <tr><td>Kill switch remoto</td><td>Revocación de licencias</td><td>Alta con conexión a internet</td></tr>
+</table>
+
+<h3>Limitaciones conocidas</h3>
+<ul>
+  <li>El login envía teléfono y licencia <b>en texto plano</b> a Telegram. El chat del desarrollador es un punto de confidencialidad.</li>
+  <li>La huella del dispositivo no es única en teléfonos idénticos. Dos Samsung A12 con el mismo idioma y zona horaria podrían compartir huella.</li>
+  <li>El kill switch solo se comprueba al pulsar <code>#btnEntrar</code>. Un usuario con sesión guardada y sin cerrar sesión no será bloqueado.</li>
+  <li>El kill switch es <b>fail-open</b>: si nunca hubo conexión, no bloquea. Es una decisión deliberada para no castigar a usuarios legítimos sin internet.</li>
+  <li>La firma del QR son solo 12 caracteres hex (48 bits). Un atacante con muchos recursos podría intentar colisiones, pero en la práctica es inviable para el caso de uso.</li>
+  <li><code>CLAVE_SECRETA</code> y <code>SALT_LICENCIAS</code> viven en <code>index.html</code> como constantes globales. Un atacante que descompile el APK puede leerlas. La mitigación es la ofuscación previa al empaquetado.</li>
+  <li>Si un usuario pierde el PIN personal y el PIN maestro (porque perdió la sesión y con ella el <code>licencia</code> guardado), no podrá desbloquear el panel hasta volver a iniciar sesión.</li>
+</ul>
+
+<h3>Recomendaciones</h3>
+<ul>
+  <li>No compartir <code>manual.html</code> con usuarios finales.</li>
+  <li>Mantener <code>CLAVE_SECRETA</code>, <code>SALT_LICENCIAS</code> y el token de Telegram fuera de cualquier documento compartido.</li>
+  <li>Revisar periódicamente los avisos de Telegram para detectar patrones anómalos.</li>
+  <li>Regenerar el token de Telegram si se sospecha que fue comprometido.</li>
+  <li>Ofuscar el código antes de distribuir el APK a terceros.</li>
+  <li>Hacer respaldos periódicos (el banner automático ayuda).</li>
+  <li>Anotar el PIN maestro en un lugar seguro.</li>
+</ul>
+
+<div class="aviso aviso-ok" style="margin-top: 40px; text-align: center;">
+  <b>Fin del manual</b><br>
+  <span style="font-size:12px;">OSTIKEC v26.55.10 — © OSTICOR 2026 — Dr. C. Osmani Tito Corrioso</span><br>
+  <span style="font-size:12px;">Contacto: osmanitito94@zoho.com | Telegram: <a href="https://t.me/+4atqFg3ymcpjNWFh">Canal oficial OSTIKEC</a></span>
+</div>
+
+</div>
+
+<script>
+/* ============================================================================
+   MANUAL — Scripts de demo
+   Dibuja los canvas de vista previa y gráfico del historial.
+   No depende de extras.js: se autogestiona.
+   ============================================================================ */
+(function () {
+  'use strict';
+
+  function dibujarVistaPreviaDemo() {
+    const cv = document.getElementById('vistaPreviaDemo');
+    if (!cv) return;
+
+    const W = 130, H = 200;
+    cv.width = W; cv.height = H;
+    cv.style.width = W + 'px';
+    cv.style.height = H + 'px';
+    const ctx = cv.getContext('2d');
+
+    /* Fondo y marco */
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0, 0, W, H);
+    ctx.strokeStyle = '#16324f';
+    ctx.lineWidth = 1.5;
+    ctx.strokeRect(2, 2, W - 4, H - 4);
+
+    /* Encabezado */
+    ctx.fillStyle = '#16324f';
+    ctx.fillRect(2.5, 2.5, W - 5, 28);
+
+    /* Logo OT */
+    ctx.beginPath();
+    ctx.arc(11, 2.5 + 14, 6, 0, Math.PI * 2);
+    ctx.fillStyle = '#f2a900';
+    ctx.fill();
+    ctx.fillStyle = '#16324f';
+    ctx.font = 'bold 5px Arial, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('OT', 11, 2.5 + 14 + 0.3);
+
+    /* OSTIKEC */
+    ctx.fillStyle = '#ffffff';
+    ctx.font = 'bold 7px Arial, sans-serif';
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'top';
+    ctx.fillText('OSTIKEC', 21, 6);
+    ctx.fillStyle = '#f2a900';
+    ctx.font = 'bold 3px Arial, sans-serif';
+    ctx.fillText('TICKET/SERVICIO/FACTURA', 21, 15);
+
+    /* Celdas */
+    let y = 34;
+    function celda(lbl, val, x, yy) {
+      ctx.fillStyle = '#64748b';
+      ctx.font = 'bold 2.8px Arial, sans-serif';
+      ctx.textAlign = 'left';
+      ctx.textBaseline = 'top';
+      ctx.fillText(lbl, x, yy);
+      ctx.fillStyle = '#0f172a';
+      ctx.font = 'bold 4.5px Arial, sans-serif';
+      ctx.fillText(val, x, yy + 3.5);
+    }
+
+    celda('NOMBRE', 'Juan Pérez García', 4, y); y += 10;
+    celda('FECHA', '15/10/26', 4, y);
+    celda('TELÉFONO', '56224466', 68, y); y += 10;
+    celda('ASIENTO', '12', 4, y);
+    celda('ID SERVICIO', 'SVC-2026-001', 68, y); y += 10;
+
+    /* QR ficticio */
+    const tamQR = 60;
+    const xQR = (W - tamQR) / 2;
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(xQR, y + 2, tamQR, tamQR);
+    ctx.strokeStyle = '#e2e8f0';
+    ctx.lineWidth = 0.5;
+    ctx.strokeRect(xQR, y + 2, tamQR, tamQR);
+    ctx.fillStyle = '#1f2937';
+    const modulos = 12, lado = tamQR / modulos;
+    for (let f = 0; f < modulos; f++) {
+      for (let c = 0; c < modulos; c++) {
+        if ((f * 7 + c * 3 + f * c + (f ^ c)) % 4 < 2) {
+          ctx.fillRect(xQR + c * lado, y + 2 + f * lado, lado, lado);
+        }
+      }
+    }
+    /* Marcadores de esquina */
+    function marcador(x, y2, t) {
+      ctx.fillStyle = '#1f2937';
+      ctx.fillRect(x, y2, t, t);
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(x + t * 0.2, y2 + t * 0.2, t * 0.6, t * 0.6);
+      ctx.fillStyle = '#1f2937';
+      ctx.fillRect(x + t * 0.35, y2 + t * 0.35, t * 0.3, t * 0.3);
+    }
+    const tm = Math.floor(tamQR / 5);
+    marcador(xQR, y + 2, tm);
+    marcador(xQR + tamQR - tm, y + 2, tm);
+    marcador(xQR, y + 2 + tamQR - tm, tm);
+
+    y += tamQR + 6;
+
+    /* Pie */
+    ctx.fillStyle = '#64748b';
+    ctx.font = 'bold 2.8px Arial, sans-serif';
+    ctx.textAlign = 'right';
+    ctx.textBaseline = 'top';
+    ctx.fillText('EMITIDO', W / 2 - 1.5, y);
+
+    ctx.fillStyle = '#16324f';
+    ctx.font = 'bold 3.8px Arial, sans-serif';
+    ctx.textAlign = 'left';
+    ctx.fillText('15/10/26 14:30', W / 2 + 1.5, y - 1);
+  }
+
+  function dibujarGraficoDemo() {
+    const cv = document.getElementById('graficoDemo');
+    if (!cv) return;
+
+    cv.width = 380;
+    cv.height = 120;
+    const ctx = cv.getContext('2d');
+
+    /* Datos de ejemplo */
+    const datos = [
+      { dia: 'L', cantidad: 5 },
+      { dia: 'M', cantidad: 8 },
+      { dia: 'M', cantidad: 3 },
+      { dia: 'J', cantidad: 12 },
+      { dia: 'V', cantidad: 15 },
+      { dia: 'S', cantidad: 6 },
+      { dia: 'D', cantidad: 2 }
+    ];
+    const max = 15;
+    const W = cv.width;
+    const H = cv.height;
+    const padX = 20, padY = 22;
+    const anchoBarra = (W - padX * 2) / 7 - 6;
+    const alturaMax = H - padY * 2;
+
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0, 0, W, H);
+
+    datos.forEach(function (c, i) {
+      const x = padX + i * ((W - padX * 2) / 7) + 3;
+      const altura = (c.cantidad / max) * alturaMax;
+      const yy = H - padY - altura;
+
+      ctx.fillStyle = c.cantidad > 0 ? '#16324f' : '#e2e8f0';
+      ctx.fillRect(x, yy, anchoBarra, altura || 2);
+
+      if (c.cantidad > 0) {
+        ctx.fillStyle = '#16324f';
+        ctx.font = 'bold 11px Arial, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'bottom';
+        ctx.fillText(String(c.cantidad), x + anchoBarra / 2, yy - 2);
+      }
+      ctx.fillStyle = '#64748b';
+      ctx.font = 'bold 10px Arial, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'top';
+      ctx.fillText(c.dia, x + anchoBarra / 2, H - padY + 4);
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    dibujarVistaPreviaDemo();
+    dibujarGraficoDemo();
+  });
+})();
+</script>
+
+</body>
+</html>
