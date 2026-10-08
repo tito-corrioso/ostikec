@@ -474,3 +474,8 @@ body.modo-oscuro .campo-bloque select.select-etiqueta option { color: #1f2937; }
     padding-top: max(34px, calc(12px + env(safe-area-inset-top))) !important;
   }
 }
+
+/* Safe area también para el login */
+#pantallaLogin .login-wrap {
+  padding-top: max(30px, calc(30px + env(safe-area-inset-top))) !important;
+}
