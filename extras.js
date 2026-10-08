@@ -2461,6 +2461,30 @@
     });
   }
 
+    /* ============================================================
+     32b. PIN MAESTRO DERIVADO DEL USUARIO
+     ----------------------------------------------------------------------------
+     Calcula el PIN maestro de recuperación para la sesión activa.
+     Se deriva de: teléfono + licencia + clave secreta.
+
+     Como cada usuario tiene su propio teléfono y licencia, cada uno tiene
+     un PIN maestro único y distinto. Solo el desarrollador (que conoce la
+     clave secreta) y el propio usuario (a través de esta función) pueden
+     calcularlo.
+     ============================================================ */
+  function calcularPinMaestroActual() {
+    try {
+      const sesion = JSON.parse(localStorage.getItem(CLAVE_SESION) || '{}');
+      if (!sesion || !sesion.tel) return null;
+      const usuario = USUARIOS_AUTORIZADOS.find(function (u) {
+        return u.telefono === sesion.tel;
+      });
+      if (!usuario) return null;
+      const semilla = sesion.tel + usuario.licencia + CLAVE_SECRETA;
+      return sha256Hex(semilla).substring(0, 6).toUpperCase();
+    } catch (e) { return null; }
+  }
+
   /* ============================================================
      33. ARRANQUE
      ============================================================ */
@@ -2537,6 +2561,7 @@
     fechaHoraExportacionLocal: fechaHoraExportacionLocal,
     envolverTexto: envolverTexto,
     sha256Hex: sha256Hex,
+    calcularPinMaestroActual: calcularPinMaestroActual,
     colorDeContraste: colorDeContraste,
 
     /* Negocios */
