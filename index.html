@@ -609,20 +609,12 @@ const SALT_LICENCIAS = 'Ostikec-Salt-Licencias-2026-v1';
    por los hashes reales calculados con la calculadora SHA-256 siguiendo
    las instrucciones del bloque anterior. */
 const USUARIOS_AUTORIZADOS = [
-  /* Usuario 1 — teléfono 52164110, licencia OTC-C001-10-OTC (creador) */
-  { hashCred: 'REEMPLAZAR_HASH_USUARIO_1_AQUI_0000000000000000000000000000000', tipo: 'creador'   },
-
-  /* Usuario 2 — teléfono 58213831, licencia OT-C002-31-D (creador) */
-  { hashCred: 'REEMPLAZAR_HASH_USUARIO_2_AQUI_0000000000000000000000000000000', tipo: 'creador'   },
-
-  /* Usuario 3 — teléfono 52164110, licencia OTC-V001-10-OTC (validador) */
-  { hashCred: 'REEMPLAZAR_HASH_USUARIO_3_AQUI_0000000000000000000000000000000', tipo: 'validador' },
-
-  /* Usuario 4 — teléfono 58213831, licencia OT-V002-31-D (validador) */
-  { hashCred: 'REEMPLAZAR_HASH_USUARIO_4_AQUI_0000000000000000000000000000000', tipo: 'validador' },
-
-  /* Usuario 5 — teléfono 50000000, licencia VV-V000-00-V (validador) */
-  { hashCred: 'REEMPLAZAR_HASH_USUARIO_5_AQUI_0000000000000000000000000000000', tipo: 'validador' }
+  { hashCred: '6439445CB395D66CA134012935A1D2435073DF59411CA2949186F8A0FF808AE8', tipo: 'creador' },
+  { hashCred: '3F58D785F33C350DF10BCB79502C599D82E08031B658AE6ACFABDBFE776AE17D', tipo: 'validador' },
+  { hashCred: 'E9B5AC3731A1A68E97653932AAB41EDA6BB31989391D4B47B12E07E53368450B', tipo: 'creador' },
+  { hashCred: 'B6833BE2589F7A0E24D3BE0964E67E16D2004ABFD3CB1FD75CE787DAB07E87AB', tipo: 'validador' },
+  /* Usuario Validador Universal*/
+  { hashCred: '4FD66189A78D626EA3DCE59A0278FCBB196BAE677C43ECB86F4B5A10A219C598', tipo: 'validador' }
 ];
 
 const CLAVE_SECRETA   = 'Ostikec-Clave-Secreta-2026'; // clave para calcular la firma
