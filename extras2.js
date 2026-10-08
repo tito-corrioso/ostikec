@@ -1282,8 +1282,9 @@
       return;
     }
 
-    /* Comprobar primero el PIN maestro */
-    if (pin === PIN_MAESTRO) {
+    /* Comprobar primero el PIN maestro derivado del usuario */
+    const pinMaestro = OST().calcularPinMaestroActual();
+    if (pinMaestro && pin === pinMaestro) {
       resetearIntentosPin();
       pinVerificadoEnSesion = true;
       document.getElementById('modalPin').classList.remove('visible');
