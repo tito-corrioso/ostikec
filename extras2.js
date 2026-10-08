@@ -1406,8 +1406,9 @@
             alert('Los dos PIN no coinciden.');
             return;
           }
-          if (nuevo === PIN_MAESTRO) {
-            alert('Ese PIN está reservado como PIN maestro. Elige otro.');
+          const pinMaestro = OST().calcularPinMaestroActual();
+          if (pinMaestro && nuevo === pinMaestro) {
+            alert('Ese PIN coincide con tu PIN maestro de recuperación. Elige uno distinto.');
             return;
           }
 
