@@ -28,7 +28,6 @@
   const CLAVE_PIN_CONFIG      = 'ostikec_pin_panel';
   const CLAVE_PIN_INTENTOS    = 'ostikec_pin_intentos';
   const DIAS_RESPALDO         = 30;
-  const PIN_MAESTRO           = '1234';
   const PIN_LONGITUD          = 4;
   const MAX_INTENTOS_PIN      = 3;
   const MINUTOS_BLOQUEO_PIN   = 5;
