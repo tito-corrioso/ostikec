@@ -1336,37 +1336,45 @@
     };
   }
 
-  /* ============================================================
     /* ============================================================
-     20. WRAPPERS DE RESULTADOS (con aviso de fecha vencida)
+     20. WRAPPERS DE RESULTADOS (con aviso de fecha)
      ============================================================ */
 
-  /* Analiza si la fecha "f" (DD/MM/AA) del ticket está vencida.
-     Devuelve:
-       { ok: false }                             → no se pudo analizar
-       { ok: true, vencida: false, dias: n }     → no vencida
-       { ok: true, vencida: true,  dias: n }     → vencida
+  /* Analiza la fecha "f" (DD/MM/AA) del ticket.
+     Devuelve uno de:
+       { ok: false, motivo: 'formato' }         → no parseable
+       { ok: false, motivo: 'rango' }           → parseable pero imposible
+       { ok: true, vencida: false, dias: n }    → vigente
+       { ok: true, vencida: true,  dias: n }    → vencida
 
      El margen (margenDias) es el número de días de gracia permitidos
      antes de considerar la fecha como vencida. Por defecto 1 día. */
   function analizarVencimientoFecha(fechaStr, margenDias) {
-    if (!fechaStr || typeof fechaStr !== 'string') return { ok: false };
+    if (!fechaStr || typeof fechaStr !== 'string') {
+      return { ok: false, motivo: 'formato' };
+    }
     const partes = fechaStr.trim().split('/');
-    if (partes.length !== 3) return { ok: false };
+    if (partes.length !== 3) {
+      return { ok: false, motivo: 'formato' };
+    }
 
     const dia  = parseInt(partes[0], 10);
     const mes  = parseInt(partes[1], 10) - 1;
     let anio   = parseInt(partes[2], 10);
 
-    if (isNaN(dia) || isNaN(mes) || isNaN(anio)) return { ok: false };
+    if (isNaN(dia) || isNaN(mes) || isNaN(anio)) {
+      return { ok: false, motivo: 'formato' };
+    }
     if (anio < 100) anio += 2000;
-    if (mes < 0 || mes > 11 || dia < 1 || dia > 31) return { ok: false };
+    if (mes < 0 || mes > 11 || dia < 1 || dia > 31) {
+      return { ok: false, motivo: 'rango' };
+    }
 
     const fechaTicket = new Date(anio, mes, dia);
     if (fechaTicket.getFullYear() !== anio ||
         fechaTicket.getMonth() !== mes ||
         fechaTicket.getDate() !== dia) {
-      return { ok: false };
+      return { ok: false, motivo: 'rango' };
     }
     fechaTicket.setHours(0, 0, 0, 0);
 
@@ -1384,9 +1392,11 @@
     };
   }
 
-  /* Inserta o elimina el aviso "Ticket con fecha vencida" junto al banner
-     de resultado indicado. El aviso se coloca entre el banner y la tabla.
-     Si "datos" es null o no tiene fecha, solo elimina el aviso anterior. */
+  /* Inserta o elimina el aviso de fecha junto al banner de resultado.
+     - Fecha ausente  → sin aviso
+     - Fecha inválida → "⚠ Ticket con fecha inválida"
+     - Fecha vencida  → "⚠ Ticket con fecha vencida"
+     - Fecha vigente  → sin aviso */
   function renderAvisoFecha(contenedorId, datos) {
     const idAviso = contenedorId + '_aviso_fecha';
     const existente = document.getElementById(idAviso);
@@ -1397,14 +1407,22 @@
     if (!datos || !datos.f) return;
 
     const analisis = analizarVencimientoFecha(datos.f, 1);
-    if (!analisis.ok || !analisis.vencida) return;
+
+    let texto = null;
+    if (!analisis.ok) {
+      texto = '⚠ Ticket con fecha inválida';
+    } else if (analisis.vencida) {
+      texto = '⚠ Ticket con fecha vencida';
+    }
+
+    if (!texto) return;
 
     const banner = document.getElementById(contenedorId);
     if (!banner || !banner.parentNode) return;
 
     const aviso = document.createElement('p');
     aviso.id = idAviso;
-    aviso.textContent = '⚠ Ticket con fecha vencida';
+    aviso.textContent = texto;
     aviso.style.cssText =
       'background:#fff9e6;' +
       'color:#7a5500;' +
@@ -1471,6 +1489,7 @@
       }
     };
   })();
+
 
   /* ============================================================
      21. WRAPPER DE construirContenidoQR (SOLO emisor)
