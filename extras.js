@@ -21,7 +21,7 @@
      17. Campos opcionales inyectados en el formulario
      18. Helpers de dibujo en canvas
      19. Dibujo del ticket personalizado (pie en una sola línea)
-     20. Wrappers de mostrarResultadoValidacion / Validador
+     20. Wrappers de mostrarResultadoValidacion / Validador (con aviso de fecha)
      21. Wrapper de construirContenidoQR (emisor)
      22. Ojo de licencia
      23. Confirmación de salida
@@ -1337,8 +1337,88 @@
   }
 
   /* ============================================================
-     20. WRAPPERS DE RESULTADOS
+    /* ============================================================
+     20. WRAPPERS DE RESULTADOS (con aviso de fecha vencida)
      ============================================================ */
+
+  /* Analiza si la fecha "f" (DD/MM/AA) del ticket está vencida.
+     Devuelve:
+       { ok: false }                             → no se pudo analizar
+       { ok: true, vencida: false, dias: n }     → no vencida
+       { ok: true, vencida: true,  dias: n }     → vencida
+
+     El margen (margenDias) es el número de días de gracia permitidos
+     antes de considerar la fecha como vencida. Por defecto 1 día. */
+  function analizarVencimientoFecha(fechaStr, margenDias) {
+    if (!fechaStr || typeof fechaStr !== 'string') return { ok: false };
+    const partes = fechaStr.trim().split('/');
+    if (partes.length !== 3) return { ok: false };
+
+    const dia  = parseInt(partes[0], 10);
+    const mes  = parseInt(partes[1], 10) - 1;
+    let anio   = parseInt(partes[2], 10);
+
+    if (isNaN(dia) || isNaN(mes) || isNaN(anio)) return { ok: false };
+    if (anio < 100) anio += 2000;
+    if (mes < 0 || mes > 11 || dia < 1 || dia > 31) return { ok: false };
+
+    const fechaTicket = new Date(anio, mes, dia);
+    if (fechaTicket.getFullYear() !== anio ||
+        fechaTicket.getMonth() !== mes ||
+        fechaTicket.getDate() !== dia) {
+      return { ok: false };
+    }
+    fechaTicket.setHours(0, 0, 0, 0);
+
+    const hoy = new Date();
+    hoy.setHours(0, 0, 0, 0);
+
+    const diffMs   = hoy.getTime() - fechaTicket.getTime();
+    const diffDias = Math.round(diffMs / 86400000);
+    const margen   = (typeof margenDias === 'number') ? margenDias : 1;
+
+    return {
+      ok: true,
+      vencida: diffDias > margen,
+      dias: diffDias
+    };
+  }
+
+  /* Inserta o elimina el aviso "Ticket con fecha vencida" junto al banner
+     de resultado indicado. El aviso se coloca entre el banner y la tabla.
+     Si "datos" es null o no tiene fecha, solo elimina el aviso anterior. */
+  function renderAvisoFecha(contenedorId, datos) {
+    const idAviso = contenedorId + '_aviso_fecha';
+    const existente = document.getElementById(idAviso);
+    if (existente && existente.parentNode) {
+      existente.parentNode.removeChild(existente);
+    }
+
+    if (!datos || !datos.f) return;
+
+    const analisis = analizarVencimientoFecha(datos.f, 1);
+    if (!analisis.ok || !analisis.vencida) return;
+
+    const banner = document.getElementById(contenedorId);
+    if (!banner || !banner.parentNode) return;
+
+    const aviso = document.createElement('p');
+    aviso.id = idAviso;
+    aviso.textContent = '⚠ Ticket con fecha vencida';
+    aviso.style.cssText =
+      'background:#fff9e6;' +
+      'color:#7a5500;' +
+      'border-left:4px solid #f2a900;' +
+      'padding:10px 14px;' +
+      'border-radius:6px;' +
+      'font-size:13px;' +
+      'font-weight:700;' +
+      'margin:12px 0;' +
+      'text-align:center;' +
+      'line-height:1.4;';
+    banner.parentNode.insertBefore(aviso, banner.nextSibling);
+  }
+
   (function () {
     if (typeof window.mostrarResultadoValidacion !== 'function') return;
     const original = window.mostrarResultadoValidacion;
@@ -1356,8 +1436,10 @@
             tabla.innerHTML += '<tr><td>Emitido por</td><td>' + datos.e + '</td></tr>';
           }
         }
+        renderAvisoFecha('bannerValidacion', datos);
       } else {
         original.call(this, esValido, datos, error);
+        renderAvisoFecha('bannerValidacion', null);
       }
     };
   })();
@@ -1380,8 +1462,12 @@
             tabla.innerHTML += '<tr><td>Emitido por</td><td>' + resultado.datos.e + '</td></tr>';
           }
         }
-      } else if (resultado && !resultado.valido) {
-        agregarFalloLog(resultado.error || 'Ticket inválido');
+        renderAvisoFecha('bannerValidacion3', resultado.datos);
+      } else {
+        renderAvisoFecha('bannerValidacion3', null);
+        if (resultado && !resultado.valido) {
+          agregarFalloLog(resultado.error || 'Ticket inválido');
+        }
       }
     };
   })();
