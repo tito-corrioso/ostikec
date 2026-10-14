@@ -2029,8 +2029,51 @@
       '</div>';
   }
 
-  function construirSeccionCampos() {
+    function construirSeccionCampos() {
     const cfg = leerCamposConfig();
+
+    /* --- Bloque reutilizable para cada campo auto-numerado --- */
+    function bloqueAuto(campo, label) {
+      const cfgAuto = leerAutoConfig(campo);
+      const contador = leerAutoContador(campo);
+      const limite = cfgAuto.limite || 0;
+      const agotado = cfgAuto.activo && limite > 0 && contador >= limite;
+
+      let estado;
+      if (!cfgAuto.activo) {
+        estado = '<span style="color:#94a3b8;">Auto-numeración desactivada</span>';
+      } else if (agotado) {
+        estado = '<span style="color:#991b1b;font-weight:700;">Emitidos: ' +
+          contador + ' / ' + limite + ' · AGOTADO</span>';
+      } else {
+        estado = 'Emitidos: ' + contador +
+          (limite > 0 ? ' / ' + limite : '') +
+          ' · Siguiente: ' + (cfgAuto.prefijo || '') + (contador + 1);
+      }
+
+      return '' +
+        '<div style="margin-top:14px;padding-top:12px;border-top:1px dashed #e2e8f0;">' +
+          '<label class="panel-label">' + label + '</label>' +
+          '<label class="panel-switch">Activar auto-numeración ' +
+            '<input type="checkbox" data-auto-activo="' + campo + '"' +
+              (cfgAuto.activo ? ' checked' : '') + '></label>' +
+          '<label class="panel-label">Capacidad máxima (0 = sin límite)</label>' +
+          '<input class="panel-input" type="tel" inputmode="numeric" ' +
+            'data-auto-limite="' + campo + '" value="' + (limite || 0) + '" placeholder="0">' +
+          '<label class="panel-label">Prefijo (opcional, máx. 6)</label>' +
+          '<input class="panel-input" type="text" maxlength="6" ' +
+            'data-auto-prefijo="' + campo + '" value="' +
+              (cfgAuto.prefijo || '').replace(/"/g, '&quot;') + '" placeholder="Ej. A-">' +
+          '<p data-auto-estado="' + campo + '" ' +
+            'style="font-size:11px;color:#64748b;margin:8px 0 0 0;line-height:1.4;">' +
+            estado + '</p>' +
+          '<div class="panel-fila" style="margin-top:8px;">' +
+            '<button type="button" class="panel-btn panel-btn-peligro" ' +
+              'data-auto-reiniciar="' + campo + '">Reiniciar contador</button>' +
+          '</div>' +
+        '</div>';
+    }
+
     return '' +
       '<div class="panel-seccion" data-seccion="campos">' +
         '<div class="panel-seccion-titulo">📋 Campos y datos <span class="flecha">▼</span></div>' +
@@ -2043,6 +2086,8 @@
           '<label class="panel-label">Prefijo de numeración</label>' +
           '<input class="panel-input" id="inpPrefijo" type="text" maxlength="6" value="' + (cfg.numeracionPrefijo || 'T-') + '" placeholder="Ej. T-">' +
           '<p style="font-size:11px;color:#64748b;margin:10px 0 0 0;">Los campos opcionales aparecen en el formulario y en el ticket. Nunca se incluyen en el código QR.</p>' +
+          bloqueAuto('a', 'Auto-numeración — Campo 4') +
+          bloqueAuto('i', 'Auto-numeración — Campo 5') +
         '</div>' +
       '</div>';
   }
