@@ -404,6 +404,121 @@
   }
   function guardarCamposConfig(cfg) { guardarJSON(CLAVE_CAMPOS_CONFIG, cfg); }
 
+    /* ============================================================
+     10b. ALMACENAMIENTO: AUTO-NUMERACIÓN DE CAMPOS 4 Y 5
+     ============================================================ */
+
+  /* Estructura de almacenamiento:
+       ostikec_auto_config   → { "negId_a": { activo, limite, prefijo }, ... }
+       ostikec_auto_contador → { "negId_a": 12, "negId_i": 0, ... }
+
+     El sufijo "_a" o "_i" indica el campo (4 o 5). El prefijo es el id
+     del negocio activo, o "_default" cuando no hay ninguno. */
+
+  const AUTO_CONFIG_DEFECTO = { activo: false, limite: 0, prefijo: '' };
+
+  function claveAuto(campo) {
+    return (leerActivoId() || '_default') + '_' + campo;
+  }
+
+  function leerMapaAutoConfig() {
+    const obj = leerJSON(CLAVE_AUTO_CONFIG, {});
+    return (obj && typeof obj === 'object') ? obj : {};
+  }
+
+  function leerAutoConfig(campo) {
+    const clave = claveAuto(campo);
+    const mapa = leerMapaAutoConfig();
+    return Object.assign({}, AUTO_CONFIG_DEFECTO, mapa[clave] || {});
+  }
+
+  function guardarAutoConfig(campo, cfg) {
+    const clave = claveAuto(campo);
+    const mapa = leerMapaAutoConfig();
+    mapa[clave] = Object.assign({}, AUTO_CONFIG_DEFECTO, cfg);
+    guardarJSON(CLAVE_AUTO_CONFIG, mapa);
+  }
+
+  function leerMapaAutoContador() {
+    const obj = leerJSON(CLAVE_AUTO_CONTADOR, {});
+    return (obj && typeof obj === 'object') ? obj : {};
+  }
+
+  function leerAutoContador(campo) {
+    const clave = claveAuto(campo);
+    const mapa = leerMapaAutoContador();
+    const v = parseInt(mapa[clave], 10);
+    return (isNaN(v) || v < 0) ? 0 : v;
+  }
+
+  function guardarAutoContador(campo, valor) {
+    const clave = claveAuto(campo);
+    const mapa = leerMapaAutoContador();
+    mapa[clave] = Math.max(0, parseInt(valor, 10) || 0);
+    guardarJSON(CLAVE_AUTO_CONTADOR, mapa);
+  }
+
+  function incrementarAutoContador(campo) {
+    const actual = leerAutoContador(campo);
+    guardarAutoContador(campo, actual + 1);
+  }
+
+  function reiniciarAutoContador(campo) {
+    guardarAutoContador(campo, 0);
+  }
+
+  /* Devuelve true si el campo está activo y el contador alcanzó el límite. */
+  function campoAutoAgotado(campo) {
+    const cfg = leerAutoConfig(campo);
+    if (!cfg.activo) return false;
+    const limite = cfg.limite || 0;
+    if (limite <= 0) return false;
+    return leerAutoContador(campo) >= limite;
+  }
+
+  /* Texto a mostrar en el input del formulario.
+     - Si no está activo: null (no tocar el input)
+     - Si está agotado: "Capacidad agotada"
+     - Si está activo: prefijo + (contador + 1) */
+  function siguienteValorAuto(campo) {
+    const cfg = leerAutoConfig(campo);
+    if (!cfg.activo) return null;
+    if (campoAutoAgotado(campo)) return 'Capacidad agotada';
+    const prefijo = cfg.prefijo || '';
+    return prefijo + (leerAutoContador(campo) + 1);
+  }
+
+  /* Aplica el estado de auto-numeración a un input concreto.
+     idInput: 'inAsiento' | 'inIdServicio'
+     campo:   'a' | 'i' */
+  function aplicarAutoAInput(idInput, campo) {
+    const el = document.getElementById(idInput);
+    if (!el) return;
+
+    const cfg = leerAutoConfig(campo);
+    if (!cfg.activo) {
+      el.readOnly = false;
+      el.style.background = '';
+      el.style.color = '';
+      /* Si el input tenía el texto "Capacidad agotada" de una activación
+         anterior, lo limpiamos para que el usuario empiece de cero. */
+      if (el.value === 'Capacidad agotada') el.value = '';
+      return;
+    }
+
+    el.readOnly = true;
+    const agotado = campoAutoAgotado(campo);
+    el.style.background = '#f1f5f9';
+    el.style.color = agotado ? '#991b1b' : '#16324f';
+    el.value = siguienteValorAuto(campo);
+  }
+
+  /* Aplica el estado de auto-numeración a los dos campos del formulario. */
+  function aplicarAutoAFormulario() {
+    aplicarAutoAInput('inAsiento', 'a');
+    aplicarAutoAInput('inIdServicio', 'i');
+  }
+   
   /* ============================================================
      11. BOTÓN NEGOCIOS
      ============================================================ */
