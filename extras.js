@@ -56,6 +56,8 @@
   const CLAVE_MENU_ESTADO    = 'ostikec_menu_estado';
   const CLAVE_LOG_FALLOS     = 'ostikec_log_fallos';
   const CLAVE_CAMPOS_CONFIG  = 'ostikec_campos_config';
+  const CLAVE_AUTO_CONFIG    = 'ostikec_auto_config';
+  const CLAVE_AUTO_CONTADOR  = 'ostikec_auto_contador';
 
   const FIRMA_ARCHIVO   = 'OSTIKEC_NEGOCIOS';
   const VERSION_FORMATO = 1;
