@@ -2351,6 +2351,68 @@
       }
     });
 
+        /* ---------- Auto-numeración: activar/desactivar ---------- */
+    document.querySelectorAll('[data-auto-activo]').forEach(function (chk) {
+      chk.addEventListener('change', function () {
+        const campo = this.dataset.autoActivo;
+        const cfg = leerAutoConfig(campo);
+        cfg.activo = this.checked;
+        guardarAutoConfig(campo, cfg);
+        aplicarAutoAFormulario();
+        construirContenidoPanel();
+      });
+    });
+
+    /* ---------- Auto-numeración: límite ---------- */
+    document.querySelectorAll('[data-auto-limite]').forEach(function (inp) {
+      inp.addEventListener('change', function () {
+        const campo = this.dataset.autoLimite;
+        const nuevo = Math.max(0, parseInt(this.value, 10) || 0);
+        const cfg = leerAutoConfig(campo);
+        const contadorActual = leerAutoContador(campo);
+
+        /* Regla 3.10: si el nuevo límite es menor que el contador actual,
+           avisar y pedir confirmación para reiniciar. */
+        if (nuevo > 0 && contadorActual > nuevo) {
+          if (!confirm('El contador actual (' + contadorActual +
+                       ') supera el nuevo límite (' + nuevo +
+                       '). ¿Reiniciar a 0?')) {
+            this.value = cfg.limite || 0;
+            return;
+          }
+          reiniciarAutoContador(campo);
+        }
+
+        cfg.limite = nuevo;
+        guardarAutoConfig(campo, cfg);
+        aplicarAutoAFormulario();
+        construirContenidoPanel();
+      });
+    });
+
+    /* ---------- Auto-numeración: prefijo ---------- */
+    document.querySelectorAll('[data-auto-prefijo]').forEach(function (inp) {
+      inp.addEventListener('input', function () {
+        const campo = this.dataset.autoPrefijo;
+        const cfg = leerAutoConfig(campo);
+        cfg.prefijo = this.value;
+        guardarAutoConfig(campo, cfg);
+        aplicarAutoAFormulario();
+      });
+    });
+
+    /* ---------- Auto-numeración: reiniciar contador ---------- */
+    document.querySelectorAll('[data-auto-reiniciar]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        const campo = this.dataset.autoReiniciar;
+        const nombre = campo === 'a' ? 'Campo 4' : 'Campo 5';
+        if (!confirm('¿Reiniciar el contador de ' + nombre + ' a 0?')) return;
+        reiniciarAutoContador(campo);
+        aplicarAutoAFormulario();
+        construirContenidoPanel();
+      });
+    });
+
     setTimeout(dibujarGraficoHistorial, 30);
   }
 
