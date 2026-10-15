@@ -1,5 +1,5 @@
 {
-  "enviar": false,
+  "enviar": true,
   "actualizado": "2026-10-15",
   "nota": "Poner enviar:true solo cuando se esté diagnosticando. Volver a false cuando termine. Los cambios tardan hasta 6 horas en propagarse a todos los dispositivos, o menos si reinician la app."
 }
