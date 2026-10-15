@@ -18,6 +18,7 @@
      - Introducir la contraseña en el modal (enmascarada, con botón de ojo).
      - La contraseña se verifica contra su hash SHA-256.
      - El hash guardado está en minúsculas para comparación tolerante.
+     - Resetea DOS cosas: la prueba gratuita Y el PIN del panel.
 
    TOOLTIPS:
      - La primera vez que un usuario entra en modo prueba, se muestra un
@@ -209,6 +210,21 @@
     trialData = null;
   }
 
+  /* Borra el PIN del panel y el contador de intentos fallidos.
+     Las claves viven en extras2.js, pero como son claves de localStorage
+     se pueden eliminar desde aquí sin importar quién las gestione.
+     Efectos:
+       - El panel queda sin protección (no pedirá PIN al abrirse).
+       - Si había un bloqueo por intentos fallidos, se cancela de inmediato.
+       - El PIN personal queda borrado; el usuario podrá configurar uno nuevo.
+       - El PIN maestro NO se resetea: es determinista y siempre el mismo. */
+  function borrarPinPanel() {
+    try {
+      localStorage.removeItem('ostikec_pin_panel');
+      localStorage.removeItem('ostikec_pin_intentos');
+    } catch (e) {}
+  }
+
   /* ============================================================
      6. MODAL DE CONTRASEÑA DE RESET
      ============================================================ */
@@ -322,7 +338,8 @@
       if (claveEsCorrecta(clave)) {
         cerrar();
         borrarTrial();
-        alert('✅ Prueba reseteada. La aplicación se reiniciará.');
+        borrarPinPanel();
+        alert('✅ Prueba gratuita y PIN del panel reseteados. La aplicación se reiniciará.');
         try { location.reload(); } catch (e) {}
       } else {
         error.textContent = 'Contraseña incorrecta.';
