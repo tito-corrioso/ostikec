@@ -1753,6 +1753,7 @@
             '<h4>8. Contacto</h4>' +
             '<p>Para soporte, ampliación de licencia o denuncia de uso indebido: osmanitito94@zoho.com</p>' +
             '<p style="margin-top:16px; font-weight:700; color:#16324f;">Al continuar utilizando OSTIKEC, usted reconoce haber leído y aceptado estos términos.</p>' +
+            '<p style="margin-top:14px; font-size:12px; color:#64748b; line-height:1.5;">Consulta también nuestra <a href="https://tito-corrioso.github.io/ostikec/privacidad.html" target="_blank" rel="noopener" style="color:#16324f; font-weight:700; text-decoration:underline;">Política de Privacidad</a>.</p>' +
           '</div>' +
           '<button id="btnAceptarTerminos" type="button" class="btn btn-acento" style="margin-top:16px;">Aceptar</button>' +
         '</div>' +
