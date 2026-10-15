@@ -1820,35 +1820,101 @@
           '<button id="btnCerrarManual" class="btn-cerrar">✕</button>' +
         '</div>' +
         '<div class="modal-cuerpo">' +
-          '<div class="manual-texto">' +
+        '<div class="manual-texto">' +
             '<div class="manual-intro">OSTIKEC es mucho más que un generador de tickets con código QR. Es una herramienta diseñada para dar confianza a tus clientes y profesionalizar la operación de tu negocio, sin necesidad de internet y sin complicaciones técnicas.</div>' +
-            '<h4>1. Generar un ticket</h4>' +
+
+            '<h4>1. Primeros pasos</h4>' +
+            '<ul>' +
+              '<li>Introduce tu número de teléfono y tu licencia en la pantalla inicial y pulsa "Entrar".</li>' +
+              '<li>El campo de la licencia está enmascarado. Puedes pulsar el ojo 👁 para verlo temporalmente y comprobar que lo escribiste bien.</li>' +
+              '<li>Si tienes una sesión guardada y el dispositivo no ha cambiado, la aplicación entra directamente sin pedirte los datos.</li>' +
+              '<li>Para cerrar sesión, pulsa el botón de salir ⏏. La app te pedirá confirmación antes de volver al inicio.</li>' +
+              '<li>Si pulsas sobre el título OSTIKEC verás información sobre la aplicación y el desarrollador.</li>' +
+            '</ul>' +
+
+            '<h4>2. Generar un ticket</h4>' +
             '<ul>' +
               '<li>Completa los datos: Fecha, Nombre, Teléfono y los dos campos configurables.</li>' +
+              '<li>Cada campo tiene una X a la derecha para borrarlo individualmente. El botón "Limpiar" borra todos de una vez.</li>' +
               '<li>Pulsa "Crear Ostikec" y aparecerá el ticket con su código QR.</li>' +
-              '<li>Puedes descargarlo como imagen o compartirlo directamente.</li>' +
+              '<li>Puedes descargarlo como imagen PNG o compartirlo por WhatsApp, Telegram, correo o cualquier aplicación del teléfono.</li>' +
+              '<li>Si tienes activada la numeración automática del ticket, cada uno llevará su correlativo (por ejemplo T-0001) en la esquina superior derecha. Ese número es solo visual: no viaja dentro del QR.</li>' +
+              '<li>Con el botón del lector ▦ también puedes leer un ticket existente para rellenar el formulario con sus datos.</li>' +
             '</ul>' +
-            '<h4>2. Modales de negocio</h4>' +
+
+            '<h4>3. Negocios y etiquetas personalizadas</h4>' +
             '<ul>' +
-              '<li>Cada negocio puede tener su nombre, sus datos de servicio y sus etiquetas personalizadas.</li>' +
-              '<li>Puedes guardar varios negocios y cambiar entre ellos con un toque.</li>' +
-              '<li>Se pueden exportar e importar como archivo para pasarlos a otro dispositivo.</li>' +
+              '<li>Cada negocio puede tener su nombre, sus datos de servicio y sus propias etiquetas para los campos 4 y 5.</li>' +
+              '<li>Puedes guardar varios negocios y cambiar entre ellos con un toque desde el botón de la maleta 💼.</li>' +
+              '<li>Se pueden exportar e importar como archivo .json para pasarlos a otro dispositivo.</li>' +
+              '<li>Si eliges "Otro" como etiqueta, puedes escribir tu propio nombre de campo (máximo 20 caracteres).</li>' +
+              '<li>Los estilos del ticket, la auto-numeración y el historial se guardan por separado para cada negocio.</li>' +
             '</ul>' +
-            '<h4>3. Validar un ticket</h4>' +
+
+            '<h4>4. Validar un ticket</h4>' +
             '<ul>' +
               '<li>Con una licencia de tipo Validador, entra y pulsa "Escanear código QR".</li>' +
-              '<li>Apunta la cámara al código del ticket. También puedes subir una imagen.</li>' +
-              '<li>La app verificará si es auténtico y mostrará sus datos.</li>' +
+              '<li>Apunta la cámara al código del ticket. También puedes subir una imagen desde la galería.</li>' +
+              '<li>La app verifica la firma digital y muestra los datos del ticket junto al teléfono del dispositivo que lo emitió.</li>' +
+              '<li>Si el ticket es auténtico, aparece un banner verde con "TICKET VÁLIDO".</li>' +
+              '<li>Si los datos fueron alterados, aparece un banner rojo con "TICKET NO VÁLIDO".</li>' +
+              '<li>Si el emisor activó el modo validador ciego, no verás el teléfono del emisor.</li>' +
             '</ul>' +
-            '<h4>4. Seguridad de la aplicación</h4>' +
-            '<p><b>Código QR cifrado:</b> cada ticket lleva sus datos cifrados y firmados. Si alguien intenta alterarlo, la validación fallará.</p>' +
-            '<p><b>Registro del emisor:</b> cada ticket guarda el teléfono del dispositivo que lo emitió.</p>' +
-            '<p><b>Supervisión periódica:</b> el desarrollador recibe informes periódicos. Si tu licencia es robada, será detectada.</p>' +
-            '<p><b>Revocación remota:</b> el desarrollador puede revocar cualquier licencia.</p>' +
-            '<h4>5. Licencia personal</h4>' +
-            '<p>Tu teléfono y licencia son personales e intransferibles.</p>' +
-            '<h4>6. Contacto</h4>' +
+
+            '<h4>5. Verificación de fechas</h4>' +
+            '<p>Además de la firma digital, OSTIKEC revisa la fecha del ticket y avisa al validador en dos casos:</p>' +
+            '<ul>' +
+              '<li><b>Fecha vencida:</b> si la fecha del ticket es anterior al día actual con más de un día de margen, aparece el aviso "⚠ Ticket con fecha vencida". El ticket sigue siendo válido criptográficamente, pero el validador sabe que corresponde a un día ya pasado.</li>' +
+              '<li><b>Fecha inválida:</b> si el ticket tiene una fecha imposible (por ejemplo 22/22/22), aparece el aviso "⚠ Ticket con fecha inválida".</li>' +
+              '<li>El validador decide libremente si lo acepta según la situación.</li>' +
+            '</ul>' +
+
+            '<h4>6. Panel de opciones</h4>' +
+            '<p>El botón flotante ⚙ (esquina inferior izquierda del creador) abre el panel de configuración. Tiene seis secciones:</p>' +
+            '<ul>' +
+              '<li><b>🎨 Estilo del ticket:</b> colores de la cinta, del fondo y del acento. Plantillas base (Estándar, Factura, Evento, Recibo). Mostrar u ocultar el logo y su forma. Tamaño del QR. Orientación vertical u horizontal. Fuente. Pie personalizable. Marca de agua. Bloque de firma al pie. Vista previa en tiempo real.</li>' +
+              '<li><b>📋 Campos y datos:</b> activar los campos opcionales Correo, Dirección y Notas. Ocultar campos vacíos en el ticket. Numeración automática del ticket con su prefijo. Reinicio de la numeración por mes o por año. Auto-numeración de los campos 4 y 5 (ver sección 7).</li>' +
+              '<li><b>📊 Historial y estadísticas:</b> contadores por día, 7 días, mes y total. Gráfico de barras de los últimos 7 días. Lista de los últimos tickets con opción de duplicar y marcar como usados. Filtros por fecha, negocio, nombre y estado. Exportación a PDF y Excel. Borrado del historial.</li>' +
+              '<li><b>🔒 Seguridad:</b> modo validador ciego (oculta el teléfono del emisor al validador). Registro de intentos fallidos de validación. PIN del panel para proteger el acceso a las opciones, con recuperación mediante PIN maestro.</li>' +
+              '<li><b>🌙 Apariencia:</b> modo oscuro de la interfaz. El ticket generado siempre se dibuja con los colores elegidos en Estilo, sin importar el modo de la interfaz.</li>' +
+              '<li><b>💾 Respaldo:</b> exportar toda la configuración (negocios, etiquetas, estilos, historial, numeración, preferencias y contadores) a un archivo .json. Importar ese archivo para restaurarlo en este u otro dispositivo. La app avisa cuando han pasado 30 días sin respaldo.</li>' +
+            '</ul>' +
+
+            '<h4>7. Auto-numeración de los campos 4 y 5</h4>' +
+            '<p>Cada uno de los dos campos configurables puede numerarse automáticamente. Útil para asignar asientos, facturas o entradas correlativas.</p>' +
+            '<ul>' +
+              '<li>Activa la auto-numeración desde el panel, en la sección Campos y datos.</li>' +
+              '<li>Define la capacidad máxima (por ejemplo 45 asientos). Con 0 se entiende sin límite.</li>' +
+              '<li>Opcionalmente escribe un prefijo (por ejemplo A-).</li>' +
+              '<li>El campo del formulario se bloquea y muestra el siguiente número libre.</li>' +
+              '<li>Al emitir un ticket, el contador avanza solo.</li>' +
+              '<li>Al llegar al límite, el campo muestra "Capacidad agotada" y la app impide generar más tickets hasta que reinicies el contador o amplíes el límite.</li>' +
+              '<li>Desde el panel puedes reiniciar el contador cuando quieras.</li>' +
+              '<li>El contador es independiente para cada negocio y para cada campo.</li>' +
+            '</ul>' +
+
+            '<h4>8. Prueba gratuita</h4>' +
+            '<ul>' +
+              '<li>Antes de comprar una licencia puedes probar OSTIKEC con hasta 12 tickets sin coste.</li>' +
+              '<li>Los tickets generados en modo prueba llevan la marca de agua "DEMO" y el validador los reconoce con un banner amarillo "TICKET DE DEMOSTRACIÓN".</li>' +
+              '<li>Al agotar los 12 tickets se ocultan los botones de Negocios, Lector QR y Panel, y se te invita a adquirir la licencia.</li>' +
+              '<li>Tus datos, negocios, estilos y contadores se conservan al pasar a la versión con licencia.</li>' +
+            '</ul>' +
+
+            '<h4>9. Seguridad de la aplicación</h4>' +
+            '<p><b>Código QR firmado:</b> cada ticket lleva sus datos cifrados y firmados digitalmente. Si alguien intenta alterarlos, la validación fallará.</p>' +
+            '<p><b>Registro del emisor:</b> cada ticket guarda el teléfono del dispositivo que lo emitió. Al validarlo se muestra junto a los datos, salvo que el emisor haya activado el modo ciego.</p>' +
+            '<p><b>Verificación de fechas:</b> al validar, la app compara la fecha del ticket con la fecha actual y avisa si está vencida o es inválida.</p>' +
+            '<p><b>Supervisión periódica:</b> el desarrollador recibe informes periódicos de accesos y tickets generados. Si tu licencia es robada, será detectada.</p>' +
+            '<p><b>Revocación remota:</b> el desarrollador puede revocar cualquier licencia en cualquier momento. Si tu licencia es revocada o el dispositivo bloqueado, al intentar iniciar sesión verás una pantalla de "ACCESO BLOQUEADO" con el motivo.</p>' +
+            '<p><b>PIN del panel:</b> puedes proteger el acceso a las opciones con un PIN de 4 dígitos. Tras 3 intentos fallidos, el panel se bloquea durante 5 minutos. Si olvidas tu PIN, puedes recuperar el acceso con el PIN maestro que aparece en la sección Seguridad del propio panel.</p>' +
+
+            '<h4>10. Licencia personal</h4>' +
+            '<p>El número de teléfono y la licencia son personales e intransferibles. No los compartas con nadie. La aplicación queda vinculada a tu dispositivo.</p>' +
+
+            '<h4>11. Contacto</h4>' +
             '<p>Soporte: <b>osmanitito94@zoho.com</b></p>' +
+            '<p>Canal oficial en Telegram: <b>t.me/+4atqFg3ymcpjNWFh</b></p>' +
           '</div>' +
         '</div>' +
       '</div>';
