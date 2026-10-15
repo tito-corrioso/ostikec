@@ -220,4 +220,21 @@
     setTimeout(reintentarCola, 4000);
   });
 
+    /* ============================================================
+     7. API PÚBLICA
+     ============================================================
+     Expone enviarMensaje y reintentarCola para que otros módulos
+     (como el capturador de errores en index.html) puedan usarlos.
+     ============================================================ */
+  window.OSTIKEC_PANEL = {
+    enviarMensaje: enviarMensaje,
+    reintentarCola: reintentarCola
+  };
+
+  /* Alias de compatibilidad: algunos módulos pueden llamar a
+     window.enviarMensaje directamente. Lo exponemos también. */
+  window.enviarMensaje = enviarMensaje;
+
+})();
+
 })();
