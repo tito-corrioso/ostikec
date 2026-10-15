@@ -957,7 +957,16 @@
           '</p>' +
         '</div>';
 
-      cuerpo.insertAdjacentHTML('beforeend', htmlReinicio);
+      /* Insertar el reinicio justo debajo del input de prefijo de numeración,
+         en lugar de al final del cuerpo de la sección. Así queda agrupado con
+         su configuración y no se desplaza cuando se añaden más controles. */
+      const ancla = document.getElementById('inpPrefijo');
+      if (ancla && ancla.parentNode === cuerpo) {
+        ancla.insertAdjacentHTML('afterend', htmlReinicio);
+      } else {
+        /* Respaldo: si no se encuentra el ancla, se añade al final como antes. */
+        cuerpo.insertAdjacentHTML('beforeend', htmlReinicio);
+      }
 
       const sel = document.getElementById('selReinicioNumeracion');
       if (sel) {
