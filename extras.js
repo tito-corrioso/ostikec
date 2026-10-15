@@ -2697,7 +2697,9 @@
       numeracion: leerMapaNumeracion(),
       seguridad: leerSeguridad(),
       apariencia: leerApariencia(),
-      campos: leerCamposConfig()
+      campos: leerCamposConfig(),
+      autoConfig: leerMapaAutoConfig(),
+      autoContador: leerMapaAutoContador()
     };
     const json = JSON.stringify(paquete, null, 2);
     const blob = new Blob([json], { type: 'application/json' });
@@ -2724,11 +2726,14 @@
       if (datos.numeracion) guardarMapaNumeracion(datos.numeracion);
       if (datos.seguridad) guardarSeguridad(datos.seguridad);
       if (datos.apariencia) { guardarApariencia(datos.apariencia); aplicarModoOscuro(); }
-      if (datos.campos) guardarCamposConfig(datos.campos);
+            if (datos.campos) guardarCamposConfig(datos.campos);
+      if (datos.autoConfig) guardarJSON(CLAVE_AUTO_CONFIG, datos.autoConfig);
+      if (datos.autoContador) guardarJSON(CLAVE_AUTO_CONTADOR, datos.autoContador);
 
       renderizarListaNegocios();
       actualizarSelectoresEtiquetas();
       actualizarVisibilidadCamposOpcionales();
+      aplicarAutoAFormulario();
       refrescarPanelSiAbierto();
       alert('Configuración importada correctamente.');
     };
