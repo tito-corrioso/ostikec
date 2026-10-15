@@ -2083,7 +2083,7 @@
           '<label class="panel-switch">Campo Dirección <input type="checkbox" id="chkDireccion"' + (cfg.activarDireccion ? ' checked' : '') + '></label>' +
           '<label class="panel-switch">Campo Notas <input type="checkbox" id="chkNotas"' + (cfg.activarNotas ? ' checked' : '') + '></label>' +
           '<label class="panel-switch">Ocultar campos vacíos en el ticket <input type="checkbox" id="chkOcultarVacios"' + (cfg.ocultarVacios ? ' checked' : '') + '></label>' +
-          '<label class="panel-switch">Numeración automática (solo visual) <input type="checkbox" id="chkNumeracion"' + (cfg.numeracionActiva ? ' checked' : '') + '></label>' +
+          '<label class="panel-switch">Numeración automática del ticket <input type="checkbox" id="chkNumeracion"' + (cfg.numeracionActiva ? ' checked' : '') + '></label>' +
           '<label class="panel-label">Prefijo de numeración</label>' +
           '<input class="panel-input" id="inpPrefijo" type="text" maxlength="6" value="' + (cfg.numeracionPrefijo || 'T-') + '" placeholder="Ej. T-">' +
           '<p style="font-size:11px;color:#64748b;margin:10px 0 0 0;">Los campos opcionales aparecen en el formulario y en el ticket. Nunca se incluyen en el código QR.</p>' +
