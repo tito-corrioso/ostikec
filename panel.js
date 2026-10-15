@@ -236,5 +236,3 @@
   window.enviarMensaje = enviarMensaje;
 
 })();
-
-})();
