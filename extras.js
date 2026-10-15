@@ -1780,7 +1780,7 @@
     const p = document.createElement('p');
     p.id = 'terminosAviso';
     p.className = 'terminos-aviso';
-    p.innerHTML = 'Al utilizar OSTIKEC aceptas los <a href="#" id="linkTerminos">Términos y Condiciones</a>';
+    p.innerHTML = 'Al utilizar OSTIKEC aceptas los <a href="#" id="linkTerminos">Términos y Condiciones</a> y la <a href="https://tito-corrioso.github.io/ostikec/privacidad.html" target="_blank" rel="noopener">Política de Privacidad</a>';
     copyrightEl.parentNode.insertBefore(p, copyrightEl.nextSibling);
     document.getElementById('linkTerminos').addEventListener('click', function (e) {
       e.preventDefault();
