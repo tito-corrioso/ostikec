@@ -569,26 +569,89 @@ html, body {
      7. Arranque de la aplicación
    ============================================================================ */
 
-  /* ============================================================================
+   /* ============================================================================
    CAPTURA GLOBAL DE ERRORES
    ============================================================================
    Registra cualquier error no capturado y cualquier promesa rechazada
-   en localStorage. Sirve para diagnosticar problemas en dispositivos
-   reales sin necesidad de que el usuario los reporte.
+   en localStorage. Opcionalmente los envía al chat del bot de Telegram,
+   según lo indique el archivo remoto enviar-error.json.
 
-   Para consultarlos desde Eruda:
-       window.OSTIKEC_VER_ERRORES()
-   Para borrarlos:
-       window.OSTIKEC_BORRAR_ERRORES()
+   CONSULTA REMOTA:
+     - La app consulta enviar-error.json como máximo cada 6 horas.
+     - Si el JSON dice "enviar": true, se envían los errores.
+     - Si dice "enviar": false, no se envían (solo se guardan localmente).
+     - Si nunca se ha consultado, o si falla la red, NO se envían (fail-closed).
+
+   ANTI-SPAM (siempre activo cuando el envío está habilitado):
+     - Máximo 5 envíos por sesión de app.
+     - Mismo mensaje no se repite en menos de 10 minutos.
+
+   API PÚBLICA:
+     window.OSTIKEC_VER_ERRORES()          → devuelve el log local
+     window.OSTIKEC_BORRAR_ERRORES()       → limpia el log local
+     window.OSTIKEC_ERROR_REPORT.estaActivo()
+     window.OSTIKEC_ERROR_REPORT.refrescar()
+     window.OSTIKEC_ERROR_REPORT.forzar(true|false)
    ============================================================================ */
 (function () {
   'use strict';
 
-  const CLAVE_LOG_ERRORES = 'ostikec_log_errores';
-  const MAX_ERRORES = 50;
+  /* --- Constantes --- */
+  const CLAVE_LOG_ERRORES          = 'ostikec_log_errores';
+  const MAX_ERRORES                = 50;
+  const URL_ENVIAR_ERROR           = 'https://tito-corrioso.github.io/ostikec/enviar-error.json';
+  const CLAVE_ERROR_ENVIAR         = 'ostikec_error_enviar';
+  const CLAVE_ERROR_ULTIMA_CONSULTA = 'ostikec_error_ultima_consulta';
+  const HORAS_ENTRE_CONSULTAS      = 6;
+  const MAX_ENVIOS_SESION          = 5;
+  const CLAVE_ULTIMO_ENVIO         = 'ostikec_error_ultimo_envio';
+  const MINUTOS_ANTI_SPAM          = 10;
+  const DELAY_CONSULTA             = 2500;
 
+  let erroresEnviadosSesion = 0;
+
+  /* ============================================================
+     CONSULTA DEL FLAG REMOTO
+     ============================================================ */
+  function actualizarFlagEnvio() {
+    fetch(URL_ENVIAR_ERROR + '?t=' + Date.now(), { cache: 'no-store' })
+      .then(function (r) {
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        return r.json();
+      })
+      .then(function (datos) {
+        if (!datos || typeof datos.enviar !== 'boolean') return;
+        try {
+          localStorage.setItem(CLAVE_ERROR_ENVIAR, datos.enviar ? '1' : '0');
+          localStorage.setItem(CLAVE_ERROR_ULTIMA_CONSULTA, String(Date.now()));
+        } catch (e) {}
+      })
+      .catch(function () {
+        /* Silencioso: si no hay internet, se conserva el último valor cacheado */
+      });
+  }
+
+  function debeConsultarFlag() {
+    let ultima = 0;
+    try { ultima = parseInt(localStorage.getItem(CLAVE_ERROR_ULTIMA_CONSULTA) || '0', 10); }
+    catch (e) {}
+    if (!ultima) return true;
+    return (Date.now() - ultima) > (HORAS_ENTRE_CONSULTAS * 3600000);
+  }
+
+  /* Fail-closed: solo devuelve true si el JSON remoto dijo enviar:true
+     y ese valor está cacheado. Si no se ha consultado nunca, devuelve false. */
+  function debeEnviarErrores() {
+    try { return localStorage.getItem(CLAVE_ERROR_ENVIAR) === '1'; }
+    catch (e) { return false; }
+  }
+
+  /* ============================================================
+     GUARDAR Y ENVIAR
+     ============================================================ */
   function guardarError(mensaje, fuente, linea, columna, stack) {
     try {
+      /* 1. Guardar localmente */
       const log = JSON.parse(localStorage.getItem(CLAVE_LOG_ERRORES) || '[]');
       log.push({
         fecha: new Date().toISOString(),
@@ -600,9 +663,50 @@ html, body {
       });
       if (log.length > MAX_ERRORES) log.splice(0, log.length - MAX_ERRORES);
       localStorage.setItem(CLAVE_LOG_ERRORES, JSON.stringify(log));
+
+      /* 2. Enviar a Telegram si el flag remoto lo permite */
+      enviarErrorATelegram(mensaje, fuente, linea, columna, stack);
     } catch (e) {}
   }
 
+  function enviarErrorATelegram(mensaje, fuente, linea, columna, stack) {
+    if (!debeEnviarErrores()) return;
+    if (erroresEnviadosSesion >= MAX_ENVIOS_SESION) return;
+    if (typeof window.enviarMensaje !== 'function') return;
+
+    /* Anti-spam: mismo mensaje no se repite en menos de MINUTOS_ANTI_SPAM */
+    const clave = String(mensaje || '').substring(0, 80);
+    let mapaUltimos = {};
+    try { mapaUltimos = JSON.parse(localStorage.getItem(CLAVE_ULTIMO_ENVIO) || '{}'); }
+    catch (e) {}
+    const ultimo = mapaUltimos[clave] || 0;
+    if (Date.now() - ultimo < MINUTOS_ANTI_SPAM * 60000) return;
+
+    mapaUltimos[clave] = Date.now();
+    /* Limitar el mapa para que no crezca sin control */
+    const claves = Object.keys(mapaUltimos);
+    if (claves.length > 30) {
+      claves.sort(function (a, b) { return mapaUltimos[a] - mapaUltimos[b]; });
+      claves.slice(0, claves.length - 30).forEach(function (k) { delete mapaUltimos[k]; });
+    }
+    try { localStorage.setItem(CLAVE_ULTIMO_ENVIO, JSON.stringify(mapaUltimos)); } catch (e) {}
+
+    erroresEnviadosSesion++;
+
+    const texto =
+      '🐞 <b>ERROR EN OSTIKEC</b>\n\n' +
+      '📄 <b>Mensaje:</b> ' + String(mensaje || '').substring(0, 150) + '\n' +
+      '📍 <b>Archivo:</b> ' + String(fuente || '').split('/').pop() + '\n' +
+      '📏 <b>Línea:</b> ' + (linea || 0) + '\n' +
+      '📱 <b>Huella:</b> ' + (typeof huellaDispositivo === 'function' ? huellaDispositivo() : 'desconocida') + '\n' +
+      '🕐 <b>Fecha:</b> ' + new Date().toLocaleString('es-ES');
+
+    try { window.enviarMensaje(texto); } catch (e) {}
+  }
+
+  /* ============================================================
+     LISTENERS GLOBALES
+     ============================================================ */
   window.addEventListener('error', function (e) {
     guardarError(
       e.message,
@@ -611,8 +715,6 @@ html, body {
       e.colno,
       e.error && e.error.stack
     );
-    /* No devolvemos false: dejamos que el error siga propagándose
-       hacia la consola del navegador para no ocultar información en desarrollo. */
   });
 
   window.addEventListener('unhandledrejection', function (e) {
@@ -626,6 +728,18 @@ html, body {
     );
   });
 
+  /* ============================================================
+     ARRANQUE
+     ============================================================ */
+  window.addEventListener('DOMContentLoaded', function () {
+    if (debeConsultarFlag()) {
+      setTimeout(actualizarFlagEnvio, DELAY_CONSULTA);
+    }
+  });
+
+  /* ============================================================
+     API PÚBLICA
+     ============================================================ */
   window.OSTIKEC_VER_ERRORES = function () {
     try { return JSON.parse(localStorage.getItem(CLAVE_LOG_ERRORES) || '[]'); }
     catch (e) { return []; }
@@ -634,8 +748,41 @@ html, body {
   window.OSTIKEC_BORRAR_ERRORES = function () {
     try { localStorage.removeItem(CLAVE_LOG_ERRORES); } catch (e) {}
   };
-})();
 
+  window.OSTIKEC_ERROR_REPORT = {
+    /* Devuelve true si el envío está activo según el flag cacheado */
+    estaActivo: debeEnviarErrores,
+
+    /* Devuelve el valor crudo del flag: '1', '0' o null si nunca se consultó */
+    verFlagCacheado: function () {
+      try { return localStorage.getItem(CLAVE_ERROR_ENVIAR); }
+      catch (e) { return null; }
+    },
+
+    /* Fuerza una nueva consulta al JSON remoto */
+    refrescar: actualizarFlagEnvio,
+
+    /* Fuerza un valor local sin consultar la red. Útil para pruebas.
+       El siguiente refresco remoto lo sobrescribirá. */
+    forzar: function (valor) {
+      try {
+        localStorage.setItem(CLAVE_ERROR_ENVIAR, valor ? '1' : '0');
+        localStorage.setItem(CLAVE_ERROR_ULTIMA_CONSULTA, String(Date.now()));
+        console.log('Flag de envío de errores forzado a: ' + (valor ? 'true' : 'false'));
+      } catch (e) {}
+    },
+
+    /* Resetea las marcas de consulta (para forzar una consulta en el próximo arranque) */
+    reset: function () {
+      try {
+        localStorage.removeItem(CLAVE_ERROR_ULTIMA_CONSULTA);
+        console.log('Marca de consulta borrada. Se consultará en el próximo arranque.');
+      } catch (e) {}
+    }
+  };
+
+})();
+  
 /* ============================================================================
    1. CONFIGURACIÓN
    ----------------------------------------------------------------------------
