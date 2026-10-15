@@ -1016,7 +1016,9 @@
         numeracion: OST().leerMapaNumeracion(),
         seguridad: OST().leerSeguridad(),
         apariencia: OST().leerApariencia(),
-        campos: OST().leerCamposConfig()
+        campos: OST().leerCamposConfig(),
+        autoConfig: OST().leerJSON('ostikec_auto_config', {}),
+        autoContador: OST().leerJSON('ostikec_auto_contador', {})
       };
       const json = JSON.stringify(paquete, null, 2);
       const blob = new Blob([json], { type: 'application/json' });
