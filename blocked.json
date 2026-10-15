@@ -1,9 +1,8 @@
 {
-  "actualizado": "2026-09-30",
+  "actualizado": "2026-10-15",
   "bloqueados": [
     {
-      "telefono": "55555555",
-      "licencia": "VV-V555-55-V",
+      "hashCred": "6439445cb395d66ca134012935a1d2435073df59411ca2949186f8a0ff808ae8",
       "motivo": "Licencia de prueba",
       "fecha": "2026-09-30"
     }
