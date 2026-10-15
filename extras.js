@@ -2864,9 +2864,19 @@
         numeroTicketActual = null;
       }
 
-      if (typeof window.generarTicket === 'function') {
+     if (typeof window.generarTicket === 'function') {
         window.generarTicket.call(this);
       }
+
+      /* Si el trial está agotado, el wrapper de generarTicket no dibujó nada.
+         No agregamos al historial ni incrementamos contadores. */
+      const trialBloqueado = !!(window.OSTIKEC_TRIAL &&
+                                window.OSTIKEC_TRIAL.estaActivo &&
+                                window.OSTIKEC_TRIAL.estaActivo() &&
+                                window.OSTIKEC_TRIAL.leer &&
+                                window.OSTIKEC_TRIAL.leer() &&
+                                window.OSTIKEC_TRIAL.leer().agotada);
+      if (trialBloqueado) return;
 
       const zona = document.getElementById('zonaResultado');
       const seMostro = zona && !zona.classList.contains('oculto');
