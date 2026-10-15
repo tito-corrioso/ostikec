@@ -641,6 +641,7 @@
     guardarActivoId(id);
     renderizarListaNegocios();
     actualizarSelectoresEtiquetas();
+    aplicarAutoAFormulario();
     refrescarPanelSiAbierto();
   }
 
@@ -2870,6 +2871,27 @@
       inyectarCamposOpcionales();
       actualizarSelectoresEtiquetas();
       instalarInterceptorBotonCrear();
+
+      /* --- Auto-numeración: aplicar estado al formulario --- */
+      aplicarAutoAFormulario();
+
+      /* Re-aplicar tras limpiar campos (los listeners de index.html borran
+         los valores; re-aplicamos el siguiente número después). */
+      document.querySelectorAll('.btn-limpiar-campo').forEach(function (b) {
+        if (b.dataset.autoLimpiarInstalado === '1') return;
+        b.dataset.autoLimpiarInstalado = '1';
+        b.addEventListener('click', function () {
+          setTimeout(aplicarAutoAFormulario, 10);
+        });
+      });
+
+      const btnLimpiarTodo = document.getElementById('btnLimpiar');
+      if (btnLimpiarTodo && btnLimpiarTodo.dataset.autoLimpiarTodoInstalado !== '1') {
+        btnLimpiarTodo.dataset.autoLimpiarTodoInstalado = '1';
+        btnLimpiarTodo.addEventListener('click', function () {
+          setTimeout(aplicarAutoAFormulario, 10);
+        });
+      }
     }
 
     interceptarBotonesSalir();
