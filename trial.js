@@ -1158,13 +1158,14 @@
     consumir:   consumirTicketPrueba,
     iniciar:    iniciarModoPrueba,
 
-    /* Resetea el trial si la clave es correcta */
+    /* Resetea el trial y el PIN del panel si la clave es correcta */
     reset: function (clave) {
       if (!claveEsCorrecta(clave)) {
         console.warn('OSTIKEC_TRIAL.reset: contraseña incorrecta');
         return false;
       }
       borrarTrial();
+      borrarPinPanel();
       try { location.reload(); } catch (e) {}
       return true;
     },
