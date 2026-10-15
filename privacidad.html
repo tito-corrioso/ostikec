@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Política de Privacidad — OSTIKEC</title>
+<style>
+* { box-sizing: border-box; }
+body {
+  margin: 0; padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  background: #eef2f7; color: #1f2937; font-size: 16px; line-height: 1.7;
+}
+.hoja {
+  max-width: 760px; margin: 0 auto; padding: 40px 24px 60px 24px;
+  background: #ffffff; min-height: 100vh;
+}
+h1 { color: #16324f; font-size: 28px; margin: 0 0 8px 0; letter-spacing: 0.5px; }
+h2 { color: #16324f; font-size: 19px; margin: 32px 0 10px 0; border-bottom: 2px solid #f2a900; padding-bottom: 6px; }
+p, li { font-size: 15px; color: #334155; }
+ul { padding-left: 22px; }
+a { color: #16324f; font-weight: 700; }
+.sub { color: #64748b; font-size: 13px; margin-bottom: 30px; }
+.aviso {
+  background: #fff9e6; border-left: 4px solid #f2a900;
+  padding: 14px 18px; border-radius: 6px; margin: 20px 0;
+  font-size: 14px; color: #7a5500;
+}
+.contacto {
+  background: #eef2f7; border-radius: 8px; padding: 16px 20px;
+  margin-top: 30px; font-size: 14px;
+}
+</style>
+</head>
+<body>
+<div class="hoja">
+
+<h1>Política de Privacidad</h1>
+<p class="sub">Última actualización: 15 de octubre de 2026</p>
+
+<p>Esta Política de Privacidad describe cómo OSTIKEC trata la información cuando usted instala y utiliza la aplicación. Al usar OSTIKEC, usted acepta las prácticas descritas en este documento.</p>
+
+<h2>1. Responsable del tratamiento</h2>
+<p>El responsable del tratamiento de los datos es:</p>
+<ul>
+  <li><b>Desarrollador:</b> Osmani Tito Corrioso</li>
+  <li><b>Grupo:</b> OSTICOR</li>
+  <li><b>Contacto:</b> osmanitito94@zoho.com</li>
+</ul>
+
+<h2>2. Información que recopila la aplicación</h2>
+<p>OSTIKEC recopila y trata la siguiente información:</p>
+<ul>
+  <li><b>Número de teléfono:</b> introducido por el usuario al iniciar sesión. Se usa para autenticar la licencia.</li>
+  <li><b>Código de licencia:</b> introducido por el usuario al iniciar sesión. Se usa para verificar el tipo de acceso (creador o validador).</li>
+  <li><b>Huella del dispositivo:</b> identificador técnico derivado del navegador, la pantalla y otros parámetros no personales. Se usa para detectar cambios de dispositivo y prevenir usos indebidos.</li>
+  <li><b>Historial de uso:</b> accesos, tickets generados y validaciones fallidas. Se usa para supervisión y para el funcionamiento normal de la app.</li>
+</ul>
+
+<div class="aviso">
+  <b>Importante:</b> el número de teléfono y la licencia nunca se envían en texto plano. Lo que se transmite al desarrollador es un hash SHA-256 derivado de ambos. Solo el desarrollador puede relacionar ese hash con un usuario concreto mediante su tabla privada de autorizaciones.
+</div>
+
+<h2>3. Cómo se usa la información</h2>
+<ul>
+  <li><b>Autenticación:</b> verificar que el usuario tiene una licencia válida para usar la aplicación.</li>
+  <li><b>Supervisión:</b> recibir informes periódicos de accesos y tickets generados para detectar usos indebidos.</li>
+  <li><b>Prevención de fraude:</b> detectar dispositivos bloqueados o licencias revocadas.</li>
+  <li><b>Funcionamiento normal:</b> la aplicación almacena datos localmente (negocios, historial de tickets, estilos, preferencias) para que funcione sin conexión.</li>
+</ul>
+
+<h2>4. Con quién se comparte la información</h2>
+<p>La información técnica derivada del uso de la aplicación (huella del dispositivo, hash de la credencial, tipo de acceso, fecha y hora, nombre del negocio asociado al ticket cuando corresponda) se envía a un chat privado de <b>Telegram</b> controlado exclusivamente por el desarrollador, usando un bot privado.</p>
+<p>No se comparte información con terceros con fines publicitarios, comerciales ni de análisis. No se vende ni se cede a ninguna otra entidad.</p>
+
+<h2>5. Dónde se almacena la información</h2>
+<ul>
+  <li><b>En el dispositivo del usuario:</b> en el almacenamiento local del navegador (localStorage). Incluye negocios, historial de tickets, estilos, preferencias, configuración del panel y contadores de auto-numeración. Estos datos <b>no se envían a ningún servidor</b>.</li>
+  <li><b>En el chat privado de Telegram del desarrollador:</b> los informes de acceso y de tickets generados, con la información técnica descrita en la sección 4.</li>
+  <li><b>En GitHub Pages:</b> un archivo público (<code>blocked.json</code>) con la lista de licencias bloqueadas. Este archivo <b>no contiene datos personales</b>, solo hashes de credenciales revocadas.</li>
+</ul>
+
+<h2>6. Retención de datos</h2>
+<p>Los datos locales del dispositivo se conservan mientras la aplicación esté instalada. El usuario puede eliminarlos en cualquier momento borrando los datos de la app desde los ajustes del sistema operativo, o desinstalándola.</p>
+<p>Los informes enviados al chat de Telegram del desarrollador se conservan mientras la licencia del usuario esté activa y durante un periodo razonable después, para fines de auditoría y prevención de fraude.</p>
+
+<h2>7. Seguridad</h2>
+<p>La aplicación utiliza las siguientes medidas de seguridad:</p>
+<ul>
+  <li>Cifrado reversible y firma SHA-256 en cada código QR generado.</li>
+  <li>Verificación de la firma digital al validar un ticket.</li>
+  <li>Almacenamiento de credenciales como hash SHA-256, nunca en texto plano.</li>
+  <li>Sistema remoto de revocación de licencias (kill switch) alojado en GitHub Pages.</li>
+  <li>PIN opcional para proteger el acceso al panel de configuración.</li>
+</ul>
+
+<h2>8. Derechos del usuario</h2>
+<p>El usuario puede:</p>
+<ul>
+  <li>Solicitar información sobre los datos que el desarrollador conserva asociados a su licencia.</li>
+  <li>Solicitar la eliminación de sus datos, salvo aquellos que el desarrollador deba conservar por motivos de auditoría o legales.</li>
+  <li>Desinstalar la aplicación en cualquier momento, lo que elimina todos los datos locales del dispositivo.</li>
+</ul>
+<p>Para ejercer cualquiera de estos derechos, el usuario puede escribir a <b>osmanitito94@zoho.com</b>.</p>
+
+<h2>9. Menores de edad</h2>
+<p>OSTIKEC no está dirigida a menores de edad y no recopila conscientemente información de menores. Si un tutor legal detecta que un menor ha utilizado la aplicación, puede contactar al desarrollador para solicitar la eliminación de los datos correspondientes.</p>
+
+<h2>10. Cambios en esta política</h2>
+<p>El desarrollador puede actualizar esta Política de Privacidad en cualquier momento. La fecha de la última actualización aparece al principio del documento. El uso continuado de la aplicación tras cualquier cambio implica la aceptación de la nueva versión.</p>
+
+<h2>11. Contacto</h2>
+<div class="contacto">
+  <p style="margin:0 0 6px 0;"><b>Desarrollador:</b> Osmani Tito Corrioso</p>
+  <p style="margin:0 0 6px 0;"><b>Correo:</b> osmanmanitito94@zoho.com</p>
+  <p style="margin:0;"><b>Canal oficial en Telegram:</b> t.me/+4atqFg3ymcpjNWFh</p>
+</div>
+
+</div>
+</body>
+</html>
