@@ -2459,14 +2459,19 @@
       document.getElementById('inIdServicio').value = h.i;
     }
 
-    if (h.negId) {
+    /* No cambiamos el negocio activo al duplicar: el negocio activo es una
+       decisión del usuario. Si el ticket era de otro negocio, el usuario
+       puede cambiarlo manualmente antes de generar. Así la auto-numeración
+       del negocio actual se mantiene intacta. */
+    /* (Bloque eliminado intencionalmente.) */
+    /* if (h.negId) {
       const existe = leerNegocios().some(n => n.id === h.negId);
       if (existe) {
         guardarActivoId(h.negId);
         renderizarListaNegocios();
         actualizarSelectoresEtiquetas();
       }
-    }
+    } */
 
     /* Re-aplicar auto por si el negocio cambió y con él los contadores */
     aplicarAutoAFormulario();
