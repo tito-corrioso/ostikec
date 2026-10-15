@@ -2754,7 +2754,21 @@
     btn.parentNode.replaceChild(clon, btn);
 
     clon.addEventListener('click', function () {
-      const datos = {
+      /* --- Auto-numeración: bloquear si algún campo activo está agotado --- */
+      const camposAutoActivos = ['a', 'i'].filter(function (campo) {
+        return leerAutoConfig(campo).activo;
+      });
+
+      for (let k = 0; k < camposAutoActivos.length; k++) {
+        const campo = camposAutoActivos[k];
+        if (campoAutoAgotado(campo)) {
+          const nombre = campo === 'a' ? 'Campo 4' : 'Campo 5';
+          alert('Capacidad agotada en ' + nombre +
+                '. Reinicia el contador o amplía el límite en el panel.');
+          return;
+        }
+      }
+       const datos = {
         f: (document.getElementById('inFecha') || {}).value ? document.getElementById('inFecha').value.trim() : '',
         n: (document.getElementById('inNombre') || {}).value ? document.getElementById('inNombre').value.trim() : '',
         t: (document.getElementById('inTelefono') || {}).value ? document.getElementById('inTelefono').value.trim() : '',
@@ -2790,7 +2804,7 @@
           const sesion = JSON.parse(localStorage.getItem(CLAVE_SESION) || '{}');
           if (sesion && sesion.tel) emitidoPor = sesion.tel;
         } catch (e) {}
-        agregarAlHistorial({
+          agregarAlHistorial({
           fecha: new Date().toISOString(),
           no: numeroTexto,
           f: datos.f,
@@ -2801,6 +2815,13 @@
           e: emitidoPor,
           negId: leerActivoId()
         });
+
+        /* --- Auto-numeración: incrementar contadores y refrescar inputs --- */
+        camposAutoActivos.forEach(function (campo) {
+          incrementarAutoContador(campo);
+        });
+        aplicarAutoAFormulario();
+
         refrescarPanelSiAbierto();
       }
     });
