@@ -600,6 +600,11 @@ html, body {
    todos los hashes anteriores. Anótalo en un lugar seguro. */
 const SALT_LICENCIAS = 'Ostikec-Salt-Licencias-2026-v1';
 
+/* Versión actual de la aplicación. Se compara con update.json para avisar
+   al usuario cuando haya una versión nueva. Debe coincidir con el texto
+   que se muestra en el login ("Versión 26.80.20"). */
+const VERSION_APP = '26.80.20';
+
 /* Lista de usuarios autorizados. Cada entrada contiene:
      - hashCred : el SHA-256 (64 caracteres en hexadecimal) del par
                   teléfono + licencia calculado con el salt.
@@ -1461,10 +1466,11 @@ document.addEventListener('DOMContentLoaded', function () {
 </script>
 <script src="jspdf.umd.min.js"></script>
 <script src="xlsx.full.min.js"></script>
-<script src="extras.js?v=10"></script>
-<script src="extras2.js?v=2"></script>
+<script src="extras.js?v=11"></script>
+<script src="extras2.js?v=3"></script>
 <script src="panel.js"></script>
 <script src="trial.js?v=2"></script>
+<script src="update.js"></script>
 <script src="bloqueo.js"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/eruda"></script>
