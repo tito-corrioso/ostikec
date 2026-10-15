@@ -2989,6 +2989,17 @@
     actualizarVisibilidadCamposOpcionales: actualizarVisibilidadCamposOpcionales,
     obtenerCamposOpcionales: obtenerCamposOpcionales,
 
+    /* Auto-numeración */
+    leerAutoConfig: leerAutoConfig,
+    guardarAutoConfig: guardarAutoConfig,
+    leerAutoContador: leerAutoContador,
+    guardarAutoContador: guardarAutoContador,
+    incrementarAutoContador: incrementarAutoContador,
+    reiniciarAutoContador: reiniciarAutoContador,
+    siguienteValorAuto: siguienteValorAuto,
+    campoAutoAgotado: campoAutoAgotado,
+    aplicarAutoAFormulario: aplicarAutoAFormulario,
+
     /* Helpers de dibujo en canvas */
     dibujarCeldaCompacta: dibujarCeldaCompacta,
     medirAlturaCelda: medirAlturaCelda,
