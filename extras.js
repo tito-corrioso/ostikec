@@ -2875,8 +2875,7 @@
       /* --- Auto-numeración: aplicar estado al formulario --- */
       aplicarAutoAFormulario();
 
-      /* Re-aplicar tras limpiar campos (los listeners de index.html borran
-         los valores; re-aplicamos el siguiente número después). */
+      /* Re-aplicar tras limpiar campos (los listeners de index.html borran los valores; re-aplicamos el siguiente número después). */
       document.querySelectorAll('.btn-limpiar-campo').forEach(function (b) {
         if (b.dataset.autoLimpiarInstalado === '1') return;
         b.dataset.autoLimpiarInstalado = '1';
