@@ -2442,6 +2442,7 @@
   }
 
   function duplicarTicketDelHistorial(idx) {
+    function duplicarTicketDelHistorial(idx) {
     const historial = leerHistorial();
     if (idx < 0 || idx >= historial.length) return;
     const h = historial[idx];
@@ -2449,8 +2450,14 @@
     if (h.f) document.getElementById('inFecha').value = h.f;
     if (h.n) document.getElementById('inNombre').value = h.n;
     if (h.t) document.getElementById('inTelefono').value = h.t;
-    if (h.a) document.getElementById('inAsiento').value = h.a;
-    if (h.i) document.getElementById('inIdServicio').value = h.i;
+
+    /* No sobrescribir los campos que tienen auto-numeración activa */
+    if (h.a && !leerAutoConfig('a').activo) {
+      document.getElementById('inAsiento').value = h.a;
+    }
+    if (h.i && !leerAutoConfig('i').activo) {
+      document.getElementById('inIdServicio').value = h.i;
+    }
 
     if (h.negId) {
       const existe = leerNegocios().some(n => n.id === h.negId);
@@ -2460,6 +2467,10 @@
         actualizarSelectoresEtiquetas();
       }
     }
+
+    /* Re-aplicar auto por si el negocio cambió y con él los contadores */
+    aplicarAutoAFormulario();
+
     cerrarPanelFlotante();
     alert('Datos del ticket cargados en el formulario. Puedes editarlos o generar uno nuevo.');
   }
