@@ -569,6 +569,72 @@ html, body {
      7. Arranque de la aplicación
    ============================================================================ */
 
+  /* ============================================================================
+   CAPTURA GLOBAL DE ERRORES
+   ============================================================================
+   Registra cualquier error no capturado y cualquier promesa rechazada
+   en localStorage. Sirve para diagnosticar problemas en dispositivos
+   reales sin necesidad de que el usuario los reporte.
+
+   Para consultarlos desde Eruda:
+       window.OSTIKEC_VER_ERRORES()
+   Para borrarlos:
+       window.OSTIKEC_BORRAR_ERRORES()
+   ============================================================================ */
+(function () {
+  'use strict';
+
+  const CLAVE_LOG_ERRORES = 'ostikec_log_errores';
+  const MAX_ERRORES = 50;
+
+  function guardarError(mensaje, fuente, linea, columna, stack) {
+    try {
+      const log = JSON.parse(localStorage.getItem(CLAVE_LOG_ERRORES) || '[]');
+      log.push({
+        fecha: new Date().toISOString(),
+        mensaje: String(mensaje || '').substring(0, 200),
+        fuente: String(fuente || '').substring(0, 200),
+        linea: linea || 0,
+        columna: columna || 0,
+        stack: String(stack || '').substring(0, 500)
+      });
+      if (log.length > MAX_ERRORES) log.splice(0, log.length - MAX_ERRORES);
+      localStorage.setItem(CLAVE_LOG_ERRORES, JSON.stringify(log));
+    } catch (e) {}
+  }
+
+  window.addEventListener('error', function (e) {
+    guardarError(
+      e.message,
+      e.filename,
+      e.lineno,
+      e.colno,
+      e.error && e.error.stack
+    );
+    /* No devolvemos false: dejamos que el error siga propagándose
+       hacia la consola del navegador para no ocultar información en desarrollo. */
+  });
+
+  window.addEventListener('unhandledrejection', function (e) {
+    const r = e.reason;
+    guardarError(
+      'Promesa rechazada: ' + (r && r.message ? r.message : String(r)),
+      '',
+      0,
+      0,
+      r && r.stack
+    );
+  });
+
+  window.OSTIKEC_VER_ERRORES = function () {
+    try { return JSON.parse(localStorage.getItem(CLAVE_LOG_ERRORES) || '[]'); }
+    catch (e) { return []; }
+  };
+
+  window.OSTIKEC_BORRAR_ERRORES = function () {
+    try { localStorage.removeItem(CLAVE_LOG_ERRORES); } catch (e) {}
+  };
+})();
 
 /* ============================================================================
    1. CONFIGURACIÓN
