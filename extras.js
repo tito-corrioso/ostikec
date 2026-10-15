@@ -2443,7 +2443,6 @@
   }
 
   function duplicarTicketDelHistorial(idx) {
-    function duplicarTicketDelHistorial(idx) {
     const historial = leerHistorial();
     if (idx < 0 || idx >= historial.length) return;
     const h = historial[idx];
