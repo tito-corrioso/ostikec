@@ -36,6 +36,7 @@
      32. Interceptor del botón Crear
      33. Arranque
      34. API PÚBLICA PARA MÓDULOS EXTERNOS
+     35. Tour de Bienvenida 
    ============================================================================ */
 
 (function () {
@@ -3111,5 +3112,491 @@
     MAX_MARCA_AGUA: MAX_MARCA_AGUA,
     MAX_OTRO: MAX_OTRO
   };
+
+    /* ============================================================
+     35. TOUR DE BIENVENIDA AL CREADOR (versión general)
+     ============================================================
+     Se muestra la primera vez que el usuario entra al creador, tanto si
+     lo hace en modo prueba como si lo hace con licencia.
+
+     Comparte la clave 'ostikec_trial_tour_visto' con trial.js:
+       - Si el usuario ya vio el tour de trial, no ve este.
+       - Si el usuario ya vio este, no ve el de trial.
+       - Un solo tour por dispositivo, en cualquier modo.
+
+     Pasos:
+       1. Negocios
+       2. Lector QR
+       3. Formulario
+       4. Botón Crear
+       5. Botón flotante del panel (al avanzar, abre el panel)
+       6. Sección Estilo (dentro del panel)
+       7. Sección Campos y datos (dentro del panel)
+       8. Bloque de Auto-numeración del Campo 4 (dentro del panel, expandido)
+       9. Sección Historial
+      10. Sección Seguridad
+      11. Sección Apariencia
+      12. Sección Respaldo
+
+     El panel se eleva temporalmente por encima del overlay para que sea
+     visible y resaltable mientras dura el tour.
+     ============================================================ */
+  (function () {
+
+    const CLAVE_TOUR_CREADOR  = 'ostikec_trial_tour_visto';
+    const DELAY_INICIO_TOUR   = 1200;
+    const MARGEN_TOOLTIP      = 14;
+
+    let tourActivo       = false;
+    let elementoResaltado = null;
+    let overlayTour      = null;
+    let tooltipTour      = null;
+    let indiceActual     = 0;
+    let panelElevado     = false;
+
+    const PASOS = [
+      {
+        target: function () { return document.getElementById('btnNegocios'); },
+        titulo: 'Tus negocios y servicios',
+        texto: 'Aquí guardas los datos de cada negocio (nombre de la institución y servicio). ' +
+               'Puedes tener varios guardados y cambiar entre ellos con un toque.'
+      },
+      {
+        target: function () { return document.getElementById('btnAbrirLector'); },
+        titulo: 'Valida tickets con código QR',
+        texto: 'Pulsa aquí para escanear un ticket con la cámara o subir una imagen. ' +
+               'La app verificará si es auténtico y mostrará todos sus datos.'
+      },
+      {
+        target: function () {
+          return document.querySelector('#pantallaCreador .tarjeta .seccion-titulo');
+        },
+        titulo: 'Rellena los datos del cliente',
+        texto: 'Aquí escribes la fecha, el nombre, el teléfono y los dos campos configurables. ' +
+               'Es lo que aparecerá impreso en el ticket.'
+      },
+      {
+        target: function () { return document.getElementById('btnCrear'); },
+        titulo: 'Genera el ticket',
+        texto: 'Pulsa este botón para crear el ticket con su código QR. ' +
+               'Aparecerá justo debajo y podrás descargarlo o compartirlo.'
+      },
+      {
+        target: function () { return document.getElementById('btnFlotanteMenu'); },
+        titulo: 'Personaliza tu ticket',
+        texto: 'Este botón abre el panel de opciones. A continuación vamos a verlo ' +
+               'por dentro, sección por sección.',
+        abrirPanel: true
+      },
+      {
+        target: function () {
+          return document.querySelector('.panel-seccion[data-seccion="estilo"] .panel-seccion-titulo');
+        },
+        titulo: 'Estilo del ticket',
+        texto: 'Aquí eliges los colores, las plantillas base, el logo, la fuente, la orientación, ' +
+               'el tamaño del QR, el pie personalizable, la marca de agua y el bloque de firma.',
+        enPanel: true
+      },
+      {
+        target: function () {
+          return document.querySelector('.panel-seccion[data-seccion="campos"] .panel-seccion-titulo');
+        },
+        titulo: 'Campos y datos',
+        texto: 'Aquí activas los campos opcionales (Correo, Dirección, Notas), la numeración ' +
+               'automática del ticket y la auto-numeración de los campos 4 y 5.',
+        enPanel: true
+      },
+      {
+        target: function () {
+          const chk = document.querySelector('[data-auto-activo="a"]');
+          return chk ? chk.closest('div') : null;
+        },
+        titulo: 'Auto-numeración de los campos',
+        texto: 'Cuando activas la auto-numeración, el campo del formulario se bloquea y muestra ' +
+               'el siguiente número libre. Al llegar al límite, la app avisa "Capacidad agotada" ' +
+               'y permite reiniciar el contador desde aquí.',
+        enPanel: true,
+        abrirSeccion: 'campos'
+      },
+      {
+        target: function () {
+          return document.querySelector('.panel-seccion[data-seccion="historial"] .panel-seccion-titulo');
+        },
+        titulo: 'Historial y estadísticas',
+        texto: 'Contadores por día, semana, mes y total. Gráfico de barras de los últimos 7 días, ' +
+               'filtros por fecha, negocio, nombre y estado. Puedes exportar a PDF o Excel.',
+        enPanel: true
+      },
+      {
+        target: function () {
+          return document.querySelector('.panel-seccion[data-seccion="seguridad"] .panel-seccion-titulo');
+        },
+        titulo: 'Seguridad',
+        texto: 'Modo validador ciego, registro de intentos fallidos de validación y ' +
+               'PIN para proteger el acceso al panel con recuperación por PIN maestro.',
+        enPanel: true
+      },
+      {
+        target: function () {
+          return document.querySelector('.panel-seccion[data-seccion="apariencia"] .panel-seccion-titulo');
+        },
+        titulo: 'Apariencia',
+        texto: 'Modo oscuro de la interfaz. El ticket generado siempre se dibuja con los colores ' +
+               'elegidos en Estilo, sin importar el modo de la interfaz.',
+        enPanel: true
+      },
+      {
+        target: function () {
+          return document.querySelector('.panel-seccion[data-seccion="respaldo"] .panel-seccion-titulo');
+        },
+        titulo: 'Respaldo',
+        texto: 'Exporta toda tu configuración a un archivo .json o importa uno existente. ' +
+               'La app te avisa cuando han pasado 30 días sin hacer un respaldo.',
+        enPanel: true
+      }
+    ];
+
+    /* --------------------------------------------------------
+       Utilidades
+       -------------------------------------------------------- */
+    function esVisible(el) {
+      if (!el) return false;
+      const cs = window.getComputedStyle(el);
+      if (cs.display === 'none' || cs.visibility === 'hidden') return false;
+      const rect = el.getBoundingClientRect();
+      return rect.width > 0 && rect.height > 0;
+    }
+
+    function expandirSeccion(nombreSeccion) {
+      const sec = document.querySelector('.panel-seccion[data-seccion="' + nombreSeccion + '"]');
+      if (!sec) return;
+      if (sec.classList.contains('abierta')) return;
+      const titulo = sec.querySelector('.panel-seccion-titulo');
+      if (titulo) titulo.click();
+    }
+
+    function elevarPanel() {
+      if (panelElevado) return;
+      const panel = document.getElementById('panelFlotante');
+      if (panel) {
+        panel.style.zIndex = '999999';
+        panelElevado = true;
+      }
+    }
+
+    function restaurarPanel() {
+      if (!panelElevado) return;
+      const panel = document.getElementById('panelFlotante');
+      if (panel) panel.style.zIndex = '';
+      panelElevado = false;
+    }
+
+    /* --------------------------------------------------------
+       Arranque del tour
+       -------------------------------------------------------- */
+    function comprobarYArrancar() {
+      if (localStorage.getItem(CLAVE_TOUR_CREADOR) === '1') return;
+      if (window.OSTIKEC_TRIAL && window.OSTIKEC_TRIAL.estaActivo()) return;
+      if (tourActivo) return;
+
+      const pantalla = document.getElementById('pantallaCreador');
+      if (!pantalla || !pantalla.classList.contains('activa')) return;
+      if (pantalla.style.display === 'none') return;
+
+      arrancarTour();
+    }
+
+    function arrancarTour() {
+      tourActivo = true;
+      indiceActual = 0;
+      crearEstructuraTour();
+      setTimeout(function () { mostrarPaso(0); }, 250);
+    }
+
+    /* --------------------------------------------------------
+       Estructura visual
+       -------------------------------------------------------- */
+    function crearEstructuraTour() {
+      if (overlayTour || tooltipTour) return;
+
+      overlayTour = document.createElement('div');
+      overlayTour.id = 'tourCreadorOverlay';
+      overlayTour.style.cssText =
+        'position:fixed;inset:0;z-index:999998;background:transparent;';
+      overlayTour.addEventListener('click', function (e) {
+        if (tooltipTour && tooltipTour.contains(e.target)) return;
+        avanzar();
+      });
+      document.body.appendChild(overlayTour);
+
+      tooltipTour = document.createElement('div');
+      tooltipTour.id = 'tourCreadorTooltip';
+      tooltipTour.style.cssText =
+        'position:fixed;z-index:1000000;background:#ffffff;' +
+        'border-radius:14px;box-shadow:0 12px 40px rgba(0,0,0,0.35);' +
+        'padding:18px 18px 14px 18px;max-width:320px;font-family:inherit;' +
+        'opacity:0;transition:opacity .25s;pointer-events:auto;';
+      document.body.appendChild(tooltipTour);
+    }
+
+    /* --------------------------------------------------------
+       Mostrar paso
+       -------------------------------------------------------- */
+    function mostrarPaso(idx) {
+      if (!tooltipTour) return;
+
+      if (idx >= PASOS.length) {
+        finalizar();
+        return;
+      }
+
+      indiceActual = idx;
+      const paso = PASOS[idx];
+      const target = paso.target();
+
+      if (!target || !esVisible(target)) {
+        mostrarPaso(idx + 1);
+        return;
+      }
+
+      /* Abrir el panel si el paso lo requiere */
+      if (paso.abrirPanel) {
+        if (typeof window.OSTIKEC.abrirPanelFlotante === 'function') {
+          window.OSTIKEC.abrirPanelFlotante();
+        }
+        /* Ocultar el fondo oscuro propio del panel: el overlay del tour hace ese papel */
+        const fondoPanel = document.getElementById('panelFlotanteFondo');
+        if (fondoPanel) fondoPanel.style.display = 'none';
+      }
+
+      /* Si el paso está dentro del panel, elevarlo para que se vea */
+      if (paso.enPanel) {
+        elevarPanel();
+        if (overlayTour) overlayTour.style.background = 'rgba(13, 32, 51, 0.78)';
+      } else {
+        restaurarPanel();
+        if (overlayTour) overlayTour.style.background = 'transparent';
+      }
+
+      /* Limpiar resaltado anterior */
+      if (elementoResaltado && elementoResaltado !== target) {
+        limpiarResaltado(elementoResaltado);
+      }
+      elementoResaltado = target;
+
+      /* Ocultar el tooltip mientras se reposiciona */
+      tooltipTour.style.opacity = '0';
+
+      /* Expandir la sección si el paso lo requiere */
+      if (paso.abrirSeccion) {
+        expandirSeccion(paso.abrirSeccion);
+        setTimeout(function () {
+          aplicarYPosicionar(target, idx, paso);
+        }, 320);
+      } else {
+        setTimeout(function () {
+          aplicarYPosicionar(target, idx, paso);
+        }, 80);
+      }
+    }
+
+    function aplicarYPosicionar(target, idx, paso) {
+      /* Hacer scroll al target si está fuera de la vista.
+         Si está dentro del panel, hacer scroll dentro del panel. */
+      const rect = target.getBoundingClientRect();
+      const visible = rect.top >= 0 && rect.bottom <= window.innerHeight;
+      if (!visible) {
+        try { target.scrollIntoView({ behavior: 'auto', block: 'center' }); } catch (e) {}
+      }
+
+      setTimeout(function () {
+        aplicarResaltado(target, paso.enPanel);
+        posicionarTooltip(target, idx, paso);
+      }, 60);
+    }
+
+    /* --------------------------------------------------------
+       Resaltado
+       -------------------------------------------------------- */
+    function aplicarResaltado(el, enPanel) {
+      try {
+        el.dataset.tourShadowPrev = JSON.stringify({
+          position:     el.style.position,
+          zIndex:       el.style.zIndex,
+          boxShadow:    el.style.boxShadow,
+          borderRadius: el.style.borderRadius,
+          outline:      el.style.outline,
+          outlineOffset: el.style.outlineOffset
+        });
+      } catch (e) {}
+
+      if (enPanel) {
+        /* Modo panel: borde amarillo, sin spotlight */
+        el.style.outline = '3px solid #f2a900';
+        el.style.outlineOffset = '3px';
+        el.style.borderRadius = '8px';
+      } else {
+        /* Modo normal: spotlight */
+        const cs = window.getComputedStyle(el);
+        if (cs.position === 'static') el.style.position = 'relative';
+        el.style.zIndex = '999999';
+        el.style.boxShadow = '0 0 0 9999px rgba(13, 32, 51, 0.78)';
+        el.style.borderRadius = '8px';
+      }
+    }
+
+    function limpiarResaltado(el) {
+      if (!el) return;
+      let prev = null;
+      try { prev = JSON.parse(el.dataset.tourShadowPrev || 'null'); } catch (e) {}
+      if (prev) {
+        el.style.position      = prev.position      || '';
+        el.style.zIndex        = prev.zIndex        || '';
+        el.style.boxShadow     = prev.boxShadow     || '';
+        el.style.borderRadius  = prev.borderRadius  || '';
+        el.style.outline       = prev.outline       || '';
+        el.style.outlineOffset = prev.outlineOffset || '';
+      } else {
+        el.style.position      = '';
+        el.style.zIndex        = '';
+        el.style.boxShadow     = '';
+        el.style.borderRadius  = '';
+        el.style.outline       = '';
+        el.style.outlineOffset = '';
+      }
+      delete el.dataset.tourShadowPrev;
+    }
+
+    /* --------------------------------------------------------
+       Tooltip
+       -------------------------------------------------------- */
+    function posicionarTooltip(target, idx, paso) {
+      const esUltimo = idx === PASOS.length - 1;
+
+      tooltipTour.innerHTML =
+        '<div style="font-size:11px;font-weight:700;color:#f2a900;' +
+          'text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">' +
+          'Paso ' + (idx + 1) + ' de ' + PASOS.length +
+        '</div>' +
+        '<h4 style="margin:0 0 8px 0;font-size:16px;color:#16324f;' +
+          'font-weight:800;letter-spacing:0.3px;line-height:1.3;">' + paso.titulo + '</h4>' +
+        '<p style="margin:0 0 14px 0;font-size:13px;color:#334155;line-height:1.55;">' +
+          paso.texto +
+        '</p>' +
+        '<div style="display:flex;gap:8px;justify-content:space-between;align-items:center;">' +
+          '<button id="tourCreadorSaltar" type="button" ' +
+            'style="padding:8px 12px;border:none;background:transparent;' +
+            'color:#94a3b8;font-size:12px;font-weight:700;cursor:pointer;' +
+            'font-family:inherit;">Saltar</button>' +
+          '<button id="tourCreadorSiguiente" type="button" ' +
+            'style="padding:8px 18px;border:none;background:#16324f;' +
+            'color:#fff;border-radius:8px;font-size:13px;font-weight:700;' +
+            'cursor:pointer;font-family:inherit;">' +
+            (esUltimo ? 'Entendido' : 'Siguiente') +
+          '</button>' +
+        '</div>';
+
+      const rect  = target.getBoundingClientRect();
+      const tRect = tooltipTour.getBoundingClientRect();
+      const tW = tRect.width;
+      const tH = tRect.height;
+
+      let top  = rect.bottom + MARGEN_TOOLTIP;
+      let left = rect.left + (rect.width / 2) - (tW / 2);
+
+      if (top + tH > window.innerHeight - MARGEN_TOOLTIP) {
+        top = rect.top - tH - MARGEN_TOOLTIP;
+      }
+      if (top < MARGEN_TOOLTIP) top = MARGEN_TOOLTIP;
+      if (left < MARGEN_TOOLTIP) left = MARGEN_TOOLTIP;
+      if (left + tW > window.innerWidth - MARGEN_TOOLTIP) {
+        left = window.innerWidth - tW - MARGEN_TOOLTIP;
+      }
+
+      tooltipTour.style.top = top + 'px';
+      tooltipTour.style.left = left + 'px';
+      tooltipTour.style.opacity = '1';
+
+      const btnSaltar    = document.getElementById('tourCreadorSaltar');
+      const btnSiguiente = document.getElementById('tourCreadorSiguiente');
+      if (btnSaltar)    btnSaltar.addEventListener('click', finalizar);
+      if (btnSiguiente) btnSiguiente.addEventListener('click', avanzar);
+    }
+
+    /* --------------------------------------------------------
+       Avanzar / finalizar
+       -------------------------------------------------------- */
+    function avanzar() {
+      mostrarPaso(indiceActual + 1);
+    }
+
+    function finalizar() {
+      if (elementoResaltado) {
+        limpiarResaltado(elementoResaltado);
+        elementoResaltado = null;
+      }
+      if (overlayTour && overlayTour.parentNode) {
+        overlayTour.parentNode.removeChild(overlayTour);
+        overlayTour = null;
+      }
+      if (tooltipTour && tooltipTour.parentNode) {
+        tooltipTour.parentNode.removeChild(tooltipTour);
+        tooltipTour = null;
+      }
+      /* Restaurar el fondo oscuro del panel y su z-index */
+      const fondoPanel = document.getElementById('panelFlotanteFondo');
+      if (fondoPanel) fondoPanel.style.display = '';
+      restaurarPanel();
+
+      tourActivo = false;
+
+      try { localStorage.setItem(CLAVE_TOUR_CREADOR, '1'); } catch (e) {}
+    }
+
+    /* --------------------------------------------------------
+       Observador de entrada al creador
+       -------------------------------------------------------- */
+    function observarEntradaAlCreador() {
+      const pantalla = document.getElementById('pantallaCreador');
+      if (!pantalla) return;
+
+      const observer = new MutationObserver(function () {
+        const activa = pantalla.classList.contains('activa') &&
+                       pantalla.style.display !== 'none';
+        if (activa) {
+          setTimeout(comprobarYArrancar, DELAY_INICIO_TOUR);
+        }
+      });
+      observer.observe(pantalla, { attributes: true, attributeFilter: ['class', 'style'] });
+
+      /* Comprobar de inmediato por si ya estaba activa (sesión guardada) */
+      if (pantalla.classList.contains('activa') && pantalla.style.display !== 'none') {
+        setTimeout(comprobarYArrancar, DELAY_INICIO_TOUR);
+      }
+    }
+
+    /* --------------------------------------------------------
+       API pública del tour (opcional)
+       -------------------------------------------------------- */
+    window.OSTIKEC_TOUR = {
+      reset: function () {
+        try { localStorage.removeItem(CLAVE_TOUR_CREADOR); } catch (e) {}
+        console.log('Tour marcado para mostrarse de nuevo.');
+      },
+      arrancar: function () {
+        if (tourActivo) return;
+        if (typeof window.OSTIKEC.abrirPanelFlotante === 'function') {
+          // asegurar que el panel puede abrirse; no forzamos la apertura aquí
+        }
+        arrancarTour();
+      },
+      estaActivo: function () { return tourActivo; }
+    };
+
+    window.addEventListener('DOMContentLoaded', function () {
+      setTimeout(observarEntradaAlCreador, 200);
+    });
+
+  })();
 
 })();
