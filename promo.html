@@ -1,0 +1,1493 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OSTIKEC — Promo y presentación</title>
+
+<!-- Estilos reales de la app: para que los mockups del panel se vean idénticos -->
+<link rel="stylesheet" href="extras.css">
+<link rel="stylesheet" href="extras2.css">
+
+<style>
+/* ============================================================================
+   PROMO OSTIKEC — Estilos propios
+   ============================================================================ */
+* { box-sizing: border-box; }
+html, body {
+  margin: 0; padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  background: #0a1520;
+  color: #ffffff;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---------- Header ---------- */
+.promo-header {
+  padding: 26px 24px 18px;
+  text-align: center;
+  background: linear-gradient(180deg, #0d1c2b 0%, #0a1520 100%);
+  border-bottom: 1px solid #1a2f45;
+}
+.promo-header h1 {
+  margin: 0;
+  font-size: 22px;
+  letter-spacing: 3px;
+  font-weight: 800;
+  color: #ffffff;
+}
+.promo-header h1 span { color: #f2a900; }
+.promo-header p {
+  margin: 6px 0 0;
+  font-size: 12px;
+  color: #6b7f96;
+  letter-spacing: 1px;
+}
+
+/* ============================================================================
+   SECCIÓN 1 — CARTAS DE PRESENTACIÓN
+   ============================================================================ */
+.section-title {
+  max-width: 1200px;
+  margin: 40px auto 18px;
+  padding: 0 24px;
+  font-size: 15px;
+  font-weight: 800;
+  color: #f2a900;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+.section-desc {
+  max-width: 1200px;
+  margin: 0 auto 20px;
+  padding: 0 24px;
+  font-size: 13px;
+  color: #6b7f96;
+  line-height: 1.5;
+}
+
+.covers-row {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  padding: 10px 24px 30px;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: thin;
+  scrollbar-color: #2a4761 #0a1520;
+}
+.covers-row::-webkit-scrollbar { height: 8px; }
+.covers-row::-webkit-scrollbar-track { background: #0a1520; }
+.covers-row::-webkit-scrollbar-thumb { background: #2a4761; border-radius: 4px; }
+
+.cover {
+  flex: 0 0 280px;
+  aspect-ratio: 9 / 16;
+  position: relative;
+  border-radius: 18px;
+  overflow: hidden;
+  scroll-snap-align: center;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255,255,255,0.05);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 32px 24px;
+  transition: transform 0.3s;
+}
+.cover:hover { transform: translateY(-4px); }
+
+/* Fondos comunes */
+.cover-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+.cover-content {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+}
+
+/* ====== COVER 1 — SPLASH / HERO ====== */
+.cover-1 .cover-bg {
+  background:
+    radial-gradient(circle at 50% 35%, rgba(242, 169, 0, 0.15) 0%, transparent 55%),
+    linear-gradient(160deg, #16324f 0%, #0d2033 60%, #0a1520 100%);
+}
+.cover-1 .cover-logo {
+  width: 100px; height: 100px;
+  margin: 0 auto 28px;
+  border-radius: 50%;
+  background: #f2a900;
+  color: #16324f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 42px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  border: 5px solid #16324f;
+  box-shadow: 0 0 0 4px #f2a900 inset, 0 0 40px rgba(242, 169, 0, 0.4);
+  animation: pulseLogo 3s ease-in-out infinite;
+}
+@keyframes pulseLogo {
+  0%, 100% { box-shadow: 0 0 0 4px #f2a900 inset, 0 0 40px rgba(242, 169, 0, 0.4); }
+  50% { box-shadow: 0 0 0 4px #f2a900 inset, 0 0 60px rgba(242, 169, 0, 0.7); }
+}
+.cover-1 .cover-title {
+  font-size: 34px;
+  font-weight: 800;
+  letter-spacing: 5px;
+  margin: 0;
+  color: #ffffff;
+}
+.cover-1 .cover-underline {
+  width: 60px;
+  height: 3px;
+  background: #f2a900;
+  margin: 14px auto 16px;
+  border-radius: 2px;
+}
+.cover-1 .cover-subtitle {
+  font-size: 13px;
+  color: #9db4cc;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  line-height: 1.5;
+  margin: 0 0 6px;
+}
+.cover-1 .cover-tagline {
+  font-size: 14px;
+  color: #f2a900;
+  font-weight: 700;
+  margin: 20px 0 0;
+  letter-spacing: 0.5px;
+}
+.cover-1 .cover-footer {
+  position: absolute;
+  bottom: 20px;
+  left: 0; right: 0;
+  font-size: 10px;
+  color: #4a6480;
+  letter-spacing: 1px;
+  z-index: 1;
+}
+
+/* ====== COVER 2 — EL TICKET ====== */
+.cover-2 .cover-bg {
+  background:
+    radial-gradient(circle at 20% 10%, rgba(22, 50, 79, 0.9) 0%, transparent 40%),
+    linear-gradient(160deg, #0d2033 0%, #0a1520 100%);
+}
+.cover-2 .cover-badge {
+  display: inline-block;
+  padding: 6px 14px;
+  background: rgba(242, 169, 0, 0.15);
+  border: 1px solid rgba(242, 169, 0, 0.4);
+  border-radius: 20px;
+  font-size: 10px;
+  font-weight: 800;
+  color: #f2a900;
+  letter-spacing: 2px;
+  margin-bottom: 22px;
+}
+.cover-2 .cover-ticket-mock {
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 16px;
+  margin: 0 auto 22px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+  text-align: left;
+  color: #1f2937;
+  max-width: 200px;
+  transform: rotate(-3deg);
+}
+.cover-2 .ticket-mini-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #e2e8f0;
+}
+.cover-2 .ticket-mini-logo {
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  background: #f2a900;
+  color: #16324f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 11px;
+}
+.cover-2 .ticket-mini-brand {
+  font-size: 11px;
+  font-weight: 800;
+  color: #16324f;
+  letter-spacing: 1px;
+}
+.cover-2 .ticket-mini-name {
+  font-size: 13px;
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 10px;
+}
+.cover-2 .ticket-mini-qr {
+  width: 90px;
+  height: 90px;
+  margin: 0 auto;
+  background:
+    repeating-conic-gradient(#1f2937 0% 25%, #ffffff 0% 50%) 50% / 9px 9px;
+  border: 3px solid #ffffff;
+  box-shadow: 0 0 0 1px #cbd5e1;
+  border-radius: 3px;
+}
+.cover-2 .cover-title {
+  font-size: 22px;
+  font-weight: 800;
+  line-height: 1.2;
+  margin: 0 0 10px;
+  color: #ffffff;
+}
+.cover-2 .cover-subtitle {
+  font-size: 13px;
+  color: #9db4cc;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* ====== COVER 3 — SEGURIDAD ====== */
+.cover-3 .cover-bg {
+  background:
+    radial-gradient(circle at 50% 20%, rgba(242, 169, 0, 0.12) 0%, transparent 50%),
+    linear-gradient(180deg, #06121f 0%, #0a1520 100%);
+}
+.cover-3 .cover-shield {
+  width: 90px;
+  height: 100px;
+  margin: 0 auto 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #f2a900;
+}
+.cover-3 .cover-shield svg {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 8px 20px rgba(242, 169, 0, 0.4));
+}
+.cover-3 .cover-badge {
+  display: inline-block;
+  padding: 5px 12px;
+  background: #f2a900;
+  color: #0a1520;
+  border-radius: 20px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  margin-bottom: 18px;
+}
+.cover-3 .cover-title {
+  font-size: 26px;
+  font-weight: 800;
+  margin: 0 0 12px;
+  color: #ffffff;
+  letter-spacing: 0.5px;
+}
+.cover-3 .cover-subtitle {
+  font-size: 14px;
+  color: #9db4cc;
+  margin: 0 0 26px;
+  line-height: 1.5;
+}
+.cover-3 .cover-stats {
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+  margin-top: 20px;
+}
+.cover-3 .cover-stat {
+  font-size: 11px;
+  color: #6b7f96;
+  line-height: 1.4;
+}
+.cover-3 .cover-stat b {
+  display: block;
+  font-size: 15px;
+  color: #f2a900;
+  font-weight: 800;
+  letter-spacing: 1px;
+  margin-bottom: 2px;
+}
+
+/* ====== COVER 4 — MULTI-NEGOCIO ====== */
+.cover-4 .cover-bg {
+  background:
+    radial-gradient(circle at 80% 90%, rgba(242, 169, 0, 0.1) 0%, transparent 50%),
+    linear-gradient(160deg, #16324f 0%, #0d2033 100%);
+}
+.cover-4 .cover-badge {
+  display: inline-block;
+  padding: 6px 14px;
+  background: rgba(242, 169, 0, 0.15);
+  border: 1px solid rgba(242, 169, 0, 0.4);
+  border-radius: 20px;
+  font-size: 10px;
+  font-weight: 800;
+  color: #f2a900;
+  letter-spacing: 2px;
+  margin-bottom: 26px;
+}
+.cover-4 .cover-title {
+  font-size: 26px;
+  font-weight: 800;
+  line-height: 1.2;
+  margin: 0 0 24px;
+  color: #ffffff;
+}
+.cover-4 .cover-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.cover-4 .mini-card {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 14px 8px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #e2e8f0;
+  text-align: center;
+  transition: all 0.2s;
+}
+.cover-4 .mini-card.active {
+  background: rgba(242, 169, 0, 0.15);
+  border-color: #f2a900;
+  color: #f2a900;
+}
+.cover-4 .cover-subtitle {
+  font-size: 13px;
+  color: #9db4cc;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* ====== COVER 5 — CTA ====== */
+.cover-5 .cover-bg {
+  background:
+    radial-gradient(circle at 50% 50%, rgba(255, 220, 100, 0.3) 0%, transparent 60%),
+    linear-gradient(160deg, #f2a900 0%, #d18e00 100%);
+}
+.cover-5 .cover-logo-small {
+  width: 70px; height: 70px;
+  margin: 0 auto 22px;
+  border-radius: 50%;
+  background: #16324f;
+  color: #f2a900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  font-weight: 800;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+.cover-5 .cover-title {
+  font-size: 32px;
+  font-weight: 800;
+  color: #0a1520;
+  line-height: 1.1;
+  margin: 0 0 12px;
+  letter-spacing: 0.5px;
+}
+.cover-5 .cover-subtitle {
+  font-size: 15px;
+  color: #16324f;
+  font-weight: 700;
+  margin: 0 0 28px;
+  line-height: 1.4;
+}
+.cover-5 .cover-cta {
+  display: inline-block;
+  padding: 14px 28px;
+  background: #0a1520;
+  color: #f2a900;
+  border-radius: 30px;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  margin-bottom: 14px;
+}
+.cover-5 .cover-small {
+  font-size: 11px;
+  color: #16324f;
+  opacity: 0.7;
+  margin: 0;
+  font-weight: 600;
+}
+
+/* Nota informativa */
+.promo-note {
+  max-width: 1200px;
+  margin: 10px auto 40px;
+  padding: 14px 20px;
+  background: rgba(242, 169, 0, 0.08);
+  border-left: 3px solid #f2a900;
+  border-radius: 6px;
+  font-size: 13px;
+  color: #9db4cc;
+  line-height: 1.55;
+}
+.promo-note b { color: #f2a900; }
+
+/* ============================================================================
+   SECCIÓN 2 — VIDEO PROMOCIONAL
+   ============================================================================ */
+.video-wrapper {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 24px 60px;
+}
+
+.video-player {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #000;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255,255,255,0.05);
+}
+
+.video-stage {
+  position: absolute;
+  inset: 0;
+}
+
+/* ---------- Escenas ---------- */
+.scene {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+}
+.scene.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Elementos animados dentro de cada escena */
+.scene .anim-up {
+  transform: translateY(24px);
+  opacity: 0;
+  transition: transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) 0.15s, opacity 0.7s ease 0.15s;
+}
+.scene.active .anim-up {
+  transform: translateY(0);
+  opacity: 1;
+}
+.scene .anim-up.delay-1 { transition-delay: 0.3s; }
+.scene .anim-up.delay-2 { transition-delay: 0.5s; }
+.scene .anim-up.delay-3 { transition-delay: 0.7s; }
+
+.scene .anim-scale {
+  transform: scale(0.85);
+  opacity: 0;
+  transition: transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) 0.25s, opacity 0.7s ease 0.25s;
+}
+.scene.active .anim-scale {
+  transform: scale(1);
+  opacity: 1;
+}
+
+/* ====== ESCENA 1 — PREGUNTA ====== */
+.scene-1 {
+  background: linear-gradient(160deg, #0a1520 0%, #06121f 100%);
+  text-align: center;
+  flex-direction: column;
+}
+.scene-1 .scene-question {
+  font-size: clamp(24px, 4vw, 40px);
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1.25;
+  letter-spacing: 0.5px;
+  max-width: 720px;
+}
+.scene-1 .scene-question span { color: #f2a900; }
+
+/* ====== ESCENA 2 — TICKET ====== */
+.scene-2 {
+  background: linear-gradient(160deg, #16324f 0%, #0d2033 100%);
+}
+.scene-2 .scene-layout {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  max-width: 850px;
+  width: 100%;
+}
+.scene-2 .scene-text {
+  flex: 1;
+  text-align: left;
+}
+.scene-2 .scene-eyebrow {
+  font-size: 12px;
+  font-weight: 800;
+  color: #f2a900;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.scene-2 .scene-title {
+  font-size: clamp(22px, 3vw, 32px);
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1.2;
+  margin: 0 0 16px;
+}
+.scene-2 .scene-desc {
+  font-size: 14px;
+  color: #9db4cc;
+  line-height: 1.6;
+  margin: 0;
+}
+.scene-2 .scene-visual {
+  flex-shrink: 0;
+}
+
+/* Ticket mock grande para el video */
+.vid-ticket {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 18px;
+  width: 200px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+  color: #1f2937;
+  transform: rotate(-4deg);
+}
+.vid-ticket-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #16324f;
+  margin-bottom: 12px;
+}
+.vid-ticket-logo {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: #f2a900;
+  color: #16324f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 13px;
+}
+.vid-ticket-brand {
+  font-size: 12px;
+  font-weight: 800;
+  color: #16324f;
+  letter-spacing: 1px;
+}
+.vid-ticket-sub {
+  font-size: 9px;
+  color: #f2a900;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+.vid-ticket-name {
+  font-size: 14px;
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 10px;
+}
+.vid-ticket-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.vid-ticket-row > div { flex: 1; }
+.vid-ticket-lbl {
+  font-size: 8px;
+  color: #64748b;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 2px;
+}
+.vid-ticket-val {
+  font-size: 12px;
+  color: #0f172a;
+  font-weight: 700;
+}
+.vid-ticket-qr {
+  width: 120px;
+  height: 120px;
+  margin: 14px auto 0;
+  background:
+    repeating-conic-gradient(#1f2937 0% 25%, #ffffff 0% 50%) 50% / 12px 12px;
+  border: 4px solid #ffffff;
+  box-shadow: 0 0 0 1px #cbd5e1;
+  border-radius: 4px;
+}
+
+/* ====== ESCENA 3 — SIN INTERNET ====== */
+.scene-3 {
+  background: linear-gradient(160deg, #0d2033 0%, #06121f 100%);
+  text-align: center;
+  flex-direction: column;
+}
+.scene-3 .scene-icon-big {
+  width: 100px;
+  height: 100px;
+  margin-bottom: 26px;
+  border-radius: 50%;
+  background: rgba(34, 197, 94, 0.15);
+  border: 2px solid rgba(34, 197, 94, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #22c55e;
+  font-size: 48px;
+}
+.scene-3 .scene-title {
+  font-size: clamp(24px, 4vw, 36px);
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0 0 14px;
+  line-height: 1.2;
+}
+.scene-3 .scene-title span { color: #22c55e; }
+.scene-3 .scene-desc {
+  font-size: 15px;
+  color: #9db4cc;
+  line-height: 1.6;
+  max-width: 500px;
+  margin: 0;
+}
+
+/* ====== ESCENA 4 — VALIDACIÓN ====== */
+.scene-4 {
+  background: linear-gradient(160deg, #16324f 0%, #0d2033 100%);
+}
+.scene-4 .scene-layout {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  max-width: 850px;
+  width: 100%;
+}
+.scene-4 .scene-visual { flex-shrink: 0; }
+.scene-4 .scene-text { flex: 1; text-align: left; }
+.scene-4 .scene-eyebrow {
+  font-size: 12px;
+  font-weight: 800;
+  color: #22c55e;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.scene-4 .scene-title {
+  font-size: clamp(22px, 3vw, 32px);
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1.2;
+  margin: 0 0 16px;
+}
+.scene-4 .scene-desc {
+  font-size: 14px;
+  color: #9db4cc;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.vid-valid {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 16px;
+  width: 230px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+  color: #1f2937;
+}
+.vid-valid-banner {
+  background: #dcfce7;
+  color: #166534;
+  padding: 12px;
+  border-radius: 8px;
+  text-align: center;
+  font-weight: 800;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+  margin-bottom: 12px;
+}
+.vid-valid-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 7px 0;
+  border-bottom: 1px solid #e2e8f0;
+  font-size: 11px;
+}
+.vid-valid-row:last-child { border-bottom: none; }
+.vid-valid-lbl {
+  color: #64748b;
+  font-weight: 700;
+}
+.vid-valid-val {
+  color: #0f172a;
+  font-weight: 700;
+}
+.vid-valid-row.highlight .vid-valid-val {
+  color: #f2a900;
+}
+
+/* ====== ESCENA 5 — PANEL ====== */
+.scene-5 {
+  background: linear-gradient(160deg, #16324f 0%, #0d2033 100%);
+}
+.scene-5 .scene-layout {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  max-width: 850px;
+  width: 100%;
+}
+.scene-5 .scene-text { flex: 1; text-align: left; }
+.scene-5 .scene-eyebrow {
+  font-size: 12px;
+  font-weight: 800;
+  color: #f2a900;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.scene-5 .scene-title {
+  font-size: clamp(22px, 3vw, 32px);
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1.2;
+  margin: 0 0 16px;
+}
+.scene-5 .scene-desc {
+  font-size: 14px;
+  color: #9db4cc;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.vid-panel {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 16px;
+  width: 220px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+  transform: rotate(2deg);
+}
+.vid-panel-title {
+  font-size: 13px;
+  font-weight: 800;
+  color: #16324f;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #f2a900;
+}
+.vid-panel-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 10px;
+  background: #f8fafc;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 8px;
+  margin-bottom: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #16324f;
+}
+.vid-panel-item.active {
+  background: #fff9e6;
+  border-color: #f2a900;
+}
+
+/* ====== ESCENA 6 — CTA ====== */
+.scene-6 {
+  background:
+    radial-gradient(circle at 50% 50%, rgba(242, 169, 0, 0.15) 0%, transparent 60%),
+    linear-gradient(160deg, #16324f 0%, #0a1520 100%);
+  text-align: center;
+  flex-direction: column;
+}
+.scene-6 .scene-logo {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 24px;
+  border-radius: 50%;
+  background: #f2a900;
+  color: #16324f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 34px;
+  font-weight: 800;
+  box-shadow: 0 0 50px rgba(242, 169, 0, 0.5);
+}
+.scene-6 .scene-title {
+  font-size: clamp(26px, 4vw, 40px);
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0 0 14px;
+  line-height: 1.15;
+}
+.scene-6 .scene-title span { color: #f2a900; }
+.scene-6 .scene-desc {
+  font-size: 15px;
+  color: #9db4cc;
+  margin: 0 0 26px;
+  line-height: 1.5;
+}
+.scene-6 .scene-cta {
+  display: inline-block;
+  padding: 14px 36px;
+  background: #f2a900;
+  color: #16324f;
+  border-radius: 30px;
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  box-shadow: 0 8px 30px rgba(242, 169, 0, 0.4);
+}
+
+/* ---------- Controles ---------- */
+.video-controls {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 14px 18px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.85), transparent);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.video-player:hover .video-controls,
+.video-player.show-controls .video-controls {
+  opacity: 1;
+}
+.video-controls button {
+  width: 38px;
+  height: 38px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  cursor: pointer;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition: background 0.2s;
+}
+.video-controls button:hover { background: rgba(242, 169, 0, 0.7); }
+.video-controls .time-display {
+  font-size: 12px;
+  color: #ffffff;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  min-width: 70px;
+}
+.progress-bar {
+  flex: 1;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+  overflow: hidden;
+  cursor: pointer;
+  position: relative;
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #f2a900, #ffd54d);
+  border-radius: 3px;
+  width: 0%;
+  transition: width 0.1s linear;
+}
+
+/* Puntos de escena (navegación) */
+.scene-dots {
+  position: absolute;
+  bottom: 70px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.video-player:hover .scene-dots,
+.video-player.show-controls .scene-dots {
+  opacity: 1;
+}
+.scene-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  cursor: pointer;
+  transition: all 0.2s;
+  border: none;
+  padding: 0;
+}
+.scene-dot.active {
+  background: #f2a900;
+  width: 24px;
+  border-radius: 4px;
+}
+
+/* Overlay "Play" inicial */
+.play-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+  opacity: 1;
+  transition: opacity 0.3s;
+  z-index: 5;
+}
+.play-overlay.hidden { opacity: 0; pointer-events: none; }
+.play-overlay-btn {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: rgba(242, 169, 0, 0.95);
+  border: none;
+  color: #16324f;
+  font-size: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 10px 40px rgba(242, 169, 0, 0.5);
+  transition: transform 0.2s;
+  padding-left: 6px;
+}
+.play-overlay-btn:hover { transform: scale(1.08); }
+
+/* Responsive */
+@media (max-width: 768px) {
+  .scene-2 .scene-layout,
+  .scene-4 .scene-layout,
+  .scene-5 .scene-layout {
+    flex-direction: column;
+    gap: 20px;
+    text-align: center;
+  }
+  .scene-2 .scene-text,
+  .scene-4 .scene-text,
+  .scene-5 .scene-text {
+    text-align: center;
+  }
+  .scene { padding: 20px; }
+  .scene-dots { bottom: 60px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ================================
+     HEADER
+     ================================ -->
+<header class="promo-header">
+  <h1>OSTIKEC <span>PROMO</span></h1>
+  <p>CARTAS DE PRESENTACIÓN + VIDEO PROMOCIONAL</p>
+</header>
+
+<!-- ================================
+     SECCIÓN 1 — CARTAS
+     ================================ -->
+<h2 class="section-title">Cartas de presentación</h2>
+<p class="section-desc">
+  5 piezas visuales para distintos usos: splash screen de la APK, Play Store, redes sociales o presentaciones.
+  Desliza horizontalmente para verlas todas.
+</p>
+
+<div class="covers-row" id="coversRow">
+
+  <!-- ====== COVER 1 — SPLASH / HERO ====== -->
+  <div class="cover cover-1">
+    <div class="cover-bg"></div>
+    <div class="cover-content">
+      <div class="cover-logo">OT</div>
+      <h2 class="cover-title">OSTIKEC</h2>
+      <div class="cover-underline"></div>
+      <p class="cover-subtitle">Tickets electrónicos<br>con QR verificable</p>
+      <p class="cover-tagline">Sin internet · Con seguridad</p>
+    </div>
+    <div class="cover-footer">© OSTICOR 2026</div>
+  </div>
+
+  <!-- ====== COVER 2 — EL TICKET ====== -->
+  <div class="cover cover-2">
+    <div class="cover-bg"></div>
+    <div class="cover-content">
+      <span class="cover-badge">VERIFICABLE</span>
+      <div class="cover-ticket-mock">
+        <div class="ticket-mini-header">
+          <div class="ticket-mini-logo">OT</div>
+          <div class="ticket-mini-brand">OSTIKEC</div>
+        </div>
+        <div class="ticket-mini-name">Juan Pérez</div>
+        <div class="ticket-mini-qr"></div>
+      </div>
+      <h2 class="cover-title">Cada compra con<br>su comprobante</h2>
+      <p class="cover-subtitle">QR único. Verificable en segundos.</p>
+    </div>
+  </div>
+
+  <!-- ====== COVER 3 — SEGURIDAD ====== -->
+  <div class="cover cover-3">
+    <div class="cover-bg"></div>
+    <div class="cover-content">
+      <div class="cover-shield">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          <path d="M9 12l2 2 4-4" stroke="#f2a900" stroke-width="2"/>
+        </svg>
+      </div>
+      <span class="cover-badge">SEGURIDAD</span>
+      <h2 class="cover-title">Firma SHA-256</h2>
+      <p class="cover-subtitle">Cada ticket firmado<br>criptográficamente</p>
+      <div class="cover-stats">
+        <div class="cover-stat"><b>SHA-256</b>Hash cripto</div>
+        <div class="cover-stat"><b>OTK1</b>Formato propio</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== COVER 4 — MULTI-NEGOCIO ====== -->
+  <div class="cover cover-4">
+    <div class="cover-bg"></div>
+    <div class="cover-content">
+      <span class="cover-badge">MULTI-NEGOCIO</span>
+      <h2 class="cover-title">Varios negocios<br>en un teléfono</h2>
+      <div class="cover-cards">
+        <div class="mini-card active">🎭 Teatro</div>
+        <div class="mini-card">🚌 Transporte</div>
+        <div class="mini-card">🎓 Escuela</div>
+        <div class="mini-card">🎉 Eventos</div>
+      </div>
+      <p class="cover-subtitle">Cambia entre ellos<br>con un solo toque</p>
+    </div>
+  </div>
+
+  <!-- ====== COVER 5 — CTA ====== -->
+  <div class="cover cover-5">
+    <div class="cover-bg"></div>
+    <div class="cover-content">
+      <div class="cover-logo-small">OT</div>
+      <h2 class="cover-title">Prueba<br>gratis</h2>
+      <p class="cover-subtitle">12 tickets<br>sin coste</p>
+      <div class="cover-cta">Descargar en Android</div>
+      <p class="cover-small">Sin tarjeta. Sin compromiso.</p>
+    </div>
+  </div>
+
+</div>
+
+<div class="promo-note">
+  <b>💡 Uso recomendado:</b> Cover 1 es ideal como <b>splash screen</b> de la APK (imagen que aparece antes de la pantalla de login). Las demás son perfectas para <b>Play Store, Instagram, Facebook o WhatsApp</b>. Puedes capturarlas con la tecla <b>Impr Pant</b> / <b>PrtScr</b> del móvil o con la opción "Guardar imagen" del navegador.
+</div>
+
+<!-- ================================
+     SECCIÓN 2 — VIDEO
+     ================================ -->
+<h2 class="section-title">Video promocional · 15 segundos</h2>
+<p class="section-desc">
+  Secuencia animada de 6 escenas. Sin audio. Muestra el valor de OSTIKEC de forma visual.
+</p>
+
+<div class="video-wrapper">
+  <div class="video-player" id="videoPlayer">
+
+    <div class="video-stage" id="videoStage">
+
+      <!-- ESCENA 1 -->
+      <div class="scene scene-1 active" data-scene="0">
+        <div class="scene-question anim-up">
+          ¿Tus clientes<br><span>confían</span> en tu<br>comprobante?
+        </div>
+      </div>
+
+      <!-- ESCENA 2 -->
+      <div class="scene scene-2" data-scene="1">
+        <div class="scene-layout">
+          <div class="scene-text">
+            <div class="scene-eyebrow anim-up">La solución</div>
+            <h2 class="scene-title anim-up delay-1">OSTIKEC genera<br>tickets con QR<br>verificable</h2>
+            <p class="scene-desc anim-up delay-2">Cada compra con su comprobante digital firmado.</p>
+          </div>
+          <div class="scene-visual anim-scale">
+            <div class="vid-ticket">
+              <div class="vid-ticket-header">
+                <div class="vid-ticket-logo">OT</div>
+                <div>
+                  <div class="vid-ticket-brand">OSTIKEC</div>
+                  <div class="vid-ticket-sub">TICKET</div>
+                </div>
+              </div>
+              <div class="vid-ticket-name">Juan Pérez</div>
+              <div class="vid-ticket-row">
+                <div>
+                  <div class="vid-ticket-lbl">Fecha</div>
+                  <div class="vid-ticket-val">15/10/26</div>
+                </div>
+                <div>
+                  <div class="vid-ticket-lbl">Asiento</div>
+                  <div class="vid-ticket-val">A-12</div>
+                </div>
+              </div>
+              <div class="vid-ticket-qr"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ESCENA 3 -->
+      <div class="scene scene-3" data-scene="2">
+        <div class="scene-icon-big anim-scale">📵</div>
+        <h2 class="scene-title anim-up delay-1">Funciona <span>sin internet</span></h2>
+        <p class="scene-desc anim-up delay-2">Todo sucede dentro del teléfono.<br>No necesita conexión ni servidores.</p>
+      </div>
+
+      <!-- ESCENA 4 -->
+      <div class="scene scene-4" data-scene="3">
+        <div class="scene-layout">
+          <div class="scene-visual anim-scale">
+            <div class="vid-valid">
+              <div class="vid-valid-banner">✓ TICKET VÁLIDO</div>
+              <div class="vid-valid-row">
+                <span class="vid-valid-lbl">Nombre</span>
+                <span class="vid-valid-val">Juan Pérez</span>
+              </div>
+              <div class="vid-valid-row">
+                <span class="vid-valid-lbl">Asiento</span>
+                <span class="vid-valid-val">A-12</span>
+              </div>
+              <div class="vid-valid-row">
+                <span class="vid-valid-lbl">Fecha</span>
+                <span class="vid-valid-val">15/10/26</span>
+              </div>
+              <div class="vid-valid-row highlight">
+                <span class="vid-valid-lbl">Emitido por</span>
+                <span class="vid-valid-val">54089688</span>
+              </div>
+            </div>
+          </div>
+          <div class="scene-text">
+            <div class="scene-eyebrow anim-up">Verificación</div>
+            <h2 class="scene-title anim-up delay-1">En segundos.<br>Sin errores.</h2>
+            <p class="scene-desc anim-up delay-2">Firma digital SHA-256 imposible de falsificar.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ESCENA 5 -->
+      <div class="scene scene-5" data-scene="4">
+        <div class="scene-layout">
+          <div class="scene-text">
+            <div class="scene-eyebrow anim-up">Personalización</div>
+            <h2 class="scene-title anim-up delay-1">Multi-negocio.<br>Multi-estilo.</h2>
+            <p class="scene-desc anim-up delay-2">Auto-numeración, historial, filtros y respaldo.</p>
+          </div>
+          <div class="scene-visual anim-scale">
+            <div class="vid-panel">
+              <div class="vid-panel-title">Opciones</div>
+              <div class="vid-panel-item">🎨 Estilo del ticket</div>
+              <div class="vid-panel-item active">📋 Campos y datos</div>
+              <div class="vid-panel-item">📊 Historial</div>
+              <div class="vid-panel-item">🔒 Seguridad</div>
+              <div class="vid-panel-item">💾 Respaldo</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ESCENA 6 -->
+      <div class="scene scene-6" data-scene="5">
+        <div class="scene-logo anim-scale">OT</div>
+        <h2 class="scene-title anim-up delay-1">Comienza tu<br><span>prueba gratuita</span></h2>
+        <p class="scene-desc anim-up delay-2">12 tickets sin coste. Sin compromiso.</p>
+        <div class="scene-cta anim-up delay-3">Descargar OSTIKEC</div>
+      </div>
+
+    </div>
+
+    <!-- Overlay inicial -->
+    <div class="play-overlay" id="playOverlay">
+      <button class="play-overlay-btn" id="btnPlayBig" aria-label="Reproducir">▶</button>
+    </div>
+
+    <!-- Dots de escena -->
+    <div class="scene-dots" id="sceneDots">
+      <button class="scene-dot active" data-dot="0" aria-label="Escena 1"></button>
+      <button class="scene-dot" data-dot="1" aria-label="Escena 2"></button>
+      <button class="scene-dot" data-dot="2" aria-label="Escena 3"></button>
+      <button class="scene-dot" data-dot="3" aria-label="Escena 4"></button>
+      <button class="scene-dot" data-dot="4" aria-label="Escena 5"></button>
+      <button class="scene-dot" data-dot="5" aria-label="Escena 6"></button>
+    </div>
+
+    <!-- Controles -->
+    <div class="video-controls">
+      <button id="btnPlayPause" aria-label="Play/Pausa">▶</button>
+      <button id="btnRestart" aria-label="Reiniciar">↻</button>
+      <div class="progress-bar" id="progressBar">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+      <div class="time-display" id="timeDisplay">0.0s / 15.0s</div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+/* ============================================================================
+   VIDEO PROMOCIONAL — Lógica
+   ============================================================================
+   Duración total: 15 segundos
+   6 escenas × 2.5 segundos cada una
+   Controles: play/pausa, reinicio, progreso, navegación por dots
+   Auto-inicio cuando el video entra en viewport
+   ============================================================================ */
+(function () {
+  'use strict';
+
+  const TOTAL_SCENES = 6;
+  const SCENE_DURATION = 2500; // ms
+  const TOTAL_DURATION = TOTAL_SCENES * SCENE_DURATION; // 15000 ms
+
+  const player = document.getElementById('videoPlayer');
+  const stage = document.getElementById('videoStage');
+  const scenes = stage.querySelectorAll('.scene');
+  const dots = document.querySelectorAll('.scene-dot');
+  const progressFill = document.getElementById('progressFill');
+  const progressBar = document.getElementById('progressBar');
+  const timeDisplay = document.getElementById('timeDisplay');
+  const btnPlayPause = document.getElementById('btnPlayPause');
+  const btnRestart = document.getElementById('btnRestart');
+  const playOverlay = document.getElementById('playOverlay');
+  const btnPlayBig = document.getElementById('btnPlayBig');
+
+  let currentScene = 0;
+  let isPlaying = false;
+  let startTime = 0;
+  let pausedAt = 0;
+  let rafId = null;
+  let hasStarted = false;
+
+  /* -------- Cambio de escena -------- */
+  function goToScene(index) {
+    if (index === currentScene && hasStarted) return;
+    currentScene = index;
+
+    scenes.forEach(function (scene, i) {
+      scene.classList.toggle('active', i === index);
+    });
+
+    dots.forEach(function (dot, i) {
+      dot.classList.toggle('active', i === index);
+    });
+  }
+
+  /* -------- Actualizar progreso -------- */
+  function updateProgress(elapsed) {
+    const pct = Math.min(100, (elapsed / TOTAL_DURATION) * 100);
+    progressFill.style.width = pct + '%';
+    const secs = (elapsed / 1000).toFixed(1);
+    const total = (TOTAL_DURATION / 1000).toFixed(1);
+    timeDisplay.textContent = secs + 's / ' + total + 's';
+  }
+
+  /* -------- Tick del loop -------- */
+  function tick() {
+    if (!isPlaying) return;
+
+    const now = performance.now();
+    const elapsed = now - startTime + pausedAt;
+
+    if (elapsed >= TOTAL_DURATION) {
+      updateProgress(TOTAL_DURATION);
+      stop();
+      return;
+    }
+
+    const sceneIndex = Math.min(
+      TOTAL_SCENES - 1,
+      Math.floor(elapsed / SCENE_DURATION)
+    );
+
+    if (sceneIndex !== currentScene) {
+      goToScene(sceneIndex);
+    }
+
+    updateProgress(elapsed);
+    rafId = requestAnimationFrame(tick);
+  }
+
+  /* -------- Play / Pausa -------- */
+  function play() {
+    if (isPlaying) return;
+
+    // Si estaba al final, reiniciar
+    if (pausedAt >= TOTAL_DURATION) {
+      pausedAt = 0;
+      currentScene = -1;
+      goToScene(0);
+    }
+
+    isPlaying = true;
+    hasStarted = true;
+    startTime = performance.now();
+    btnPlayPause.textContent = '⏸';
+    playOverlay.classList.add('hidden');
+
+    // Mostrar controles unos segundos
+    player.classList.add('show-controls');
+    setTimeout(function () {
+      if (isPlaying) player.classList.remove('show-controls');
+    }, 2000);
+
+    rafId = requestAnimationFrame(tick);
+  }
+
+  function pause() {
+    if (!isPlaying) return;
+    isPlaying = false;
+    pausedAt += performance.now() - startTime;
+    btnPlayPause.textContent = '▶';
+    if (rafId) cancelAnimationFrame(rafId);
+  }
+
+  function stop() {
+    isPlaying = false;
+    pausedAt = TOTAL_DURATION;
+    btnPlayPause.textContent = '▶';
+    if (rafId) cancelAnimationFrame(rafId);
+    player.classList.add('show-controls');
+  }
+
+  function restart() {
+    if (rafId) cancelAnimationFrame(rafId);
+    isPlaying = false;
+    pausedAt = 0;
+    currentScene = -1;
+    goToScene(0);
+    updateProgress(0);
+    btnPlayPause.textContent = '▶';
+    playOverlay.classList.remove('hidden');
+    hasStarted = false;
+  }
+
+  /* -------- Listeners -------- */
+  btnPlayPause.addEventListener('click', function () {
+    if (isPlaying) pause();
+    else play();
+  });
+
+  btnRestart.addEventListener('click', restart);
+
+  playOverlay.addEventListener('click', play);
+  btnPlayBig.addEventListener('click', function (e) {
+    e.stopPropagation();
+    play();
+  });
+
+  /* Saltar a una escena con los dots */
+  dots.forEach(function (dot, i) {
+    dot.addEventListener('click', function () {
+      if (rafId) cancelAnimationFrame(rafId);
+      isPlaying = false;
+      pausedAt = i * SCENE_DURATION;
+      currentScene = -1;
+      goToScene(i);
+      updateProgress(pausedAt);
+      btnPlayPause.textContent = '▶';
+      hasStarted = true;
+    });
+  });
+
+  /* Clic en la barra de progreso para saltar */
+  progressBar.addEventListener('click', function (e) {
+    const rect = progressBar.getBoundingClientRect();
+    const pct = (e.clientX - rect.left) / rect.width;
+    const targetMs = pct * TOTAL_DURATION;
+    const sceneIndex = Math.min(
+      TOTAL_SCENES - 1,
+      Math.floor(targetMs / SCENE_DURATION)
+    );
+
+    if (rafId) cancelAnimationFrame(rafId);
+    isPlaying = false;
+    pausedAt = targetMs;
+    currentScene = -1;
+    goToScene(sceneIndex);
+    updateProgress(pausedAt);
+    btnPlayPause.textContent = '▶';
+    hasStarted = true;
+  });
+
+  /* Auto-play cuando el video entra en viewport */
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting && !hasStarted && !isPlaying) {
+          // Pequeño delay para que el usuario vea la escena 1 primero
+          setTimeout(function () {
+            if (!hasStarted) play();
+          }, 800);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 });
+
+    observer.observe(player);
+  }
+
+  /* Teclado: espacio para play/pausa (solo si el player está visible) */
+  document.addEventListener('keydown', function (e) {
+    const rect = player.getBoundingClientRect();
+    const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
+    if (!isVisible) return;
+
+    if (e.code === 'Space') {
+      e.preventDefault();
+      if (isPlaying) pause();
+      else play();
+    }
+  });
+
+  /* Estado inicial */
+  updateProgress(0);
+  goToScene(0);
+
+})();
+</script>
+
+</body>
+</html>
